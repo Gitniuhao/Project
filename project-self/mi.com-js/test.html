@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+</body>
+<script src="js/until.js"></script>
+<script>
+	var oBox = document.getElementById('box');
+	oBox.onclick = function(){
+		animation(oBox,{width:200,height:200},true);
+	}
+</script>
+</html>

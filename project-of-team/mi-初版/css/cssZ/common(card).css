@@ -1,0 +1,104 @@
+/*共用属性*/
+	.container{
+		width: 1226px;
+		margin-right: auto;
+		margin-left: auto;
+		/*background-color: blue;*/
+	}
+	a{
+		text-decoration: none;
+		font-size: 12px;
+		color:#b0b0b0;
+	}
+	a:hover{
+		color: #fff;
+	}
+	.trl{
+		color:#393d42;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	.top-trl{
+		color: #eff7fa;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	.clearfix:after{ 
+		content: ".";  /* 搭配after伪类选择器，内容为空*/
+		display: block;
+		height: 0; 
+		clear: both; 
+		visibility: hidden;  
+	}
+	.clearfix{
+		*zoom: 1;      /*兼容IE浏览器*/
+	}
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-size:100%;
+		font-weight:normal
+	}
+/*loader图标样式*/
+	.loader{
+		position: relative;
+		width: 3px;
+		height: 20px;
+		background-color: #ff6700;
+		margin: 10px auto;
+		animation: loading1 0.3s linear 0.3s infinite alternate;
+	}
+	.loader:before,.loader:after{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		content:'';
+		width: 3px;
+		height: 20px;
+		background-color: #ff6700;
+	}
+	.loader:before{
+		margin-left: -10px;
+		transform: scale(1,0.4);
+		animation: loading 0.3s linear 0.5s infinite alternate;
+	}
+	.loader:after{
+		margin-left: 10px;
+		transform: scale(1,0.2);
+		animation: loading 0.3s linear 0.3s infinite alternate;
+	}
+	@keyframes loading{
+		from{
+			opacity: 0.5;
+			transform: scale(1,0.5)
+		}
+		to{
+			opacity: 1;
+			transform: scale(1,1)
+		}
+	}
+	@keyframes loading1{
+		from{
+			opacity: 0.5;
+			transform: scale(1,0.8)
+		}
+		to{
+			opacity: 1;
+			transform: scale(1,1)
+		}
+	}
+/*抽取的公共样式*/
+	.text1{
+		font-size: 52px;
+		line-height: 62px;
+	}
+	.text2{
+		font-size: 20px;
+	}
+	.text3{
+		font-size: 16px;
+		line-height: 28px;
+	}

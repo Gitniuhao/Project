@@ -1,0 +1,151 @@
+.container{
+	width: 1226px;
+	margin-left: auto;
+	margin-right: auto;
+	/*background-color: #333;*/
+}
+.clearfix:after{
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+.clearfix{
+	*zoom: 1;
+}
+a{
+	text-decoration: none;
+	color: #b0b0b0;
+}
+a:hover{
+	color:#fff;
+}
+.sep{
+	color: #39393b;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.col1{
+	width: 234px;
+	float: left;
+}
+.col2{
+	width: 978px;
+	float: right;
+}
+.active{
+	background-color: #f13939;
+}
+.main .main-content .main-content-list .main-content-item img{
+	width: 190px;
+	height: 190px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.main .main-content .main-content-list .main-content-item .name{
+	width: 167px;
+	font-size: 15px;
+	color: #2b352d;
+	position: absolute;
+	top: 30px;
+	left: 210px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.main .main-content .main-content-list .main-content-item .desc{
+	font-size: 11px;
+	color: #72727a;
+	position: absolute;
+	top: 55px;
+	left: 210px;
+}
+.main .main-content .main-content-list .main-content-item .price{
+	font-size: 14px;
+	color: #ff3334;
+	position: absolute;
+	bottom: 75px;
+	left: 210px;
+}
+.main .main-content .main-content-list .main-content-item del{
+	font-size: 12px;
+	color: #777674;
+	position: absolute;
+	bottom: 75px;
+	left: 280px;
+}
+.main .main-content .main-content-list .main-content-item .flag{
+	width: 120px;
+	height: 30px;
+	background-color: #ff3334;
+	font-size: 	12px;
+	color: 	#fefff8;
+	text-align: center;
+	line-height: 30px;
+	position: absolute;
+	left: 210px;
+	bottom: 26px;
+}
+/*.main .main-content .main-content-list .main-content-item .flag.flag-dl{
+	background-color: #ff3334;
+}*/
+.main .main-content .main-content-list .main-content-item .flag.flagtx{
+	background-color: #83c44e;
+}
+.main .main-content .main-content-list .main-content-item .tx{
+	font-size: 12px;
+	color: #777674;
+	position: absolute;
+	left: 210px;
+	bottom: 5px;
+}
+.transition{
+	transition:box-shadow 0.3s linear,transform 0.3s linear;
+}
+.transition:hover{
+	box-shadow: 0px 10px 15px rgba(0,0,0,0.2);
+	transform: translateY(-3px);
+	cursor: pointer;
+}
+/*loader部分代码*/
+		.loader{
+			position: relative;
+			width: 5px;
+			height: 30px;
+			background-color: #ff6700;
+			margin:0px auto;
+			animation: loading 0.5s linear 0s infinite alternate;
+			transform: scale(1,0.8);	
+		}
+		.loader:before,
+		.loader:after{
+			position: absolute;
+			top: 0;
+			left: 0;
+			content:'';
+			width: 5px;
+			height: 30px;
+			background-color: #ff6700;
+		}
+		.loader:before{
+			margin-left: 10px;
+			transform: scale(1,0.3);
+			animation:loading 0.5s linear 0.3s infinite alternate;
+		}
+		.loader:after{
+			transform: scale(1,0.5);
+			margin-left: -10px;
+			animation:loading 0.5s linear 0.5s infinite alternate;
+		}
+		@keyframes loading{
+			form{
+				opacity: 1;
+				transform: scale(1,0.5);
+			}
+			to{
+				opacity: 0.5;
+				transform: scale(1,1);
+			}
+		}

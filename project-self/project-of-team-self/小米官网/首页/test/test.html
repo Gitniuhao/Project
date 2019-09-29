@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test.html</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.loader{
+			position: relative;
+			width: 5px;
+			height: 30px;
+			background-color: #ff6700;
+			margin:50px auto;
+			animation: loading 0.5s linear 0s infinite alternate;
+			transform: scale(1,0.8);	
+		}
+		.loader:before,
+		.loader:after{
+			position: absolute;
+			top: 0;
+			left: 0;
+			content:'';
+			width: 5px;
+			height: 30px;
+			background-color: #ff6700;
+		}
+		.loader:before{
+			margin-left: 10px;
+			transform: scale(1,0.3);
+			animation:loading 0.5s linear 0.3s infinite alternate;
+		}
+		.loader:after{
+			transform: scale(1,0.5);
+			margin-left: -10px;
+			animation:loading 0.5s linear 0.5s infinite alternate;
+		}
+		@keyframes loading{
+			form{
+				opacity: 1;
+				transform: scale(1,0.5);
+			}
+			to{
+				opacity: 0.5;
+				transform: scale(1,1);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="loader"></div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+/*共用属性*/
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+.container{            /*内容区*/
+	width: 1360px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.clearfix:after{ 
+	content: ".";  /* 搭配after伪类选择器，内容为空*/
+	display: block;
+	height: 0; 
+	clear: both; 
+	visibility: hidden;  
+}
+.clearfix{
+	*zoom: 1;      /*兼容IE浏览器*/
+}
+a{
+	text-decoration: none;
+	font-size: 14px;
+	color:#fff;
+}
+.text1{
+	text-align: center;
+	font-size: 32px;
+	color: #000;
+	/*margin-bottom: 38px;*/
+}
+.text2{
+	text-align: center;
+	font-size: 20px;
+	color: #000;
+	/*margin-bottom: 80px;*/
+}
+.text3{
+	width: 316px;
+	font-size: 16px;
+	color: #000;
+	/*margin-top: 48px;
+	margin-bottom: 24px;*/
+}
+.text4{
+	width: 316px;
+	font-size: 14px;
+	color: #8e8f91;
+    line-height: 24px;
+}
+.text5{
+	/*text-align: center;*/
+	font-size: 12px;
+	color: #fffdff;
+}
+/*抽取的公共样式*/
+.liov{
+	width: 96px;
+	height: 56px;
+	text-align: center;
+	line-height: 56px;
+	/*background-color: #000;*/
+}
+.spn{
+	width: 92px;
+	border-top: 2px solid rgba(235,235,235,0.5);
+	position: absolute;
+}
+.m2-img{
+    position: relative;
+    height: 220px;
+}
+.trl{
+	color:#8d8e92;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+	/*skill公共样式组*/
+		.skill{
+			/*height: 368px;*/
+			padding-top: 62px;
+			padding-bottom: 80px;
+		}
+		.skill .container .text2{
+			margin-bottom: 55px;
+			color: #fff;
+		}
+		.skill-top>div{
+			width: 272px;
+			height: 52px;
+			/*background-color: orange;*/
+			float: left;
+			text-align: center;
+			position: relative;
+		}
+		.spn-r{
+			right: 0px;
+			top: 25px;
+		}
+		.spn-l{
+			left: 0px;
+			top: 25px;
+		}
+		.skill-top div svg{
+			margin-top: 7px;
+			font-size: 38px;
+			color: #fff;
+		}
+		.text3-1{
+			font-size: 16px;
+			color: #fff;
+			margin-top: 24px;
+			margin-bottom: 24px;
+		}
+		.skill-con{
+			position: relative;
+			width: 100%;
+			height: 116px;
+		}
+		.skill-con a{
+			position: absolute;
+			width: 300px;
+			height: 56px;
+			font-size: 20px;
+			bottom: 0px;
+			left: 50%;
+			margin-left: -150px;
+			text-align: center;
+			line-height: 56px;	
+		}
