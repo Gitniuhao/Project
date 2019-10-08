@@ -27,6 +27,7 @@
 
 	function handleDropDown(){
 		var $dropdown = $('.nav-side .dropdown');
+		var $layer = $dropdown.find('.dropdown-layer');
 	    $dropdown.dropDown({delay:200});
 	    $dropdown.on('dropDown-show',function(ev){
 	    	// var $elem = $(this);
@@ -44,7 +45,8 @@
 	    	// 			$layer.html(html);
 	    	// 		},1000)				
 	    	// })
-	    	loadHtmlOnce($(this),createHtml);
+	    	loadHtmlOnce($(this),createHtml);	    	
+	    	$layer.zIndex = 99;
 	    	function createHtml(data,$layer){
 	    		var html ='';
 	  			for(var i=0;i<data.length;i++){
@@ -131,7 +133,7 @@
 	
 	function handleCarousel(){
 		var $carousel = $('.carousel-wrap');
-		$carousel.carousel({});
+		$carousel.carousel();
 	}
 	
 })(jQuery);
