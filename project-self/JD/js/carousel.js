@@ -14,20 +14,55 @@
 		constructor:Carousel,	
 		init:function(){
 			if(this.options.slide){//划入划出
-
+				//先让所有的图片默认隐藏
+				this.$elem.addClass('slide');
+				//默认显示第一张、
+				this.$carouselItem.eq(this.now).css({left:0})
+				//默认图标显示第一张
+				// this.$btns.eq(this.now).addClass('active')
+				//将移动插件初始化
+				this.$carouselItem.move(this.options);
+				//将左右按钮显示出来
+				/*
+				this.$elem
+				.hover(function(){
+						this.$control.show();
+					}.bind(this),function(){
+						this.$control.hide();
+					}.bind(this))
+				.on('click','.control-left',function(){
+					this._slide(this.getIndex(this.now - 1));
+				}.bind(this))
+				.on('click','.control-right',function(){
+					this._slide(this.getIndex(this.now + 1));
+				}.bind(this))
+			
+				//处理自动轮播事件
+				if(this.options.interval){
+				this.autoplay();
+				this.$elem.hover($.proxy(this.paused,this),$.proxy(this.autoplay,this))
+				}
+				//处理底部按钮点击事件
+				var _this = this;
+				this.$btns.on('click',function(){
+					//获取底部按钮对应的下标
+					_this._slide(_this.$btns.index($(this)))
+				})
+			  */
+			  this.tab = this._slide;
 			}else{//淡入淡出
 				//先让所有的图片默认隐藏
 				this.$elem.addClass('fade');
 				//默认显示第一张、
 				this.$carouselItem.eq(this.now).show();
 				//默认图标显示第一张
-				this.$btns.eq(this.now).addClass('active')
+				// this.$btns.eq(this.now).addClass('active')
 				//将显示隐藏插件初始化
-				this.$carouselItem.showHide({js:true,mode:'fade'});
+				this.$carouselItem.showHide(this.options);
 				//将左右按钮显示出来
+				/*
 				this.$elem
-				.hover(
-					function(){
+				.hover(function(){
 						this.$control.show();
 					}.bind(this),function(){
 						this.$control.hide();
@@ -38,7 +73,7 @@
 				.on('click','.control-right',function(){
 					this._fade(this.getIndex(this.now + 1));
 				}.bind(this))
-			}
+			
 			//处理自动轮播事件
 			if(this.options.interval){
 				this.autoplay();
@@ -50,16 +85,55 @@
 				//获取底部按钮对应的下标
 				_this._fade(_this.$btns.index($(this)))
 			})
+			*/
+			this.tab = this._fade;
+		  }
+		  //默认图标显示第一张
+		  this.$btns.eq(this.now).addClass('active')
+		  //将左右按钮显示出来
+			this.$elem
+			.hover(function(){
+					this.$control.show();
+				}.bind(this),function(){
+					this.$control.hide();
+				}.bind(this))
+			.on('click','.control-left',function(){
+				this.tab(this.getIndex(this.now - 1));
+			}.bind(this))
+			.on('click','.control-right',function(){
+				this.tab(this.getIndex(this.now + 1));
+			}.bind(this))
+		
+			//处理自动轮播事件
+			if(this.options.interval){
+			this.autoplay();
+			this.$elem.hover($.proxy(this.paused,this),$.proxy(this.autoplay,this))
+			}
+			//处理底部按钮点击事件
+			var _this = this;
+			this.$btns.on('click',function(){
+				//获取底部按钮对应的下标
+				_this.tab(_this.$btns.index($(this)))
+			})
 		},
+	  _slide:function(index){
+		//如果当前值和即将显示的值想等的话,不执行
+	  	if(this.now == index) return;
+	  	//让即将显示的放在左边或右边
+	  	//让当前显示的移出
+	  	//让即将显示的移入
+	},
 	  _fade(index){
 	  	//如果当前值和即将显示的值想等的话,不执行
-	  	if(this.now = index) return;
+	  	if(this.now == index) return;
 	  	//让当前显示的隐藏
 	  	this.$carouselItem.eq(this.now).showHide('hide');
+
 	  	this.$btns.eq(this.now).removeClass('active');
 	  	//让当前隐藏的显示
 	  	this.$carouselItem.eq(index).showHide('show');
 	  	this.$btns.eq(index).addClass('active');
+	  	//将inde赋给this.now
 	  	this.now = index;
 	  },
 	  getIndex(index){
@@ -76,13 +150,16 @@
 	  		clearInterval(this.timer);
 	  }
 	}
+
 	Carousel.DEFAULTS = {
-		slide:false,
+		slide:true,
 		showIndex:0,
 		interval:2500,
 		js:true,
 		mode:'fade'
 	}
+
+	//注册插件
 	$.fn.extend({
 		carousel:function(options){
 			return this.each(function(){

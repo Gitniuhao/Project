@@ -135,5 +135,4 @@
 		var $carousel = $('.carousel-wrap');
 		$carousel.carousel();
 	}
-	
 })(jQuery);

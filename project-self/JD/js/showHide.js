@@ -175,13 +175,13 @@
 	}
 	var DEFAULTS = {
 		js:true,
-		mode:'slideDownUp'
+		mode:'fade'
 	}
 
 	//1,注册插件
 	$.fn.extend({
 		showHide:function(options){
-			this.each(function(){
+		 this.each(function(){
 				var $elem = $(this);
 				var showHideObj = $elem.data('showHideObj')
 				//判断是否初始化
