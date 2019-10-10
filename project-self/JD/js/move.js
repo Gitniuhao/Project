@@ -12,6 +12,7 @@
 		if(this.currentX == x && this.currentY == y) return;
 		//共通的代码抽取并封装为一个函数调用即可,而不同的部分可用回调函数在不同的地方再传入调用
 		typeof cb == 'function' && cb();
+		this.$elem.trigger('move');
 		this.currentX = x;
 		this.currentY = y;
 	}
@@ -27,7 +28,7 @@
 				left:x,
 				top:y
 			  })
-			 this.$elem.trigger('moved')
+			 this.$elem.trigger('moved');
 			}.bind(this))
 		},
 		x:function(x){
@@ -51,7 +52,7 @@
 					left:x,
 					top:y
 				},function(){
-					this.$elem.trigger('moved')
+					this.$elem.trigger('moved');
 				}.bind(this))
 			}.bind(this))
 		},

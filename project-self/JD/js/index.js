@@ -3,6 +3,8 @@
 	handleSearch();
 	handleCategory();
 	handleCarousel();
+	handleTodays();
+	handleTab();
 
 
 	//共通只加载一次html
@@ -23,6 +25,106 @@
 	  		// },1000)
 	  		typeof cb == 'function' && cb(data,$layer);				
 	  })
+	}
+	//封装加载图片的函数
+	function loadImage(imgUrl,success,error){
+		var image = new Image();//得到一个实例
+		image.onload = function(){//成功时的回调
+			success();
+		}
+		image.onerror = function(){//失败时的回调
+			error();
+		}
+		//模仿延迟加载图片
+		setTimeout(function(){
+			image.src = imgUrl;//表明去哪个地址请求图片
+		},500)		
+	}
+	//轮播图图片懒加载共通
+	function carouselLazyLoad($elem){
+		$elem.item = {};
+		$elem.loadItemNum = $elem.find('.carousel-item').length;
+		$elem.loadedItemNum = 0;//表示已经加载过几张图片 
+		$elem.fnload = null;
+		
+		//开始加载
+		$elem.on('carousel-show',$elem.fnload = function(ev,index,elem){
+			$elem.trigger('load',[index,elem])
+			
+		})
+		//执行加载
+		$elem.on('load',function(ev,index,elem){
+			if($elem.item[index] != 'loaded'){//使得图片只加载一次
+				// console.log('load',index);
+				//加载图片
+				//找到图片标签
+				var $imgs = $(elem).find('.carousel-img');
+				$imgs.each(function(){
+					var $img = $(this);
+					//拿到真正的图片地址
+					var imgUrl = $img.data('src');
+					//获取到图片
+					loadImage(imgUrl,function(){
+						$img.attr('src',imgUrl);
+					},function(){
+						$img.attr('src',"images/focus-carousel/placeholder.png")
+					})
+				})
+					$elem.item[index] = 'loaded';	
+					$elem.loadedItemNum ++;
+					if($elem.loadedItemNum == $elem.loadItemNum){//当加载过的图片和图片的数量想等时,去掉carousel-show事件
+						$elem.trigger('carousel-loaded');
+					}				
+				}
+			})
+			
+		//加载结束
+		$elem.on('carousel-loaded',function(ev){
+			$elem.off('carousel-show',$elem.fnload);
+		})
+	}
+	//选项卡图片懒加载
+	function floorImageLazyLoad($elem){
+		$elem.item = {};
+		$elem.loadItemNum = $elem.find('.tab-item').length;
+		$elem.loadedItemNum = 0;//表示已经加载过几张图片 
+		$elem.fnload = null;
+		
+		//开始加载
+		$elem.on('floor-show',$elem.fnload = function(ev,index,elem){
+			$elem.trigger('floor-load',[index,elem])
+			
+		})
+		//执行加载
+		$elem.on('floor-load',function(ev,index,elem){
+			if($elem.item[index] != 'loaded'){//使得图片只加载一次
+				// console.log('load',index);
+				//加载图片
+				//找到图片标签
+				var $imgs = $(elem).find('.floor-img');
+				$imgs.each(function(){
+					var $img = $(this);
+					//拿到真正的图片地址
+					var imgUrl = $img.data('src');
+					//获取到图片
+					loadImage(imgUrl,function(){
+						$img.attr('src',imgUrl);
+					},function(){
+						$img.attr('src',"images/floor/placeholder.png")
+					})
+				})
+					$elem.item[index] = 'loaded';	
+					$elem.loadedItemNum ++;
+					if($elem.loadedItemNum == $elem.loadItemNum){//当加载过的图片和图片的数量想等时,去掉floor-show事件
+						$elem.trigger('floor-loaded');
+					}				
+				}
+			})
+			
+		//加载结束
+		$elem.on('floor-loaded',function(ev){
+			$elem.off('floor-show',$elem.fnload);
+		})
 	}
 
 	function handleDropDown(){
@@ -87,7 +189,6 @@
 		}
 	}
 
-
 	function handleCategory(){
 		var $dropdown = $('.category .dropdown');
 		$dropdown.on('dropDown-show',function(ev){
@@ -132,7 +233,22 @@
 	}
 	
 	function handleCarousel(){
-		var $carousel = $('.carousel-wrap');
+		var $carousel = $('.focus .carousel-wrap');
+		carouselLazyLoad($carousel);
 		$carousel.carousel();
+	}
+
+	function handleTodays(){
+		var $carousel = $('.todays .carousel-wrap');
+		carouselLazyLoad($carousel);
+		$carousel.carousel({interval:4000});
+	}
+
+	function handleTab(){
+		var $floor = $('.floor');
+		$floor.each(function(){
+			floorImageLazyLoad($(this));
+		})
+		$floor.tab({});
 	}
 })(jQuery);
