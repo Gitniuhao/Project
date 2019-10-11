@@ -26,6 +26,18 @@
 	  		typeof cb == 'function' && cb(data,$layer);				
 	  })
 	}
+	//只获取一次数据
+	function getDataOnce($elem,url,cb){
+		var data = $elem.data(url);
+		if(!data){
+			$.getJSON(url,function(resData){
+				$elem.data(url,resData)
+				cb(resData);
+			})
+		}else{
+			cb(data);
+		}
+	}
 	//封装加载图片的函数
 	function loadImage(imgUrl,success,error){
 		var image = new Image();//得到一个实例
@@ -86,7 +98,7 @@
 	//选项卡图片懒加载
 	function floorImageLazyLoad($elem){
 		$elem.item = {};
-		$elem.loadItemNum = $elem.find('.tab-item').length;
+		$elem.loadItemNum = $elem.find('.tab-item').length;//表示需要加载几次
 		$elem.loadedItemNum = 0;//表示已经加载过几张图片 
 		$elem.fnload = null;
 		
@@ -246,9 +258,131 @@
 
 	function handleTab(){
 		var $floor = $('.floor');
-		$floor.each(function(){
-			floorImageLazyLoad($(this));
-		})
-		$floor.tab({});
+		var $win = $(window);
+		var $doc = $(document);
+
+		function buildFloorHtml(oneFloorData){
+			var html = '';
+			html += '<div class="container">'
+			html += buildFloorHeadHtml(oneFloorData);
+			html += buildFloorBodyHtml(oneFloorData);
+			html += '</div>'
+			return html;
+		}
+		function buildFloorHeadHtml(oneFloorData){
+			var html = '';
+			html += '<div class="floor-hd">';
+			html += '	<h2 class="floor-title fl">';
+			html += '		<span class="floor-title-num">'+oneFloorData.num+'F</span>';
+			html += '		<span class="floor-title-text">'+oneFloorData.text+'</span>';
+			html += '	</h2>';
+			html += '	<ul class="tab-item-wrap fr">';
+			for(var i=0;i<oneFloorData.tabs.length;i++){
+				html += '		<li class="fl">';
+				html += '			<a class="tab-item " href="javascript:;">'+oneFloorData.tabs[i]+'</a>';
+				html += '		</li>';
+				if(i != oneFloorData.tabs.length-1){
+					html += '		<li class="fl tab-divider"></li>';
+				}
+			}
+			html += '	</ul>';
+			html += '</div>';
+			return html;
+		}
+		function buildFloorBodyHtml(oneFloorData){
+			var html = '';
+			html += '<div class="floor-bd">';
+			for(var i=0;i<oneFloorData.items.length;i++){
+				html += '	<ul class="tab-panel clearfix">';
+				for(var j=0;j<oneFloorData.items[i].length;j++){
+					html += '		<li class="floor-item fl">';
+					html += '			<p class="floor-item-pic">';
+					html += '				<a href="#">';
+				
+					html += '					<img class="floor-img" src="images/floor/loading.gif" data-src="images/floor/'+oneFloorData.num+'/'+(i+1)+'/'+(j+1)+'.png" alt="">';
+					html += '				</a>';
+					html += '			</p>';
+					html += '			<p class="floor-item-name">';
+					html += '				<a class="link" href="#">'+oneFloorData.items[i][j].name+'</a>';
+					html += '			</p>';
+					html += '			<p class="floor-item-price">'+oneFloorData.items[i][j].price+' </p>';
+					html += '		</li>';
+				}
+				html += '	</ul>';
+			}
+			html += '</div>';
+
+			return html;
+		}
+
+	
+		
+		//楼层HTMl部分懒加载
+		function floorHTMLLazyLoad($elem){
+			$elem.item = {};
+			$elem.loadItemNum = $elem.find('.tab-item').length;//表示需要加载几次
+			$elem.loadedItemNum = 0;//表示已经加载过几张图片 
+			$elem.fnload = null;		
+
+			//开始加载
+			$elem.on('floor-show',$elem.fnload = function(ev,index,elem){
+				$elem.trigger('floor-load',[index,elem])
+				
+			})
+			//执行加载
+			$elem.on('floor-load',function(ev,index,item){
+				var $item = $(item);
+				if($elem.item[index] != 'loaded'){//使得图片只加载一次
+					// console.log('load',index);
+					//加载HTML
+					//获取数据,关于HTML
+					getDataOnce($elem,'data/floor/floorData.json',function(data){
+						// console.log(data)
+						//生成HTML代码
+						var html = buildFloorHtml(data[index]);
+						//将HTML代码插入到页面
+						$item.html(html);
+						//实现图片的懒加载
+						floorImageLazyLoad($item);
+						//激活选项卡功能
+						$item.tab({});
+					})
+					
+					
+						$elem.item[index] = 'loaded';	
+						$elem.loadedItemNum ++;
+						if($elem.loadedItemNum == $elem.loadItemNum){//当加载过的图片和图片的数量想等时,去掉floor-show事件
+							$elem.trigger('floor-loaded');
+						}				
+					}
+				})
+				
+			//加载结束
+			$elem.on('floor-loaded',function(ev){
+				$elem.off('floor-show',$elem.fnload);
+			})
+		}
+		floorHTMLLazyLoad($doc)
+		function timeToShow(){
+			$floor.each(function(index,elem){
+			
+			//判断是否出现在可视区内
+			if(isVisible($(this))){
+				//只有存在于可视区的楼层,才需要加载HTML代码
+				clearTimeout(elem.showTimer)
+				elem.showTimer = setTimeout(function(){
+					//自动触发自定义事件
+					$doc.trigger('floor-show',[index,elem])
+				},200)
+			}
+		  })
+		}
+		//当滚动屏幕和加载过以及改变尺寸大小的时候触发事件
+		$win.on('scroll load resize',timeToShow)
+
+		function isVisible($elem){
+			return $elem.offset().top < $win.scrollTop() + $win.height() && $elem.height() + $elem.offset().top > $win.scrollTop();
+		}
+		// $floor.tab({});
 	}
 })(jQuery);

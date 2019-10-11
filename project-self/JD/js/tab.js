@@ -13,6 +13,8 @@
 		constructor:Tab,	
 		init:function(){
 			var _this = this;
+			//默认加载的
+			_this.$elem.trigger('floor-show',[this.now,this.$tabPanel[this.now]])
 			//默认显示
 			this.$tabPanel.eq(this.now).show();
 			this.$tabItem.eq(this.now).addClass('tab-item-active');
