@@ -5,7 +5,8 @@
 	handleCarousel();
 	handleTodays();
 	handleTab();
-
+	handleElevator();
+	handleBackTop();
 
 	//共通只加载一次html
 	function loadHtmlOnce($elem,cb){
@@ -52,49 +53,76 @@
 			image.src = imgUrl;//表明去哪个地址请求图片
 		},500)		
 	}
-	//轮播图图片懒加载共通
-	function carouselLazyLoad($elem){
-		$elem.item = {};
-		$elem.loadItemNum = $elem.find('.carousel-item').length;
-		$elem.loadedItemNum = 0;//表示已经加载过几张图片 
+
+	//抽取所有懒加载共通函数
+	function lazyLoad(options){
+		var $elem = options.$elem;
+		var eventName = options.eventName;
+		var eventPrefix = options.eventPrefix;
+		$elem.item = {};//0:loaded,1:loaded
+		$elem.loadItemNum = options.loadItemNum;
+		$elem.loadedItemNum = 0;//表示已经加载过几张图片
 		$elem.fnload = null;
-		
 		//开始加载
-		$elem.on('carousel-show',$elem.fnload = function(ev,index,elem){
-			$elem.trigger('load',[index,elem])
-			
+		$elem.on(eventName,$elem.fnload = function(ev,index,elem){
+				$elem.trigger(eventPrefix+'-load',[index,elem,function(){
+				$elem.item[index] = 'loaded';
+				$elem.loadedItemNum++;
+				if($elem.loadedItemNum == $elem.loadItemNum){
+					$elem.trigger(eventPrefix+'-loaded');
+				}
+			}])
 		})
 		//执行加载
-		$elem.on('load',function(ev,index,elem){
-			if($elem.item[index] != 'loaded'){//使得图片只加载一次
-				// console.log('load',index);
-				//加载图片
-				//找到图片标签
-				var $imgs = $(elem).find('.carousel-img');
-				$imgs.each(function(){
-					var $img = $(this);
-					//拿到真正的图片地址
-					var imgUrl = $img.data('src');
-					//获取到图片
-					loadImage(imgUrl,function(){
-						$img.attr('src',imgUrl);
-					},function(){
-						$img.attr('src',"images/focus-carousel/placeholder.png")
-					})
-				})
-					$elem.item[index] = 'loaded';	
-					$elem.loadedItemNum ++;
-					if($elem.loadedItemNum == $elem.loadItemNum){//当加载过的图片和图片的数量想等时,去掉carousel-show事件
-						$elem.trigger('carousel-loaded');
-					}				
-				}
-			})
-			
+		
 		//加载结束
-		$elem.on('carousel-loaded',function(ev){
-			$elem.off('carousel-show',$elem.fnload);
+		$elem.on(eventPrefix+'-loaded',function(){
+			$elem.off(eventName,$elem.fnload);
 		})
 	}
+	//轮播图图片懒加载共通
+	// function carouselLazyLoad($elem){
+	// 	$elem.item = {};
+	// 	$elem.loadItemNum = $elem.find('.carousel-item').length;
+	// 	$elem.loadedItemNum = 0;//表示已经加载过几张图片 
+	// 	$elem.fnload = null;
+		
+	// 	//开始加载
+	// 	$elem.on('carousel-show',$elem.fnload = function(ev,index,elem){
+	// 		$elem.trigger('load',[index,elem])
+			
+	// 	})
+	// 	//执行加载
+	// 	$elem.on('load',function(ev,index,elem){
+	// 		if($elem.item[index] != 'loaded'){//使得图片只加载一次
+	// 			// console.log('load',index);
+	// 			//加载图片
+	// 			//找到图片标签
+	// 			var $imgs = $(elem).find('.carousel-img');
+	// 			$imgs.each(function(){
+	// 				var $img = $(this);
+	// 				//拿到真正的图片地址
+	// 				var imgUrl = $img.data('src');
+	// 				//获取到图片
+	// 				loadImage(imgUrl,function(){
+	// 					$img.attr('src',imgUrl);
+	// 				},function(){
+	// 					$img.attr('src',"images/focus-carousel/placeholder.png")
+	// 				})
+	// 			})
+	// 				$elem.item[index] = 'loaded';	
+	// 				$elem.loadedItemNum ++;
+	// 				if($elem.loadedItemNum == $elem.loadItemNum){//当加载过的图片和图片的数量想等时,去掉carousel-show事件
+	// 					$elem.trigger('carousel-loaded');
+	// 				}				
+	// 			}
+	// 		})
+			
+	// 	//加载结束
+	// 	$elem.on('carousel-loaded',function(ev){
+	// 		$elem.off('carousel-show',$elem.fnload);
+	// 	})
+	// }
 	//选项卡图片懒加载
 	function floorImageLazyLoad($elem){
 		$elem.item = {};
@@ -160,7 +188,6 @@
 	    	// 		},1000)				
 	    	// })
 	    	loadHtmlOnce($(this),createHtml);	    	
-	    	$layer.zIndex = 99;
 	    	function createHtml(data,$layer){
 	    		var html ='';
 	  			for(var i=0;i<data.length;i++){
@@ -246,13 +273,67 @@
 	
 	function handleCarousel(){
 		var $carousel = $('.focus .carousel-wrap');
-		carouselLazyLoad($carousel);
+		// carouselLazyLoad($carousel);
+		lazyLoad({
+			$elem:$carousel,
+			loadedItemNum:$carousel.find('carousel-item0').length,
+			eventName:'carousel-show',
+			eventPrefix:'carousel',
+		})
+		$carousel.on('carousel-load',function(ev,index,elem,cb){
+			if($carousel.item[index] != 'loaded'){//使得图片只加载一次
+				// console.log('load',index);
+				//加载图片
+				//找到图片标签
+				var $imgs = $(elem).find('.carousel-img');
+				$imgs.each(function(){
+					var $img = $(this);
+					//拿到真正的图片地址
+					var imgUrl = $img.data('src');
+					//获取到图片
+					loadImage(imgUrl,function(){
+						$img.attr('src',imgUrl);
+					},function(){
+						$img.attr('src',"images/focus-carousel/placeholder.png")
+					})
+				})
+					cb();			
+				}
+			})
+			
 		$carousel.carousel();
 	}
 
 	function handleTodays(){
 		var $carousel = $('.todays .carousel-wrap');
-		carouselLazyLoad($carousel);
+		// carouselLazyLoad($carousel);
+		lazyLoad({
+			$elem:$carousel,
+			loadedItemNum:$carousel.find('carousel-item0').length,
+			eventName:'carousel-show',
+			eventPrefix:'carousel',
+		})
+		$carousel.on('carousel-load',function(ev,index,elem,cb){
+			if($carousel.item[index] != 'loaded'){//使得图片只加载一次
+				// console.log('load',index);
+				//加载图片
+				//找到图片标签
+				var $imgs = $(elem).find('.carousel-img');
+				$imgs.each(function(){
+					var $img = $(this);
+					//拿到真正的图片地址
+					var imgUrl = $img.data('src');
+					//获取到图片
+					loadImage(imgUrl,function(){
+						$img.attr('src',imgUrl);
+					},function(){
+						$img.attr('src',"images/focus-carousel/placeholder.png")
+					})
+				})
+					cb();				
+				}
+			})
+
 		$carousel.carousel({interval:4000});
 	}
 
@@ -316,7 +397,7 @@
 		}
 
 	
-		
+		/*
 		//楼层HTMl部分懒加载
 		function floorHTMLLazyLoad($elem){
 			$elem.item = {};
@@ -332,7 +413,7 @@
 			//执行加载
 			$elem.on('floor-load',function(ev,index,item){
 				var $item = $(item);
-				if($elem.item[index] != 'loaded'){//使得图片只加载一次
+				if($doc.item[index] != 'loaded'){//使得图片只加载一次
 					// console.log('load',index);
 					//加载HTML
 					//获取数据,关于HTML
@@ -363,6 +444,72 @@
 			})
 		}
 		floorHTMLLazyLoad($doc)
+		*/
+		lazyLoad({
+			$elem:$doc,
+			loadedItemNum:$doc.find('.floor').length,
+			eventName:'floor-show',
+			eventPrefix:'floor'
+		})
+		$doc.on('floor-load',function(ev,index,item){
+			var $item = $(item)
+			if($doc.item[index] != 'loaded'){
+				// console.log('load',index,elem)
+				//加载html
+				//获取数据，关于html
+				getDataOnce($doc,'data/floor/floorData.json',function(data){
+					// console.log(data);
+					//生成html代码
+					var html = buildFloorHtml(data[index]);
+
+					//将html代码插入到页面
+					$item.html(html);
+					//实现图片的懒加载
+					// floorImglLazyLoad($(elem))
+					lazyLoad({
+						$elem:$item,
+						loadItemNum:$item.find('.tab-item').length,
+						eventName:'floor-show',
+						eventPrefix:'floor'
+					})
+					$item.on('floor-load',function(ev,index,elem,cb){
+						if($item.item[index] != 'loaded'){
+
+							// console.log('load',index)
+							//找到图片标签
+							var $imgs = $(elem).find('.floor-img');
+							$imgs.each(function(){
+								var $img = $(this);
+								//拿到真正的图片地址
+							
+								var imgUrl = $img.data('src');
+								//获取图片
+								loadImage(imgUrl,function(){
+									$img.attr('src',imgUrl)
+								},function(){
+									$img.attr('src',"images/floor/placeholder.png")
+								});
+							})
+							cb()				
+						}
+					})
+					//激活选项卡功能
+					$item.tab({})
+				});
+				
+
+				$doc.item[index] = 'loaded';
+				$doc.loadedItemNum++;
+				if($doc.loadedItemNum == $doc.loadItemNum){
+					$doc.trigger('floor-loaded');
+				}
+				
+			}
+		})
+		$doc.on('floor-loaded',function(){
+			$win.off('scroll load resize',timeToShow)
+		})
+
 		function timeToShow(){
 			$floor.each(function(index,elem){
 			
@@ -384,5 +531,58 @@
 			return $elem.offset().top < $win.scrollTop() + $win.height() && $elem.height() + $elem.offset().top > $win.scrollTop();
 		}
 		// $floor.tab({});
+	}
+
+	function handleElevator(){
+		var $floor = $('.floor');
+		var $win = $(window);
+		var $elevator = $('#elevator');
+		var $elevatorItems = $elevator.find('.elevator-item')
+		//获取楼层号
+		function getFloorNum(){
+			var num = -1;
+			$floor.each(function(){
+				var index = $floor.index(this);
+				num = index;
+				if($floor.eq(index).offset().top > $win.scrollTop() + $win.height()/2){
+					num = index - 1;
+					return false;
+				}
+			})
+			return num;
+		}
+		// console.log(getFloorNum())
+		//设置电梯
+		function setElevator(){
+			var num = getFloorNum();
+			if(num == -1){
+				$elevator.fadeOut();
+			}else{
+				$elevator.fadeIn();
+				$elevatorItems.removeClass('elevator-active')
+				$elevatorItems.eq(num).addClass('elevator-active')
+			}
+			
+		}
+		$win.on('scroll resize load',function(){
+			clearTimeout($elevator.showTimer);
+			$elevator.showTimer = setTimeout(setElevator,200);
+		});
+		//点击电梯，出现对应楼层
+		$elevator.on('click','.elevator-item',function(){
+			var index = $elevatorItems.index(this);
+			//让window的scrollTop等于对应楼层的offset().top
+			$('html').animate({
+				scrollTop:$floor.eq(index).offset().top
+			})
+		})
+	}
+	function handleBackTop(){
+		var $back = $('#backToTop');
+		$back.on('click',function(){
+			$('html').animate({
+				scrollTop:0
+			})
+		})
 	}
 })(jQuery);
