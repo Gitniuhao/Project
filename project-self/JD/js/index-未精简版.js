@@ -17,6 +17,13 @@
 	  if($elem.data('isLoaded')) return;
 	  	$.getJSON(dataUrl,function(data){
 	  		$elem.data('isLoaded',true);
+	  		// var html ='';
+	  		// for(var i=0;i<data.length;i++){
+	  		// 	html += '<li class="menu-item"><a href="'+data[i].url+'">'+data[i].name+'</a></li>'
+	  		// }
+	  		// setTimeout(function(){
+	  		// 	$layer.html(html);
+	  		// },1000)
 	  		typeof cb == 'function' && cb(data,$layer);				
 	  })
 	}
@@ -73,6 +80,49 @@
 			$elem.off(eventName,$elem.fnload);
 		})
 	}
+	//轮播图图片懒加载共通
+	// function carouselLazyLoad($elem){
+	// 	$elem.item = {};
+	// 	$elem.loadItemNum = $elem.find('.carousel-item').length;
+	// 	$elem.loadedItemNum = 0;//表示已经加载过几张图片 
+	// 	$elem.fnload = null;
+		
+	// 	//开始加载
+	// 	$elem.on('carousel-show',$elem.fnload = function(ev,index,elem){
+	// 		$elem.trigger('load',[index,elem])
+			
+	// 	})
+	// 	//执行加载
+	// 	$elem.on('load',function(ev,index,elem){
+	// 		if($elem.item[index] != 'loaded'){//使得图片只加载一次
+	// 			// console.log('load',index);
+	// 			//加载图片
+	// 			//找到图片标签
+	// 			var $imgs = $(elem).find('.carousel-img');
+	// 			$imgs.each(function(){
+	// 				var $img = $(this);
+	// 				//拿到真正的图片地址
+	// 				var imgUrl = $img.data('src');
+	// 				//获取到图片
+	// 				loadImage(imgUrl,function(){
+	// 					$img.attr('src',imgUrl);
+	// 				},function(){
+	// 					$img.attr('src',"images/focus-carousel/placeholder.png")
+	// 				})
+	// 			})
+	// 				$elem.item[index] = 'loaded';	
+	// 				$elem.loadedItemNum ++;
+	// 				if($elem.loadedItemNum == $elem.loadItemNum){//当加载过的图片和图片的数量想等时,去掉carousel-show事件
+	// 					$elem.trigger('carousel-loaded');
+	// 				}				
+	// 			}
+	// 		})
+			
+	// 	//加载结束
+	// 	$elem.on('carousel-loaded',function(ev){
+	// 		$elem.off('carousel-show',$elem.fnload);
+	// 	})
+	// }
 	//选项卡图片懒加载
 	function floorImageLazyLoad($elem){
 		$elem.item = {};
@@ -201,6 +251,7 @@
 	
 	function handleCarousel(){
 		var $carousel = $('.focus .carousel-wrap');
+		// carouselLazyLoad($carousel);
 		lazyLoad({
 			$elem:$carousel,
 			loadedItemNum:$carousel.find('carousel-item0').length,
@@ -233,6 +284,7 @@
 
 	function handleTodays(){
 		var $carousel = $('.todays .carousel-wrap');
+		// carouselLazyLoad($carousel);
 		lazyLoad({
 			$elem:$carousel,
 			loadedItemNum:$carousel.find('carousel-item0').length,
@@ -407,6 +459,7 @@
 		function isVisible($elem){
 			return $elem.offset().top < $win.scrollTop() + $win.height() && $elem.height() + $elem.offset().top > $win.scrollTop();
 		}
+		// $floor.tab({});
 	}
 
 	function handleElevator(){
