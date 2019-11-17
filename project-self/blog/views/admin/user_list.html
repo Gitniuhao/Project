@@ -1,0 +1,52 @@
+{% extends './layout.html' %}
+{% block title %}
+  用户列表页面
+{% endblock %}
+{% block header %}
+  用户列表
+{% endblock %}
+{% block content %}
+	<div class="table-responsive" id="content">
+	    <table class="table table-striped">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <th>用户名</th>
+	          <th>是否是管理员</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	      	{% for user in users %}
+	        <tr>
+	          <td>{{ user._id.toString() }}</td>
+	          <td>{{ user.username }}</td>
+	          {% if user.isAdmin %}
+	          	<td>是</td>
+	          {% else %}
+	          	<td>否</td>
+	          {% endif %}                
+	        </tr>
+	        {% endfor %}
+	      </tbody>
+	    </table>
+	  </div>
+ <!-- 分页开始部分 -->
+  <nav aria-label="Page navigation" id="page">
+    <ul class="pagination">
+      <li>
+        <a href="/admin/users/?page={{ page - 1 }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% for i in list %}
+      	<li><a href="/admin/users/?page={{ i }}">{{ i }}</a></li>
+      {% endfor %}
+      <li>
+        <a href="/admin/users/?page={{ page + 1 }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+

@@ -1,6 +1,7 @@
 ;(function($){
 var $register = $('#register') 
 var $login = $('#login');
+var $userInfo = $('#user-info');
 //1.1.登录 => 注册 没有账号，跳转注册页面
 $('#go-register').on('click',function(){
 	$login.hide();
@@ -12,7 +13,7 @@ $('#go-login').on('click',function(){
 	$login.show()
 })
 
-//2.注册进行验证然后发送ajax请求
+//2.点击注册进行验证然后发送ajax请求
 $('#sub-register').on('click',function(){
 	var username = $register.find('[name = username]').val()
 	var password = $register.find('[name = password]').val()
@@ -60,7 +61,7 @@ $('#sub-register').on('click',function(){
 	}
 })
 
-//3.登录进行验证然后发送ajax请求
+//3.点击登录进行验证然后发送ajax请求
 $('#sub-login').on('click',function(){
 	var username = $login.find('[name = username]').val()
 	var password = $login.find('[name = password]').val()
@@ -98,7 +99,7 @@ $('#sub-login').on('click',function(){
 				// $login.hide()
 				// $('#user-info').show()
 				// $('#user-info').find('span').html(data.user.username)
-				window.loaction.reload();//重新刷新页面
+				window.location.reload();//重新刷新页面
 			}else{//当登录失败后显示后台返回的失败信息
 				$err.html(data.message);
 			}
@@ -107,5 +108,22 @@ $('#sub-login').on('click',function(){
 			$err.html('请求失败，请稍后重试！')
 		})
 	}
+})
+
+//4.点击退出登录
+$('#logout').on('click',function(){
+	$.ajax({
+		url:'/user/logout',
+		type:'GET',
+	})
+	.done(data =>{
+		//退出登录成功就跳转到首页
+		if(data.code == 0){
+			window.location.href ='/' ;
+		}
+	})
+	.fail(err =>{
+		$userInfo.find('.err').html('请求失败，请稍后重试！')
+	})
 })
 })(jQuery);

@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 //此页面处理根目录下的直接请求
 //获取首页
-router.get('/',(req,res) =>{
-	
+router.get('/',(req,res) =>{	
 	res.render('main/index',{
 		userInfo:req.userInfo
 	})

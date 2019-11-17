@@ -19,7 +19,8 @@ router.post('/register',(req,res)=>{
 		}else{//3.插入数据 ：表示数据库没有同名，可以插入
 			userModel.insertMany({
 				username:username,
-				password:hmac(password)
+				password:hmac(password),
+				// isAdmin:true
 			})
 			.then(user =>{//插入数据成功
 				res.json({
@@ -52,8 +53,10 @@ router.post('/login',(req,res)=>{
 	userModel.findOne({username:username,password:hmac(password)},'-password')
 	.then(user =>{//数据库获取参数成功
 		if(user){//表示数据库有相同账号密码，可以登录
-			//设置cookies
-			req.cookies.set('userInfo',JSON.stringify(user))
+			//设置cookies,设置到期时间为一天，cookie只能设置字符串
+			// req.cookies.set('userInfo',JSON.stringify(user),{maxAge:1000*60*60*24})
+			//设置session,session可以直接设置对象
+			req.session.userInfo = user;
 			res.json({
 				code:0,
 				message:'登录成功！',
@@ -71,6 +74,17 @@ router.post('/login',(req,res)=>{
 			code:10,
 			message:'注册失败，数据库操作错误！'
 		})
+	})
+})
+
+//处理退出登录
+router.get('/logout',(req,res)=>{
+	//清楚cookies缓存
+	// req.cookies.set('userInfo',null)
+	req.session.destroy()
+	res.json({
+		code:0,
+		message:'退出登录成功！'
 	})
 })
 module.exports = router;

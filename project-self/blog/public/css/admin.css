@@ -1,0 +1,13 @@
+.btn-group{
+	float:right;
+	margin-right: 30px;
+	margin-top: 8px;
+}
+#content{
+	margin-top: 20px;
+	min-height: 400px;
+}
+#page{
+	float: right;
+	margin-right: 200px;
+}
