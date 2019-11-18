@@ -77,9 +77,9 @@ app.use(session({
     store:new MongoStore({ mongooseConnection: mongoose.connection }) 	  
 }))
 app.use((req,res,next)=>{
-	//获取并将cookie的信息存在req.userInfo上
+	//获取并将session的信息存在req.userInfo上，
+	//第一次登录时无法获取，后面可以通过路由处理时把session存在req上获取到
 	req.userInfo = req.session.userInfo || {};
-
 	next();
 })
 /*--------------------配置cookies保存用户状态信息开始---------*/

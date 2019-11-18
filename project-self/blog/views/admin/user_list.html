@@ -30,23 +30,6 @@
 	      </tbody>
 	    </table>
 	  </div>
- <!-- 分页开始部分 -->
-  <nav aria-label="Page navigation" id="page">
-    <ul class="pagination">
-      <li>
-        <a href="/admin/users/?page={{ page - 1 }}" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {% for i in list %}
-      	<li><a href="/admin/users/?page={{ i }}">{{ i }}</a></li>
-      {% endfor %}
-      <li>
-        <a href="/admin/users/?page={{ page + 1 }}" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+ {% include './pagination.html' %}
 {% endblock %}
 
