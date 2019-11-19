@@ -24,8 +24,8 @@
 	          <td>{{ category.name }}</td>	         
 	          <td>{{ category.order }}</td>	          
 	          <td>
-	          	<a href="">编辑</a>
-	          	<a href="">删除</a>
+	          	<a href="/category/edit/{{ category._id.toString() }}">编辑</a>
+	          	<a href="/category/delete/{{ category._id.toString() }}" class="del">删除</a>
 	          </td>	                   
 	        </tr>
 	        {% endfor %}	       

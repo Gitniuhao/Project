@@ -32,8 +32,6 @@ db.once('open',function(){
 })
 /*--------------------链接数据库开始----------------*/
 
-
-
 /*---------------渲染页面模板引擎的配置开始---------*/
 //1.设置缓存,开发阶段设置不走缓存
 swig.setDefaults({
@@ -90,6 +88,7 @@ app.use('/',require('./routs/index.js'))
 app.use('/user',require('./routs/user.js'))
 app.use('/admin',require('./routs/admin.js'))
 app.use('/category',require('./routs/category.js'))
+app.use('/article',require('./routs/article.js'))
 /*------------------------配置路由结束----------------------*/
 
 
