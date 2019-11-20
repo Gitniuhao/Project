@@ -15,12 +15,13 @@ const ArticleSchema = new mongoose.Schema({
 		type:mongoose.Schema.Types.ObjectId,
 		ref:'category'
 	},
-	cteateAt:{
+	createAt:{
 		type:Date,
 		default:Date.now
 	},
 	click:{
-		type:Number
+		type:Number,
+		default:0
 	},
 	content:{
 		type:String

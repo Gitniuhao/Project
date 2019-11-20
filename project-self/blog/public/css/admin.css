@@ -11,3 +11,6 @@
 	float: right;
 	margin-right: 200px;
 }
+.ck-content{
+	min-height: 200px;
+}

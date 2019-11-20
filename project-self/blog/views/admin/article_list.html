@@ -16,6 +16,7 @@
 	          <th>所属分类</th>
 	          <th>创作时间</th>
 	          <th>点击量</th>
+	          <th>操作</th>
 	        </tr>
 	      </thead>
 	      <tbody>
@@ -27,6 +28,7 @@
 	          <td>{{ article.createAt }}</td>	          
 	          <td>{{ article.click }}</td>	                   
 	          <td>
+	          	<a href="/detail/{{ article._id.toString() }}"></a>
 	          	<a href="/article/edit/{{ article._id.toString() }}">编辑</a>
 	          	<a href="/article/delete/{{ article._id.toString() }}" class="del">删除</a>
 	          </td>	                   

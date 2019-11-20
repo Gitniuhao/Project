@@ -3,6 +3,10 @@ const router = express.Router();
 const CategoryModel = require('../models/category.js');
 const ArticleModel = require('../models/article.js');
 const pagination = require('../util/pagination.js')
+const multer = require('multer');
+//dest表示后台要存放图片的对应文件夹的地址
+const upload = multer({dest:'public/uploads/'})
+
 //此页面处理根管理员的请求
 //进行是否是管理员的验证
 router.use((req,res,next)=>{
@@ -13,7 +17,7 @@ router.use((req,res,next)=>{
 	}
 })
 
-//获取分类管理页面
+//获取文章管理页面
 router.get('/',(req,res) =>{
 	const options = {
 		page:req.query.page*1,//当前页码
@@ -44,8 +48,8 @@ router.get('/',(req,res) =>{
 
 //获取新增文章页面
 router.get('/add',(req,res) =>{
-	ArticleModel.find({},'name')
-	.then(article =>{
+	CategoryModel.find({},'name')
+	.then(categories =>{
 		res.render('admin/article_add',{
 			userInfo:req.userInfo,
 			categories:categories
@@ -60,53 +64,50 @@ router.get('/add',(req,res) =>{
 	})
 })
 
-
-
-
-
-
-//处理新增分类请求
+//处理新增文章请求
 router.post('/add',(req,res) =>{	
 	//1.获取参数
-	let { name,order } = req.body;
-	if(!order){
-		order = 0;
-	}
-	// console.log(name,order)
-	//2.进行验证数据库中是否以及存在
-	CategoryModel.findOne({name:name})
-	.then(category =>{//数据查询成功
-		if(category){//数据已经存在，不能插入
-			res.render('admin/err',{
-					userInfo:req.userInfo,
-					message:'分类已经存在，请重新进行添加！！'
-				})
-		}else{//3.插入数据,数据不存在，可以插入
-			CategoryModel.insertMany({name:name,order:order})
-			.then(result =>{//插入数据成功
-				res.render('admin/ok',{
-					userInfo:req.userInfo,
-					message:'新增分类成功！！',
-					url:'/catgory'
-				})
-			})
-			.catch(err =>{//插入数据失败
-				console.log(err)
-				res.render('admin/err',{
-					userInfo:req.userInfo,
-					message:'数据库操作过于频繁，请稍后重试！！'
-				})
-			})
-		}
+	let { category,title,intro,content } = req.body;
+	//2.插入文章到数据库中
+	ArticleModel.insertMany({
+		category,
+		title,
+		intro,
+		content,
+		author:req.userInfo._id
 	})
-	.catch(err =>{//数据查询失败
+	.then(result =>{//插入数据成功
+		res.render('admin/ok',{
+			userInfo:req.userInfo,
+			message:'新增文章成功！！',
+			url:'/article'
+		})
+	})
+	.catch(err =>{//插入数据失败
 		console.log(err)
 		res.render('admin/err',{
 			userInfo:req.userInfo,
-			message:'数据库操作过于频繁，请稍后重试！！'
+			message:'数据库操作过于频繁，请稍后重试！！',
+			url:'/article'
 		})
-	})	
+  	})
 })
+
+//处理上传图片请求
+//upload.single('upload')
+//upload表示的是前台传递图片资源的字段名称,与前台控制台formData中的字段保持一致
+//因为图片相当于就存在upload这个字段中，upload中存的就是图片的二进制
+router.post('/uploadImg',upload.single('upload'),(req,res) =>{
+	//表示图片在后台的路径
+	// console.log(req.file)
+	const filepath = '/uploads/'+req.file.filename;
+	res.json({
+		uploaded:true,
+		url:filepath
+	})
+})
+
+
 
 //获取编辑分类页面
 router.get('/edit/:id',(req,res) =>{

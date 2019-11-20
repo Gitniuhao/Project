@@ -39,7 +39,8 @@
               {{ userInfo.username }} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="#" id="logout">退出</a></li>
+              <li><a href="/" id="home">返回首页</a></li>
+              <li><a href="#" id="logout">退出登录</a></li>
             </ul>
           </div>         
         </div>
@@ -69,5 +70,6 @@
 <script src="/lib/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 <script src="/js/logout.js"></script>
 <script src="/js/del.js"></script>
+{% block footer %}{% endblock %}
   </body>
 </html>
