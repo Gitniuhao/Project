@@ -12,7 +12,7 @@ async function pagination(options){
 	//限制每页只显示4条数据
 	const limit = 4;
 	
-	let { page,model,query,projection,sort } = options
+	let { page,model,query,projection,sort,populates } = options
 	//当page不是数字时的处理
 	if(isNaN(page)){
 		page = 1
@@ -41,7 +41,13 @@ async function pagination(options){
 	//需要跳跃的页数
 	let skip = (page-1)*limit;
 	//查找数据
-	const docs = await model.find(query,projection).sort(sort).skip(skip).limit(limit)
+	let result =  model.find(query,projection)
+	if(populates){
+		populates.forEach(function(populate){
+			return result.populate(populate)
+		})
+	}
+	const docs = await result.sort(sort).skip(skip).limit(limit)
 	//需要返回的值
 	return {
 		docs:docs,

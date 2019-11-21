@@ -73,7 +73,8 @@ router.post('/add',(req,res) =>{
 				console.log(err)
 				res.render('admin/err',{
 					userInfo:req.userInfo,
-					message:'数据库操作过于频繁，请稍后重试！！'
+					message:'数据库操作过于频繁，请稍后重试！！',
+					url:'/catgory'
 				})
 			})
 		}
@@ -140,7 +141,8 @@ router.post('/edit',(req,res) =>{
 			   	.catch(err =>{//进行更改失败
 			   		res.render('admin/err',{
 						userInfo:req.userInfo,
-						message:'数据库操作失败，请稍后重试！！'
+						message:'数据库操作失败，请稍后重试！！',
+						url:'/catgory'
 					 })
 			   	})
 			  }				
