@@ -157,14 +157,9 @@
             </div>
             <div class="panel-body">
               <ul class="list-group">
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">Cookie和Session的底层实现原理</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">JavaScript高级应用：防抖和节流（高频JavaScript手写面试题）</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">记一次爬虫-js逆向解析学习</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">讲给后台程序员看的前端系列教程(56)——jQuery样式控制</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">JavaScript基础总结：数据类型、数据&变量&内存、对象、函数</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">微信小程序聊天室 前后端源码附效果图和数据库结构图</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">【问题解决】此网站似乎使用 scroll-linked 定位效果。这可能无法与异步平移一起使用；</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">原生JS灵魂之问——你真的懂这些JS吗？</a></li> 
+                {% for topArticle in topArticles %}
+                  <li class="list-group-item"><a href="/detail/{{ topArticle._id.toString() }}" class="link text-ellipsis" target="_blank">[{{ topArticle.click }}] {{ topArticle.title }}</a></li>
+                {% endfor %}
               </ul>     
             </div>
         </div>
@@ -186,6 +181,7 @@
 </body>
 <script src="lib/jquery-1.12.4.min.js"></script>
 <script src="lib/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="js/pagination.js"></script>
 <script src="js/common.js"></script>
 {% block js %}{% endblock%}
 </html>

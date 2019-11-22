@@ -19,17 +19,37 @@ router.use((req,res,next)=>{
 
 //获取文章管理页面
 router.get('/',(req,res) =>{
+	/*
 	const options = {
 		page:req.query.page*1,//当前页码
 		model:ArticleModel,//所用模型(集合)
 		query:{},//查询条件
 		projection:'-__v',//所需显示隐藏字段
 		sort:{_id:1},//排序，
-		populates:[{ path:'user',select:'username'},{path:'category',select:'name'}]
+		populates:[{path:'user',select:'username'},{path:'category',select:'name'}]
 	}
 	pagination(options)//调用分类函数
 	.then(result =>{//获取到页面和返回所需数据到页面
-	// console.log(result)	
+	// console.log(result)
+		res.render('admin/article_list',{
+		userInfo:req.userInfo,
+		articles:result.docs,
+		page:result.page,
+		pages:result.pages,
+		list:result.list,
+		url:'/article'
+		})
+	})
+	.catch(err =>{
+		res.render('admin/err',{
+			userInfo:req.userInfo,
+			message:'数据库操作过于频繁，请稍后重试！！'
+		})
+	})
+	*/
+	//调用ArticleModel上的静态分页方法
+	ArticleModel.getArticle(req)
+	.then(result =>{//获取到页面和返回所需数据到页面
 		res.render('admin/article_list',{
 		userInfo:req.userInfo,
 		articles:result.docs,
@@ -75,9 +95,10 @@ router.post('/add',(req,res) =>{
 		title,
 		intro,
 		content,
-		uesr:req.userInfo._id
+		user:req.userInfo._id
 	})
 	.then(result =>{//插入数据成功
+		// console.log(result)
 		res.render('admin/ok',{
 			userInfo:req.userInfo,
 			message:'新增文章成功！！',

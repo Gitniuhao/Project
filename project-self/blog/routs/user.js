@@ -57,6 +57,7 @@ router.post('/login',(req,res)=>{
 			// req.cookies.set('userInfo',JSON.stringify(user),{maxAge:1000*60*60*24})
 			//设置session,session可以直接设置对象
 			req.session.userInfo = user;
+			// console.log(user)
 			res.json({
 				code:0,
 				message:'登录成功！',

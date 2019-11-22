@@ -34,7 +34,7 @@ router.get('/',(req,res) =>{
 	})
 	.catch(err =>{
 		console.log(err)
-	})
+	})	
 })
 
 //获取新增分类页面
@@ -63,10 +63,11 @@ router.post('/add',(req,res) =>{
 		}else{//3.插入数据,数据不存在，可以插入
 			CategoryModel.insertMany({name:name,order:order})
 			.then(result =>{//插入数据成功
+				console.log(result)
 				res.render('admin/ok',{
 					userInfo:req.userInfo,
 					message:'新增分类成功！！',
-					url:'/catgory'
+					url:'/category'
 				})
 			})
 			.catch(err =>{//插入数据失败
@@ -74,7 +75,7 @@ router.post('/add',(req,res) =>{
 				res.render('admin/err',{
 					userInfo:req.userInfo,
 					message:'数据库操作过于频繁，请稍后重试！！',
-					url:'/catgory'
+					url:'/category'
 				})
 			})
 		}
@@ -135,14 +136,14 @@ router.post('/edit',(req,res) =>{
 					res.render('admin/ok',{
 						userInfo:req.userInfo,
 						message:'编辑分类成功！！',
-						url:'/catgory'
+						url:'/category'
 					})
 			   	})
 			   	.catch(err =>{//进行更改失败
 			   		res.render('admin/err',{
 						userInfo:req.userInfo,
 						message:'数据库操作失败，请稍后重试！！',
-						url:'/catgory'
+						url:'/category'
 					 })
 			   	})
 			  }				
@@ -167,14 +168,14 @@ router.get('/delete/:id',(req,res) =>{
 		res.render('admin/ok',{
 			userInfo:req.userInfo,
 			message:'删除分类成功！！',
-			url:'/catgory'
+			url:'/category'
 		})
 	})
 	.catch(err =>{
    		res.render('admin/err',{
 			userInfo:req.userInfo,
 			message:'数据库操作失败，请稍后重试！！',
-			url:'/catgory'
+			url:'/category'
 		 })
    	})	
 })

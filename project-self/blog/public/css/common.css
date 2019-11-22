@@ -104,7 +104,7 @@ body{
 	color: #f65a8a;
 }
 
-#page .pagination>li>a:hover{
+#articlePage .pagination>li>a:hover{
 	color: #f65a8a;
 	background: #fff;
 }
