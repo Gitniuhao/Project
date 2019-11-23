@@ -6,7 +6,7 @@ const ArticleModel = require('../models/article.js')
 //获取共通数据
 async function getCommonData(){
 	const getCategoriesDataPromise =  CategoryModel.find({},'name').limit(5);
-	const getTopArticlesDataPromise = ArticleModel.find({},'title click').sort({click:1}).limit(10)
+	const getTopArticlesDataPromise = ArticleModel.find({},'title click').sort({click:-1}).limit(10)
 	//获取顶部导航分类列表
 	const categories = await getCategoriesDataPromise;
 	//获取点击排行榜文章数据
@@ -38,23 +38,77 @@ router.get('/',(req,res) =>{
 	})	
 })
 
+
 //获取列表页面
-router.get('/list',(req,res) =>{
-	res.render('main/list',{
-		userInfo:req.userInfo
-	})
+router.get('/list/:id',(req,res) =>{
+	let id = req.params.id;
+	ArticleModel.getArticle(req,{category:id})
+	.then(result =>{
+		getCommonData()
+		.then(data =>{
+			res.render('main/list',{
+				userInfo:req.userInfo,
+				categories:data.categories,
+				topArticles:data.topArticles,
+				//分页所需要的数据
+				articles:result.docs,
+				page:result.page,
+				pages:result.pages,
+				list:result.list,
+				url:'/list',
+				//回传的分类id
+				currentCategoryId:id
+			})
+		})	
+	})	
 })
 
+//获取详情页数据
+async function getArticleData(req){
+	//获取共通数据
+	const getCommonDataPromise = getCommonData()
+
+	//获取文章数据
+	const id = req.params.id;
+	const getArticleDataPromise = ArticleModel.findOneAndUpdate({_id:id},{$inc:{click:1}},{new:true})
+										      .populate({path:'user',select:'username'})
+										      .populate({path:'category',select:'name'})
+	//为了保证点击排行和文章内点击率相同，必须先获取更新后的文章内容
+	const ArticleData = await getArticleDataPromise;
+
+	const commonData = await getCommonDataPromise									      
+	const { categories,topArticles } = commonData;
+
+	return{
+		categories,
+		topArticles,
+		ArticleData 
+	}
+}
 //获取详情页
-router.get('/detail',(req,res) =>{
-	res.render('main/detail',{
-		userInfo:req.userInfo
-	})
+router.get('/detail/:id',(req,res) =>{
+	getArticleData(req)
+	.then(data =>{
+		const { categories,topArticles,ArticleData  } = data;
+		res.render('main/detail',{
+			userInfo:req.userInfo,
+			categories,
+			topArticles,
+			ArticleData,
+			//回传的分类id
+			currentCategoryId:ArticleData.category._id.toString()
+		})
+	})	
 })
 
-//处理首页分页请求
+//处理分页请求
 router.get('/articles',(req,res) =>{
-	ArticleModel.getArticle(req)
+	const id = req.query.id
+	let query = {}
+	if(id){
+		query.category = id
+	}
+	ArticleModel.getArticle(req,query)
 	.then(result =>{
 		res.json({
 			code:0,

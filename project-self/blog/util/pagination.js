@@ -22,7 +22,7 @@ async function pagination(options){
 		page = 1
 	}
 	//用await处理异步减少回调函数的麻烦
-	 const count = await model.countDocuments();
+	 const count = await model.countDocuments(query);
 	//获取总页数(由总的数据条数除以每一页的数据得出页数)
 	let pages = Math.ceil((count/limit));
 	//下一页边界控制

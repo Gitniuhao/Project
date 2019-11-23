@@ -130,10 +130,10 @@ $('#logout').on('click',function(){
 //5.处理首页分页
 var $articlePage = $('#articlePage');
 //构建文章内容的函数
-function buildArticleHtml(articles){
- // var createTime = moment(article.createAt).format('YYYY-MM-DD HH:mm:ss')	
+function buildArticleHtml(articles){	
 		var html = '';
 		articles.forEach(function(article){
+			var createTime = moment(article.createAt).format('YYYY-MM-DD HH:mm:ss')
 			html += `
               <div class="panel panel-default content-item">
                 <div class="panel-heading">
@@ -150,7 +150,7 @@ function buildArticleHtml(articles){
                   <span class="glyphicon glyphicon-th-list"></span>
                   <span class="panel-footer-text text-muted">${ article.category.name }</span>
                   <span class="glyphicon glyphicon-time"></span>
-                  <span class="panel-footer-text text-muted">${ article.createAt }</span>
+                  <span class="panel-footer-text text-muted">${ createTime }</span>
                   <span class="glyphicon glyphicon-eye-open"></span>
                   <span class="panel-footer-text text-muted"><em>${ article.click }</em>已阅读</span>
                 </div>

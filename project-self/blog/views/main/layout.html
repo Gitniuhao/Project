@@ -6,8 +6,8 @@
    {% block title %}{% endblock %} 
   </title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="lib/bootstrap-3.3.7/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="/lib/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/common.css">
   {% block css %}{% endblock %}
 </head>
 <body>
@@ -28,9 +28,17 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li ><a href="/" class="active">首页 <span class="sr-only">(current)</span></a></li>
+          {% if currentCategoryId %}
+            <li ><a href="/">首页</span></a></li>
+          {% else %}
+            <li ><a href="/" class="active">首页</span></a></li>
+          {% endif %}          
           {% for category in categories %}
-            <li><a href="/list/category._id.toString()">{{ category.name }}</a></li>
+          {% if currentCategoryId == category._id.toString() %}
+            <li><a href="/list/{{ category._id.toString() }}" class="active">{{ category.name }}</a></li>
+           {% else %}
+            <li><a href="/list/{{ category._id.toString() }}">{{ category.name }}</a></li> 
+           {% endif %}  
           {% endfor %}
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -123,12 +131,12 @@
 
         <div class="ad">
           <a href="#" class="thumbnail">
-            <img src="images/ad1.jpeg" alt="">
+            <img src="/images/ad1.jpeg" alt="">
           </a>
         </div>
         <div class="ad">
           <a href="#" class="thumbnail">
-            <img src="images/ad2.jpg" alt="">
+            <img src="/images/ad2.jpg" alt="">
           </a>
         </div>
         <!-- 博主介绍开始部分 -->
@@ -140,7 +148,7 @@
               <div class="media">
                 <div class="media-left">
                   <a href="#">
-                    <img class="media-object img-me img-circle" src="images/q3.jpg" alt="博主帅照">
+                    <img class="media-object img-me img-circle" src="/images/q3.jpg" alt="博主帅照">
                   </a>
                 </div>
                 <div class="media-body">
@@ -168,7 +176,7 @@
               <h3 class="panel-title">关注我</h3>
             </div>
             <div class="panel-body">
-              <img src="images/csdn.jpg" class="img-responsive" alt="">
+              <img src="/images/csdn.jpg" class="img-responsive" alt="">
             </div>
           </div> 
       </div>
@@ -179,9 +187,10 @@
     Blog Design by <a href="#">牛皓</a> <a href="#">豫ICP备11002787号-1</a>.
   </footer>
 </body>
-<script src="lib/jquery-1.12.4.min.js"></script>
-<script src="lib/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
-<script src="js/pagination.js"></script>
-<script src="js/common.js"></script>
+<script src="/lib/jquery-1.12.4.min.js"></script>
+<script src="/lib/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="/lib/moment/moment.js"></script>
+<script src="/js/pagination.js"></script>
+<script src="/js/common.js"></script>
 {% block js %}{% endblock%}
 </html>

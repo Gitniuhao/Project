@@ -20,6 +20,7 @@ app.use(bodyParser.json())
 /*--------------------链接数据库开始----------------*/
 mongoose.connect('mongodb://localhost/blog',{useUnifiedTopology: true,useNewUrlParser: true });
 //生成db
+mongoose.set('useFindAndModify', false)
 const db = mongoose.connection;
 //链接数据库失败
 db.on('err',function(err){
