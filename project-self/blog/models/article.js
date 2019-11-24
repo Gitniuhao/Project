@@ -35,7 +35,7 @@ ArticleSchema.virtual('createTime').get(function(){
 	return moment(this.createAt).format('YYYY - MM - DD HH:mm:ss')
 })
 //在模型上定义分页静态方法，可以让所有的articleModel直接调用
-ArticleSchema.statics.getArticle = function(req,query={}){
+ArticleSchema.statics.getPaginationArticle = function(req,query={}){
 	const options = {
 		page:req.query.page*1,//当前页码
 		model:ArticleModel,//所用模型(集合)

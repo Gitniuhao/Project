@@ -90,6 +90,7 @@ app.use('/user',require('./routs/user.js'))
 app.use('/admin',require('./routs/admin.js'))
 app.use('/category',require('./routs/category.js'))
 app.use('/article',require('./routs/article.js'))
+app.use('/comment',require('./routs/comment.js'))
 /*------------------------配置路由结束----------------------*/
 
 

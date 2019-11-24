@@ -48,7 +48,7 @@ router.get('/',(req,res) =>{
 	})
 	*/
 	//调用ArticleModel上的静态分页方法
-	ArticleModel.getArticle(req)
+	ArticleModel.getPaginationArticle(req)
 	.then(result =>{//获取到页面和返回所需数据到页面
 		res.render('admin/article_list',{
 		userInfo:req.userInfo,

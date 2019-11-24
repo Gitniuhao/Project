@@ -1,4 +1,4 @@
-(function($){//编辑组件
+(function($){//编辑分页组件
 	$.fn.extend({
 		pagination:function(options){
 			var $elem = this//this就是#page

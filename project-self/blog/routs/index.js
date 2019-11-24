@@ -3,6 +3,7 @@ const router = express.Router();
 const CategoryModel = require('../models/category.js')
 const ArticleModel = require('../models/article.js')
 //此页面处理根目录下的直接请求
+
 //获取共通数据
 async function getCommonData(){
 	const getCategoriesDataPromise =  CategoryModel.find({},'name').limit(5);
@@ -19,7 +20,7 @@ async function getCommonData(){
 }
 //获取首页
 router.get('/',(req,res) =>{
-	ArticleModel.getArticle(req)
+	ArticleModel.getPaginationArticle(req)
 	.then(result =>{
 		getCommonData()
 		.then(data =>{
@@ -38,11 +39,10 @@ router.get('/',(req,res) =>{
 	})	
 })
 
-
 //获取列表页面
 router.get('/list/:id',(req,res) =>{
 	let id = req.params.id;
-	ArticleModel.getArticle(req,{category:id})
+	ArticleModel.getPaginationArticle(req,{category:id})
 	.then(result =>{
 		getCommonData()
 		.then(data =>{
@@ -76,7 +76,8 @@ async function getArticleData(req){
 	//为了保证点击排行和文章内点击率相同，必须先获取更新后的文章内容
 	const ArticleData = await getArticleDataPromise;
 
-	const commonData = await getCommonDataPromise									      
+	const commonData = await getCommonDataPromise
+										      
 	const { categories,topArticles } = commonData;
 
 	return{
@@ -85,6 +86,7 @@ async function getArticleData(req){
 		ArticleData 
 	}
 }
+
 //获取详情页
 router.get('/detail/:id',(req,res) =>{
 	getArticleData(req)
@@ -108,7 +110,7 @@ router.get('/articles',(req,res) =>{
 	if(id){
 		query.category = id
 	}
-	ArticleModel.getArticle(req,query)
+	ArticleModel.getPaginationArticle(req,query)
 	.then(result =>{
 		res.json({
 			code:0,
