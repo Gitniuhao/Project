@@ -39,7 +39,7 @@
           <textarea class="form-control" rows="3" id="comment-content"></textarea>
           <span class="input-group-btn">
             <!-- 将具体文章的id存在提交按钮上 -->
-            <button class="btn btn-primary btn-sub-comment" type="button" data-id={{ ArticleData._id.toString() }}>提交</button>
+            <button class="btn btn-primary btn-sub-comment" type="button" data-id="{{ ArticleData._id.toString() }}">提交</button>
           </span>
         </div>
         <p class="text-danger err"></p>
@@ -48,19 +48,21 @@
     {% endif %}
   </div>
 </div>
+<!-- 评论面板 -->
 <div class="row"> 
   <div class="col-lg-12">
     <div id="comment-wrap">
       {% for comment in comments %}
       <div class="panel panel-default">
-        <div class="panel-heading">{{ comment.user.username }} 发表于 {{ comment.createdTime }} </div>
+        <div class="panel-heading">{{ comment.user.username }} 发表于 {{ comment.createTime }} </div>
         <div class="panel-body">
           {{ comment.content }}
         </div>
       </div>
       {% endfor %}    
     </div>
-    <nav aria-label="Page navigation" id="comment-page" data-id="{{article._id.toString()}}">
+     <!-- 将具体文章的id存在分页器上，发送ajax请求可以找到准确的评论 -->
+    <nav aria-label="Page navigation" id="comment-page" data-id="{{ArticleData._id.toString()}}">
       {% include "./pagination.html" %}
     </nav>        
   </div>

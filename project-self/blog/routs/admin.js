@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userModel = require('../models/user.js');
+const CommentModel = require('../models/comment.js');
 const pagination = require('../util/pagination.js')
 //此页面处理根管理员的请求
 //进行是否是管理员的验证
@@ -93,5 +94,48 @@ router.get('/users',(req,res) =>{
 	
 })
 
+//获取评论管理页面
+router.get('/comment/list',(req,res) =>{
+	CommentModel.getPaginationComment(req)
+	.then(result =>{
+		res.render('admin/comment_list',{
+			userInfo:req.userInfo,
+			comments:result.docs,
+			page:result.page,
+			pages:result.pages,
+			list:result.list,
+			url:'/admin/comment/list'
+		})
+	})
+})
+
+//处理删除评论请求
+router.get('/comment/delete/:id',(req,res) =>{
+	//获取参数id
+	const id = req.params.id;
+	//从数据库中查找id对应数据进行删除
+	CommentModel.deleteOne({_id:id})
+	.then(comment =>{
+		res.render('admin/ok',{
+			userInfo:req.userInfo,
+			message:'删除文章成功！！',
+			url:'/admin/comment/list'
+		})
+	})
+	.catch(err =>{
+   		res.render('admin/err',{
+			userInfo:req.userInfo,
+			message:'数据库操作失败，请稍后重试！！',
+			url:'/admin/comment/list'
+		 })
+   	})	
+})
+
+//获取修改密码页面
+router.get('/password',(req,res) =>{
+	res.render('admin/password',{
+		userInfo:req.userInfo
+	})
+})
 //导出router实例
 module.exports = router;

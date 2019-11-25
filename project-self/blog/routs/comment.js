@@ -21,6 +21,7 @@ router.post('/add',(req,res)=>{
 		user:req.userInfo._id
 	})
 	.then(comments =>{
+		console.log(article)
 		CommentModel.getPaginationComment(req,{article:article})
 		.then(data =>{
 			res.json({
@@ -44,10 +45,10 @@ router.post('/add',(req,res)=>{
 	})
 })
 
-//处理评论的ajax
+//处理评论的ajax,请求评论数据局部渲染页面
 router.get('/list',(req,res) =>{
-	const id = req.params.id;
-	const query = {};
+	const id = req.query.id;
+	let query = {};
 	if(id){
 		query.article = id;
 	}
@@ -66,5 +67,4 @@ router.get('/list',(req,res) =>{
 		})
 	})
 })
-
 module.exports = router;

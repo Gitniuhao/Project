@@ -1,6 +1,4 @@
-.detail-panel{
-	height: 600px;
-}
+
 .detail-panel .panel-title{
 	margin-bottom: 10px;
 	font-size: 30px;
@@ -13,4 +11,10 @@
 }
 .btn-sub-comment{
 	padding: 26px 20px;
+}
+#comment-wrap{
+	min-height: 500px;	
+}
+#comment-wrap .panel-body{
+	word-break: break-all; 
 }

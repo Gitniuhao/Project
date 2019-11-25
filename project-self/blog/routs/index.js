@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CategoryModel = require('../models/category.js')
 const ArticleModel = require('../models/article.js')
+const CommentModel = require('../models/comment.js')
 //此页面处理根目录下的直接请求
 
 //获取共通数据
@@ -73,17 +74,22 @@ async function getArticleData(req){
 	const getArticleDataPromise = ArticleModel.findOneAndUpdate({_id:id},{$inc:{click:1}},{new:true})
 										      .populate({path:'user',select:'username'})
 										      .populate({path:'category',select:'name'})
+
+	const getCommentDataPromise = CommentModel.getPaginationComment(req,{article:id})
 	//为了保证点击排行和文章内点击率相同，必须先获取更新后的文章内容
 	const ArticleData = await getArticleDataPromise;
 
-	const commonData = await getCommonDataPromise
+	const commonData = await getCommonDataPromise;
+
+	const commentsData = await getCommentDataPromise;
 										      
 	const { categories,topArticles } = commonData;
 
 	return{
 		categories,
 		topArticles,
-		ArticleData 
+		ArticleData,
+		commentsData 
 	}
 }
 
@@ -91,19 +97,24 @@ async function getArticleData(req){
 router.get('/detail/:id',(req,res) =>{
 	getArticleData(req)
 	.then(data =>{
-		const { categories,topArticles,ArticleData  } = data;
+		const { categories,topArticles,ArticleData,commentsData  } = data;
 		res.render('main/detail',{
 			userInfo:req.userInfo,
 			categories,
 			topArticles,
 			ArticleData,
 			//回传的分类id
-			currentCategoryId:ArticleData.category._id.toString()
+			currentCategoryId:ArticleData.category._id.toString(),
+			//分页所需要的数据
+			comments:commentsData.docs,
+			page:commentsData.page,
+			pages:commentsData.pages,
+			list:commentsData.list
 		})
 	})	
 })
 
-//处理分页请求
+//处理分页请求，只请求文章部分数据进行局部渲染页面
 router.get('/articles',(req,res) =>{
 	const id = req.query.id
 	let query = {}

@@ -28,7 +28,10 @@
 			}
 		})
 		.done(function(result){
-			console.log(result)
+			if(result.status == 0){
+				$('#comment-content').val('')
+			}
+			$('#comment-page').trigger('get-data',result.data)
 		})
 		.fail(function(){
 			$err.html('评论失败，请稍后重试！！')

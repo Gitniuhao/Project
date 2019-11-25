@@ -1,7 +1,7 @@
-{% if pages >1 %}
+
 <!-- 分页开始部分 -->
- <nav aria-label="Page navigation" id="articlePage">
-    <ul class="pagination">
+<ul class="pagination">
+{% if pages >1 %}
     {% if page == 1 %}
       <li class="disabled">
         <a href="javascript:;" aria-label="Previous">
@@ -35,6 +35,5 @@
         </a>
       </li>
       {% endif %}
-    </ul>
-  </nav>
   {% endif %}
+</ul>

@@ -23,8 +23,9 @@
 				}
 				//3.发送ajax请求
 				//因为在列表页获取到的不是精准的一类，而是所有的，所以由后台把id传到前台进行就能精准渲染
+				var url = options.url+"?page="+page;
 				var id = $elem.data('id');
-				var url = options.url+"?page="+page
+				console.log(id)
 				if(id){
 					url = url+"&id="+id
 				}

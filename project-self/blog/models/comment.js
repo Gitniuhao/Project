@@ -33,7 +33,7 @@ CommentSchema.statics.getPaginationComment = function(req,query={}){
 		query:query,//查询条件
 		projection:'-__v',//所需显示隐藏字段
 		sort:{_id:1},//排序，
-		populates:[{path:'user',select:'username'},{path:'category',select:'name'}]
+		populates:[{path:'user',select:'username'},{path:'article',select:'title'}]
 	}
 	 return pagination(options)//调用分类函数
 }

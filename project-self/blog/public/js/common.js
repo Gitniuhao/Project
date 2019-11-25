@@ -2,11 +2,13 @@
 var $register = $('#register') 
 var $login = $('#login');
 var $userInfo = $('#user-info');
+
 //1.1.登录 => 注册 没有账号，跳转注册页面
 $('#go-register').on('click',function(){
 	$login.hide();
 	$register.show()
 })
+
 //1.1.注册 => 登录 已有账号，跳转到登录页面
 $('#go-login').on('click',function(){
 	$register.hide();
@@ -191,6 +193,7 @@ $('#logout').on('click',function(){
 	      
 	      return html;
 	}
+	//将事件绑定在分页器上
 	$articlePage.on('get-data',function(ev,data){
 		//构建文章html
 		$('#article-wrap').html(buildArticleHtml(data.docs))
@@ -209,10 +212,37 @@ $('#logout').on('click',function(){
 		url:'/articles'
 	})
 
-//6.处理评论分页
-$commentPage = $('#comment-page');
+//6.处理评论分页，局部渲染页面
+	$commentPage = $('#comment-page');
+	function buildCommentHtml(comments){
+		var html = '';
+		comments.forEach(function(comment){
+			var createTime = moment(comment.createAt).format('YYYY-MM-DD HH:mm:ss')
+			html += `
+				<div class="panel panel-default">
+			        <div class="panel-heading">${ comment.user.username } 发表于 ${ createTime } </div>
+			        <div class="panel-body">
+			          ${ comment.content }
+			        </div>
+			     </div>	`
+		})
+		return html;
+	}
+	//将事件绑定在分页器上
+	$commentPage.on('get-data',function(ev,data){
+			//构建评论部分html在评论面板上
+			$('#comment-wrap').html(buildCommentHtml(data.docs))
+			//构建分页器html
+			$pagination = $commentPage.find('.pagination')
+			if(data.pages > 1){
+				// console.log(data)
+				$pagination.html(buildPaginationHtml(data.page,data.pages,data.list))
+			}else{
+				$pagination.html('')
+			}
+	})
+	$commentPage.pagination({
+		url:'/comment/list'
+	})
 
-$commentPage.pagination({
-	url:'/comment/list'
-})
 })(jQuery);
