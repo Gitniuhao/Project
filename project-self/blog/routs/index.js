@@ -78,9 +78,9 @@ async function getArticleData(req){
 	const getCommentDataPromise = CommentModel.getPaginationComment(req,{article:id})
 	//为了保证点击排行和文章内点击率相同，必须先获取更新后的文章内容
 	const ArticleData = await getArticleDataPromise;
-
+	//共通数据	
 	const commonData = await getCommonDataPromise;
-
+	//评论数据
 	const commentsData = await getCommentDataPromise;
 										      
 	const { categories,topArticles } = commonData;

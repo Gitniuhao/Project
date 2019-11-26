@@ -55,7 +55,7 @@ router.post('/login',(req,res)=>{
 		if(user){//表示数据库有相同账号密码，可以登录
 			//设置cookies,设置到期时间为一天，cookie只能设置字符串
 			// req.cookies.set('userInfo',JSON.stringify(user),{maxAge:1000*60*60*24})
-			//设置session,session可以直接设置对象
+			//在第一次登录的时候设置cookies+session,设置session,session可以直接设置对象
 			req.session.userInfo = user;
 			// console.log(user)
 			res.json({

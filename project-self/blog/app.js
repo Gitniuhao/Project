@@ -77,7 +77,7 @@ app.use(session({
 }))
 app.use((req,res,next)=>{
 	//获取并将session的信息存在req.userInfo上，
-	//第一次登录时无法获取，后面可以通过路由处理时把session存在req上获取到
+	//第一次登录时无法获取，可以通过路由处理时在第一次登录时把session存在req上后面获取到
 	req.userInfo = req.session.userInfo || {};
 	next();
 })
@@ -88,6 +88,7 @@ app.use((req,res,next)=>{
 app.use('/',require('./routs/index.js'))
 app.use('/user',require('./routs/user.js'))
 app.use('/admin',require('./routs/admin.js'))
+app.use('/home',require('./routs/home.js'))
 app.use('/category',require('./routs/category.js'))
 app.use('/article',require('./routs/article.js'))
 app.use('/comment',require('./routs/comment.js'))

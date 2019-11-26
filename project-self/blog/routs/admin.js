@@ -3,6 +3,7 @@ const router = express.Router();
 const userModel = require('../models/user.js');
 const CommentModel = require('../models/comment.js');
 const pagination = require('../util/pagination.js')
+const hmac = require('../util/hamc.js')
 //此页面处理根管理员的请求
 //进行是否是管理员的验证
 router.use((req,res,next)=>{
@@ -135,6 +136,27 @@ router.get('/comment/delete/:id',(req,res) =>{
 router.get('/password',(req,res) =>{
 	res.render('admin/password',{
 		userInfo:req.userInfo
+	})
+})
+
+//处理修改密码请求
+router.post('/password',(req,res) =>{
+	const { password } = req.body;
+	userModel.updateOne({_id:req.userInfo._id},{password:hmac(password)})
+	.then(data =>{
+		//清楚cookies缓存
+		req.session.destroy()
+		res.render('admin/ok',{
+			userInfo:req.userInfo,
+			message:'修改密码成功！！',
+			url:'/'//返回首页
+		})
+	})
+	.catch(err =>{
+		res.render('admin/err',{
+			userInfo:req.userInfo,
+			message:'修改密码失败，请稍后重试！！'
+		})
 	})
 })
 //导出router实例

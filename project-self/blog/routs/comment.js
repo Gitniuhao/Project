@@ -21,7 +21,6 @@ router.post('/add',(req,res)=>{
 		user:req.userInfo._id
 	})
 	.then(comments =>{
-		console.log(article)
 		CommentModel.getPaginationComment(req,{article:article})
 		.then(data =>{
 			res.json({
