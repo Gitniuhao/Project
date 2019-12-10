@@ -46,8 +46,9 @@
       </div>
       <div class="col-md-4 hidden-xs hidden-sm">
         <!--用户注册登录-->
+         {% if userInfo._id %}
           <div class="user-panel" id='user-info'>
-            欢迎您，<span></span>
+            欢迎您，<span>{{ userInfo.username }}</span>
             <a class="link" href="/home">进入个人中心</a>
             <a class="link" href="javascript:;" id='logout'>退出</a>
             <div class="form-group">
@@ -56,6 +57,7 @@
               </div>
             </div>              
           </div>
+          {% else %}
           <div class="form-horizontal user-panel" id='register' style="display: none">
             <div class="form-group">
               <label class="col-sm-4 control-label">用户名</label>
@@ -113,6 +115,7 @@
               </div>
             </div>            
           </div>
+          {% endif %}
           <!--用户注册登录--> 
 
         <div class="ad">
