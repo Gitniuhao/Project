@@ -17,7 +17,7 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values);
         this.props.handleLogin(values)
       }
     });
@@ -29,7 +29,7 @@ class NormalLoginForm extends React.Component {
     <div className='Login'>
       <Form  className="login-form">
         <Form.Item>
-          {getFieldDecorator('Username', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入用户名!' },{pattern:/^[a-z][0-9a-z_]{2,5}$/i,message:'用户名是以字母开头的3-6位字符'}],
           })(
             <Input
@@ -39,7 +39,7 @@ class NormalLoginForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('Password', {
+          {getFieldDecorator('password', {
             rules: [{ required: true, message: '请输入密码!' },{pattern:/^\w{3,6}$/i,message:'密码是任意的3-6位字符'}],
           })(
             <Input

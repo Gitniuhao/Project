@@ -6,16 +6,16 @@ export  const getLoadInitDataAction = (payload)=>({
 			type:types.DATA_LOAD,
 			payload
 })
-export const getLoginAction = ()=>{
+export const getLoginAction = (values)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		values.role = true;
+		values.role = 'admin';
 		axios({
 			method:'post',
 			url:'http://127.0.0.1:3000/sessions/users',
 			data:values
 		})
 		.then(result=>{
-			console.log(result.data)
+			console.log(result)
 			// dispatch(getLoadInitDataAction(result.data))
 		})
 		.catch(err =>{
