@@ -104,7 +104,7 @@ body{
 	color: #f65a8a;
 }
 
-#page .pagination>li>a:hover{
+#articlePage .pagination>li>a:hover{
 	color: #f65a8a;
 	background: #fff;
 }
@@ -135,5 +135,5 @@ footer{
 	text-align: center;
 }
 #article-wrap{
-	min-height: 300px;
+	min-height: 700px;
 }

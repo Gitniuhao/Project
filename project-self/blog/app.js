@@ -4,7 +4,9 @@ const app = express();
 const swig = require('swig');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const Cookies = require('cookies')
+const Cookies = require('cookies');
+const session = require('express-session');
+const MongoStore = require("connect-mongo")(session);
 
 //处理静态资源
 app.use(express.static('public'))
@@ -18,6 +20,7 @@ app.use(bodyParser.json())
 /*--------------------链接数据库开始----------------*/
 mongoose.connect('mongodb://localhost/blog',{useUnifiedTopology: true,useNewUrlParser: true });
 //生成db
+mongoose.set('useFindAndModify', false)
 const db = mongoose.connection;
 //链接数据库失败
 db.on('err',function(err){
@@ -29,8 +32,6 @@ db.once('open',function(){
 	console.log('connect success..');
 })
 /*--------------------链接数据库开始----------------*/
-
-
 
 /*---------------渲染页面模板引擎的配置开始---------*/
 //1.设置缓存,开发阶段设置不走缓存
@@ -47,15 +48,37 @@ app.set('view engine','html')
 
 /*--------------------配置cookies保存用户状态信息开始---------*/
 //相当于在用中间件，要放在处理路由前面
-app.use((req,res,next) =>{
-	req.cookies = new Cookies(req,res)
-	//将cookies从req取出来返回到模板
-	req.cookies.get('userInfo')
-	var userInfo = '';
-	if(req.cookies.get('userInfo')){
-		userInfo = JSON.parse(req.cookies.get('userInfo'));
-	}
-	req.userInfo = userInfo
+// app.use((req,res,next) =>{
+// 	req.cookies = new Cookies(req,res)
+// 	//将cookies从req取出来返回到模板
+// 	req.cookies.get('userInfo')
+// 	var userInfo = '';
+// 	if(req.cookies.get('userInfo')){
+// 		userInfo = JSON.parse(req.cookies.get('userInfo'));
+// 	}
+// 	req.userInfo = userInfo
+// 	next();
+// })
+app.use(session({
+    //设置cookie名称
+    name:'blogid',
+    //用它来对session cookie签名，防止篡改
+    secret:'asdbhdb',
+    //强制保存session即使它并没有变化
+    resave: true,
+    //强制将未初始化的session存储
+    saveUninitialized: true, 
+    //如果为true,则每次请求都更新cookie的过期时间
+    rolling:true,
+    //cookie过期时间 1天
+    cookie:{maxAge:1000*60*60*24},
+    // //设置session存储在数据库中,当重启服务器cookie也会存在
+    store:new MongoStore({ mongooseConnection: mongoose.connection }) 	  
+}))
+app.use((req,res,next)=>{
+	//获取并将session的信息存在req.userInfo上，
+	//第一次登录时无法获取，可以通过路由处理时在第一次登录时把session存在req上后面获取到
+	req.userInfo = req.session.userInfo || {};
 	next();
 })
 /*--------------------配置cookies保存用户状态信息开始---------*/
@@ -64,6 +87,11 @@ app.use((req,res,next) =>{
 //5.引进模板并使用进行渲染页面
 app.use('/',require('./routs/index.js'))
 app.use('/user',require('./routs/user.js'))
+app.use('/admin',require('./routs/admin.js'))
+app.use('/home',require('./routs/home.js'))
+app.use('/category',require('./routs/category.js'))
+app.use('/article',require('./routs/article.js'))
+app.use('/comment',require('./routs/comment.js'))
 /*------------------------配置路由结束----------------------*/
 
 

@@ -6,8 +6,8 @@
    {% block title %}{% endblock %} 
   </title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="lib/bootstrap-3.3.7/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="/lib/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/common.css">
   {% block css %}{% endblock %}
 </head>
 <body>
@@ -22,17 +22,24 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand link" href="#">我的个人博客</a>
+        <a class="navbar-brand link" href="/">我的个人博客</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li ><a href="index.html" class="active">首页 <span class="sr-only">(current)</span></a></li>
-          <li><a href="list">HTML/CSS</a></li>
-          <li><a href="list">Javascript</a></li>
-          <li><a href="list">学无止境</a></li>
-          <li><a href="list">我的足迹</a></li>
+          {% if currentCategoryId %}
+            <li ><a href="/">首页</span></a></li>
+          {% else %}
+            <li ><a href="/" class="active">首页</span></a></li>
+          {% endif %}          
+          {% for category in categories %}
+          {% if currentCategoryId == category._id.toString() %}
+            <li><a href="/list/{{ category._id.toString() }}" class="active">{{ category.name }}</a></li>
+           {% else %}
+            <li><a href="/list/{{ category._id.toString() }}">{{ category.name }}</a></li> 
+           {% endif %}  
+          {% endfor %}
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
@@ -46,10 +53,21 @@
       </div>
       <div class="col-md-4 hidden-xs hidden-sm">
         <!--用户注册登录-->
+<<<<<<< HEAD
          {% if userInfo._id %}
           <div class="user-panel" id='user-info'>
             欢迎您，<span>{{ userInfo.username }}</span>
             <a class="link" href="/home">进入个人中心</a>
+=======
+        {% if userInfo._id%}
+          <div class="user-panel" id='user-info'>
+            欢迎您，<span>{{ userInfo.username }}</span>
+            {% if userInfo.isAdmin %}
+              <a class="link" href="/admin">进入管理员中心</a>
+            {% else %}
+              <a class="link" href="/home">进入个人中心</a>
+            {% endif %}
+>>>>>>> dfb8614ebe1e67fe80055527a1ed1e8f8602081a
             <a class="link" href="javascript:;" id='logout'>退出</a>
             <div class="form-group">
               <div class="col-sm-12">
@@ -120,12 +138,12 @@
 
         <div class="ad">
           <a href="#" class="thumbnail">
-            <img src="images/ad1.jpeg" alt="">
+            <img src="/images/ad1.jpeg" alt="">
           </a>
         </div>
         <div class="ad">
           <a href="#" class="thumbnail">
-            <img src="images/ad2.jpg" alt="">
+            <img src="/images/ad2.jpg" alt="">
           </a>
         </div>
         <!-- 博主介绍开始部分 -->
@@ -137,7 +155,7 @@
               <div class="media">
                 <div class="media-left">
                   <a href="#">
-                    <img class="media-object img-me img-circle" src="images/q3.jpg" alt="博主帅照">
+                    <img class="media-object img-me img-circle" src="/images/q3.jpg" alt="博主帅照">
                   </a>
                 </div>
                 <div class="media-body">
@@ -154,14 +172,9 @@
             </div>
             <div class="panel-body">
               <ul class="list-group">
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">Cookie和Session的底层实现原理</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">JavaScript高级应用：防抖和节流（高频JavaScript手写面试题）</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">记一次爬虫-js逆向解析学习</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">讲给后台程序员看的前端系列教程(56)——jQuery样式控制</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">JavaScript基础总结：数据类型、数据&变量&内存、对象、函数</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">微信小程序聊天室 前后端源码附效果图和数据库结构图</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">【问题解决】此网站似乎使用 scroll-linked 定位效果。这可能无法与异步平移一起使用；</a></li>
-                <li class="list-group-item"><a href="detail" class="link text-ellipsis" target="_blank">原生JS灵魂之问——你真的懂这些JS吗？</a></li> 
+                {% for topArticle in topArticles %}
+                  <li class="list-group-item"><a href="/detail/{{ topArticle._id.toString() }}" class="link text-ellipsis" target="_blank">[{{ topArticle.click }}] {{ topArticle.title }}</a></li>
+                {% endfor %}
               </ul>     
             </div>
         </div>
@@ -170,7 +183,7 @@
               <h3 class="panel-title">关注我</h3>
             </div>
             <div class="panel-body">
-              <img src="images/csdn.jpg" class="img-responsive" alt="">
+              <img src="/images/csdn.jpg" class="img-responsive" alt="">
             </div>
           </div> 
       </div>
@@ -181,8 +194,10 @@
     Blog Design by <a href="#">牛皓</a> <a href="#">豫ICP备11002787号-1</a>.
   </footer>
 </body>
-<script src="lib/jquery-1.12.4.min.js"></script>
-<script src="lib/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
-<script src="js/common.js"></script>
+<script src="/lib/jquery-1.12.4.min.js"></script>
+<script src="/lib/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="/lib/moment/moment.js"></script>
+<script src="/js/pagination.js"></script>
+<script src="/js/common.js"></script>
 {% block js %}{% endblock%}
 </html>
