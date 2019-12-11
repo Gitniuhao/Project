@@ -25,6 +25,7 @@ class NormalLoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { isFecthing } = this.props.isFecthing
     return (
     <div className='Login'>
       <Form  className="login-form">
@@ -54,6 +55,7 @@ class NormalLoginForm extends React.Component {
 	          type="primary"  
 	          className="login-form-button btn-submit"
 	          onClick ={this.handleSubmit}
+            loading={isFecthing}
           >
             登录
           </Button>
@@ -67,7 +69,7 @@ const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLogin
 //将store里的数据映射到props里
 const mapStateToProps = (state) =>{		
 	return{
-		
+		isFecthing:state.get('login').get('isFecthing')
 	}
 }
 //将方法映射到组件中，从而返回到this.props里

@@ -39,7 +39,8 @@ module.exports = {
 	//配置别名
 	resolve:{
 		alias:{
-			pages:path.resolve(__dirname,'./src/pages')
+			pages:path.resolve(__dirname,'./src/pages'),
+			util:path.resolve(__dirname,'./src/util/')
 		}
 	},
 	module:{//webpack自身只支持javascript,而loader能够让webpack处理那些非javascript文件
