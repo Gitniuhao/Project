@@ -5,18 +5,16 @@ import { message } from 'antd';
 import { saveUsername } from 'util'
 
 export  const getLoginStatrAction = ()=>({
-			type:types.LOGIN_REQUEST_START,
-			
+			type:types.LOGIN_REQUEST_START,			
 })
 export  const getLoginDoneAction = ()=>({
 			type:types.LOGIN_REQUEST_DONE,
-			
 })
 export const getLoginAction = (values)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		values.role = 'admin';
 		//发送ajax前显示loading
 		dispatch(getLoginStatrAction())
+		values.role = 'admin';
 		axios({
 			method:'post',
 			url:'http://127.0.0.1:3000/sessions/users',
@@ -29,7 +27,7 @@ export const getLoginAction = (values)=>{
 				//1、先将用户信息保存在前台
 				saveUsername(data.data.username)
 				//2、然后跳转用后台首页
-				// window.location.href = '/'
+				window.location.href = '/'
 			}else{//登录失败
 				 message.error(data.message);
 			}			
