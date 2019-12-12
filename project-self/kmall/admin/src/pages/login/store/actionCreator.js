@@ -18,6 +18,7 @@ export const getLoginAction = (values)=>{
 		axios({
 			method:'post',
 			url:'http://127.0.0.1:3000/sessions/users',
+			withCredentials:true,
 			data:values
 		})
 		.then(result=>{

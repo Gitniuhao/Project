@@ -1,6 +1,5 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout } from 'antd';
 import React,{Component} from 'react';
-const { SubMenu } = Menu;
 const {  Content } = Layout;
 import AdminHeader from 'common/header'
 import AdminSider from 'common/sider'
@@ -13,11 +12,7 @@ class AdminLayout extends Component{
             <Layout>
               <AdminSider />
               <Layout style={{ padding: '0 24px 24px' }}>
-                <Breadcrumb style={{ margin: '16px 0' }}>
-                  <Breadcrumb.Item>Home</Breadcrumb.Item>
-                  <Breadcrumb.Item>List</Breadcrumb.Item>
-                  <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb>
+                
                 <Content
                   style={{
                     background: '#fff',
@@ -26,7 +21,7 @@ class AdminLayout extends Component{
                     minHeight: 280,
                   }}
                 >
-                  Content
+                 {this.props.children}
                 </Content>
               </Layout>
             </Layout>

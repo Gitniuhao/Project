@@ -2,28 +2,22 @@
 import * as types from './actionTypes.js'
 import axios from 'axios'
 
-export  const getChangeItemAction = (val)=>({
-			type:types.CHANG_ITEM,
-			payload:val	
-})
-export  const getAddItemAction = ()=>({
-			type:types.ADD_ITEM,
-})
-export  const getDelItemAction = (index)=>({
-			type:types.DEL_ITEM,
-			payload:index
-})
-export  const getLoadInitDataAction = (payload)=>({
-			type:types.DATA_LOAD,
+export  const setCountAction = (payload)=>({
+			type:types.SET_COUNT,
 			payload
 })
-export const getRequestInitDataAction = ()=>{
+export const getCountAction = ()=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		axios.get('http://127.0.0.1:3000')
+		axios({
+			method:"get",
+			url:'http://127.0.0.1:3000/counts',
+			withCredentials:true
+		})
 		.then(result=>{
 			// console.log(result.data)
+			const data = result.data
 			//派发action
-			dispatch(getLoadInitDataAction(result.data))
+			dispatch(setCountAction(data.data))			
 		})
 		.catch(err =>{
 			console.log(err)

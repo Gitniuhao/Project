@@ -107,8 +107,8 @@ module.exports = {
                     loader: 'less-loader', // compiles Less to CSS
                     options: {
                         modifyVars: {
-                            'primary-color': '#ff8800',
-                            'link-color': '#ff8800',
+                            'primary-color': '#50dfb8',
+                            'link-color': '#50dfb8',
                             'border-radius-base': '2px',
                         },
                         javascriptEnabled: true,
