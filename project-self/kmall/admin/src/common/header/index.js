@@ -5,6 +5,7 @@ const { Header } = Layout;
 import './index.css'
 import { getUsername,removeUsername } from 'util'
 import axios from 'axios'
+import api from 'api'
 
 class AdminHeader extends Component{
   constructor(props){
@@ -12,7 +13,19 @@ class AdminHeader extends Component{
     this.handleLogout = this.handleLogout.bind(this)
   }
   handleLogout(){//发送ajax清除后台session后然后清除前台locastroage退出登录
-    axios({
+    api.logout()
+    .then(result=>{
+      if(result.data.code == 0){
+          //1、清除localstorage
+          removeUsername()
+          //2、跳转到登录页面
+          window.location.href = '/login'
+      } 
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+    /*axios({
       method:'delete',
       url:'http://127.0.0.1:3000/sessions/users'
     })
@@ -27,6 +40,7 @@ class AdminHeader extends Component{
     .catch(err =>{
       console.log(err)
     })
+    */
   }
   render(){
     const menu = (

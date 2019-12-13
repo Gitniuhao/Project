@@ -3,6 +3,8 @@
 import React,{Component,Fragment} from 'react'
 import Login from 'pages/login'
 import Home from 'pages/home'
+import User from 'pages/user'
+import Category from 'pages/category'
 import Err from 'common/err'
 import {
 	BrowserRouter as Router,
@@ -41,7 +43,8 @@ class App extends Component{
 				<div className ='App'>
 					<Switch>
 						<HomeRoute exact path='/'  component={Home} />				 
-						<HomeRoute exact path='/user'  component={Home} />				 
+						<HomeRoute  path='/user'  component={User} />				 
+						<HomeRoute  path='/category'  component={Category} />				 
 						<LoginRoute path='/login'  component={Login} />
 						<Route component={Err} />				 
 					</Switch>

@@ -17,7 +17,7 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         this.props.handleLogin(values)
       }
     });
@@ -25,7 +25,7 @@ class NormalLoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isFecthing } = this.props.isFecthing
+    const { isFecthing } = this.props
     return (
     <div className='Login'>
       <Form  className="login-form">

@@ -41,7 +41,8 @@ module.exports = {
 		alias:{
 			pages:path.resolve(__dirname,'./src/pages'),
 			util:path.resolve(__dirname,'./src/util'),
-			common:path.resolve(__dirname,'./src/common')
+			common:path.resolve(__dirname,'./src/common'),
+			api:path.resolve(__dirname,'./src/api')
 		}
 	},
 	module:{//webpack自身只支持javascript,而loader能够让webpack处理那些非javascript文件
