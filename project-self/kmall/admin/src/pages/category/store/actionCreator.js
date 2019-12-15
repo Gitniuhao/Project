@@ -3,36 +3,35 @@ import * as types from './actionTypes.js'
 import axios from 'axios'
 import api from 'api'
 
-export  const setCountAction = (payload)=>({
-			type:types.SET_COUNT,
+export  const setPageAction = (payload)=>({
+			type:types.SET_PAGE,
 			payload
 })
-export const getCountAction = ()=>{
+const getPageStartAction = () =>({
+	type:types.PAGE_REQUEST_START
+})
+const getPageDoneAction = () =>({
+	type:types.PAGE_REQUEST_DONE
+})
+
+export const getPageAction = (page)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		api.getCounts()
+		//派发action,发送ajax前进行loading加载
+		dispatch(getPageStartAction())
+		api.getUserList({//获取用户列表
+			page:page
+		})
 		.then(result=>{
-			// console.log(result.data)
+			console.log(result.data.data)
 			const data = result.data
-			//派发action，将获取到信息传到reducer进行存储和设置
-			dispatch(setCountAction(data.data))			
+			//派发action传递设置页面分页数据
+			dispatch(setPageAction(data.data))			
 		})
 		.catch(err =>{
 			console.log(err)
 		})
-		/*axios({
-			method:"get",
-			url:'http://127.0.0.1:3000/counts',
-			withCredentials:true
+		.finally(()=>{//ajax发送完毕，取消loading
+			dispatch(getPageDoneAction())
 		})
-		.then(result=>{
-			// console.log(result.data)
-			const data = result.data
-			//派发action
-			dispatch(setCountAction(data.data))			
-		})
-		.catch(err =>{
-			console.log(err)
-		})
-		*/
 	}
 }
