@@ -2,7 +2,7 @@ import React,{Component,Fragment} from 'react'
 import * as actionCreator from'./store/actionCreator.js'
 import { connect } from 'react-redux'
 import './index.css';
-import { Table,Pagination,Breadcrumb,Button } from 'antd';
+import { Table,Pagination,Breadcrumb,Button,Input,InputNumber } from 'antd';
 import AdminLayout from 'common/layout'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
@@ -17,44 +17,73 @@ class CategoryList extends Component{//自定义组件名字首字母都要大�
 	render(){
 		const columns = [
 		  {
-		    title: '用户名',
-		    dataIndex: 'username',
-		    key: 'username',
-		    render: text => <a>{text}</a>,
+		    title: '分类名称',
+		    dataIndex: 'name',
+		    key: 'name',
+		    render: (name,record)=>{
+		    	return(
+		    		<Input 
+		    			style={{width:'60%'}}
+		    			defaultValue={name}
+		    			onBlur={(ev)=>{
+		    				// console.log(ev.target.value)
+		    				// console.log(record)
+		    				if(ev.target.value != name){
+		    					this.props.handleUpdateName(record._id,ev.target.value)
+		    				}		    				
+		    			}}
+		    		/>
+		    	)
+		    }
 		  },
 		  {
-		    title: '是否是管理员',
-		    dataIndex: 'isAdmin',
-		    key: 'isAdmin',
-		    render:(isAdmin)=>(isAdmin ? '是' : '否')
+		    title: '手机分类名称',
+		    dataIndex: 'mobileName',
+		    key: 'mobileName',
+		    render: (mobileName,record)=>{
+		    	return(
+		    		<Input 
+		    			style={{width:'60%'}}
+		    			defaultValue={mobileName}
+		    			onBlur={(ev)=>{
+		    				// console.log(ev.target.value)
+		    				// console.log(record)
+		    				if(ev.target.value != mobileName){
+		    					this.props.handleUpdateMobileName(record._id,ev.target.value)
+		    				}		    				
+		    			}}
+		    		/>
+		    	)
+		    }
 		  },
 		  {
-		    title: 'email',
-		    dataIndex: 'email',
-		    key: 'email',
+		    title: '是否显示',
+		    key: 'isShow',
+		    dataIndex: 'isShow',
 		  },
 		  {
-		    title: '电话',
-		    key: 'phone',
-		    dataIndex: 'phone',
-		  },
-		  {
-		    title: '创建时间',
-		    key: 'createdAt',
-		    dataIndex: 'createdAt',
+		    title: '排序',
+		    key: 'order',
+		    dataIndex: 'order',
+		    render: (order,record)=>{
+		    	return(
+		    		<InputNumber 
+		    			style={{width:'60%'}}
+		    			defaultValue={order}
+		    			onBlur={(ev)=>{
+		    				// console.log(ev.target.value)
+		    				// console.log(record)
+		    				if(ev.target.value != order){
+		    					this.props.handleUpdateOrder(record._id,ev.target.value)
+		    				}		    				
+		    			}}
+		    		/>
+		    	)
+		    }
 		  },
 		]
 		 const { list,current,pageSize,total,handlePage,isFecthing } = this.props
-		 const dataSource = list.map((user)=>{
-		 	return{
-		 		key:user.get('_id'),
-		 		username:user.get('username'),
-				isAdmin:user.get('isAdmin'),
-				email:user.get('email'),
-				phone:user.get('phone'),
-				createdAt:moment(user.get('createdAt')).format('YYYY-MM-DD HH:MM:SS')
-			}		 	
-		 }).toJS()
+		 const dataSource = list.toJS()
 		return(
  			<div className = 'CategoryList'>
  				<AdminLayout>
@@ -92,13 +121,13 @@ class CategoryList extends Component{//自定义组件名字首字母都要大�
 }
 //将store里的数据映射到props里
 const mapStateToProps = (state) =>{	
-	// console.log(state)
+	// console.log(state.get('category').get('list'))
 	return{
-		list:state.get('user').get('list'),
-		current:state.get('user').get('current'),
-		pageSize:state.get('user').get('pageSize'),
-		total:state.get('user').get('total'),
-		isFecthing:state.get('user').get('isFecthing')
+		list:state.get('category').get('list'),
+		current:state.get('category').get('current'),
+		pageSize:state.get('category').get('pageSize'),
+		total:state.get('category').get('total'),
+		isFecthing:state.get('category').get('isFecthing')
 	}
 }
 //将方法映射到组件中，从而返回到this.props里
@@ -106,6 +135,15 @@ const mapDispatchToProps =(dispatch)=>{//利用接收的dispatch参数，进行�
 	return{//将方法都需要返回一个对象，
 		handlePage:(page)=>{//进行页码的获取
 			dispatch(actionCreator.getPageAction(page))
+		},
+		handleUpdateName:(id,newName)=>{
+			dispatch(actionCreator.updateNameAction(id,newName))
+		},
+		handleUpdateMobileName:(id,newMobileName)=>{
+			dispatch(actionCreator.updateMobileNameAction(id,newMobileName))
+		},
+		handleUpdateOrder:(id,newOrder)=>{
+			dispatch(actionCreator.updateOrderAction(id,newOrder))
 		}
 	}
 }

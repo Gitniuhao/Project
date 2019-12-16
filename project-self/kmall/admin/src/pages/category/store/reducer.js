@@ -7,10 +7,14 @@ const defaultState = fromJS({//初始化默认数据
 	current:0,
 	pageSize:0,
 	total:0	,
-	isFecthing:false
+	categories:[],
+	isFecthing:false	
 })
 
 export default (state = defaultState,action)=>{
+	if(action.type == types.SET_LEVEL_CATEGORIES){
+		return state.set('categories',fromJS(action.payload))
+	}
 	if(action.type == types.SET_PAGE){
 		return state.merge({
 			'list':fromJS(action.payload.list),//必须是immutable数据
