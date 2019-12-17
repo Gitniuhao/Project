@@ -12,7 +12,7 @@ class Category extends Component{
 			<div className='Category'>
 				<Switch>
 					<Route exact path='/category/' component={CategoryList}/>
-					<Route path='/category/add' component={CategoryAdd}/>
+					<Route path='/category/add' component={CategoryAdd} />
 				</Switch>
 			</div>
 		)

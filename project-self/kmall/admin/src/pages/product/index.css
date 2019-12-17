@@ -1,0 +1,17 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.ProductList .btn{	
+	height: 40px;
+}
+.ProductList .add-btn{
+	float: right;
+	/*margin-right: 20px;*/
+}
+.ProductList .ant-table-body{
+	min-height: 550px;
+}
+.ProductSave .simditor{
+	overflow:hidden;
+}

@@ -7,7 +7,7 @@ import AdminLayout from 'common/layout'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 
-class CategoryList extends Component{//自定义组件名字首字母都要大写，而html组件则就是个一个html标签
+class ProductList extends Component{//自定义组件名字首字母都要大写，而html组件则就是个一个html标签
 	constructor(props){
 		super(props)
 	}
@@ -96,15 +96,15 @@ class CategoryList extends Component{//自定义组件名字首字母都要大�
 		 const { list,current,pageSize,total,handlePage,isFecthing } = this.props
 		 const dataSource = list.toJS()
 		return(
- 			<div className = 'CategoryList'>
+ 			<div className = 'ProductList'>
  				<AdminLayout>
 	 				<Breadcrumb style={{ margin: '16px 0' }}>
 	                  <Breadcrumb.Item>首页</Breadcrumb.Item>
-	                  <Breadcrumb.Item>分类管理</Breadcrumb.Item>
-	                  <Breadcrumb.Item>分类列表</Breadcrumb.Item>
+	                  <Breadcrumb.Item>商品管理</Breadcrumb.Item>
+	                  <Breadcrumb.Item>商品列表</Breadcrumb.Item>
 	                </Breadcrumb>
 	                <div className='btn'>
-			        	<Link to='/category/add'><Button type="primary" className='add-btn'>新增分类</Button></Link>
+			        	<Link to='/product/save'><Button type="primary" className='add-btn'>新增商品</Button></Link>
 			        </div>
  					<div className='conntent'>
  						<Table 
@@ -161,4 +161,4 @@ const mapDispatchToProps =(dispatch)=>{//利用接收的dispatch参数，进行�
 		}
 	}
 }
-export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);//app通过connnect方法与store进行关联，接收数据和方法
+export default connect(mapStateToProps,mapDispatchToProps)(ProductList);//app通过connnect方法与store进行关联，接收数据和方法

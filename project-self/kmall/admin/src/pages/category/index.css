@@ -2,8 +2,13 @@
 	margin: 0;
 	padding: 0;
 }
-.CategoryList .btn{
+.CategoryList .btn{	
+	height: 40px;
+}
+.CategoryList .add-btn{
 	float: right;
 	/*margin-right: 20px;*/
-	height: 40px;
+}
+.CategoryList .ant-table-body{
+	min-height: 550px;
 }

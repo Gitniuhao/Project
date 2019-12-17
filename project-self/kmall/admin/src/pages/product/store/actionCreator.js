@@ -34,7 +34,7 @@ export const AddCategoryACtion = (values)=>{
 export const getLevelCategoriesAction = ()=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
 		api.getLevelCategories({
-			level:2
+			level:3
 		})
 		.then(result=>{
 			// console.log(result.data.data)
