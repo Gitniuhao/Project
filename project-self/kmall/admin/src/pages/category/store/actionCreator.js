@@ -4,7 +4,7 @@ import axios from 'axios'
 import api from 'api'
 import { message } from 'antd';
 
-export  const setLevelCategoriesAction = (payload)=>({
+const setLevelCategoriesAction = (payload)=>({
 			type:types.SET_LEVEL_CATEGORIES,
 			payload
 })

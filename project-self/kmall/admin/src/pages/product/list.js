@@ -2,7 +2,7 @@ import React,{Component,Fragment} from 'react'
 import * as actionCreator from'./store/actionCreator.js'
 import { connect } from 'react-redux'
 import './index.css';
-import { Table,Pagination,Breadcrumb,Button,Input,InputNumber,Switch } from 'antd';
+import { Table,Pagination,Breadcrumb,Button,Input,InputNumber,Switch,Divider } from 'antd';
 import AdminLayout from 'common/layout'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
@@ -17,47 +17,12 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 	render(){
 		const columns = [
 		  {
-		    title: '分类名称',
+		    title: '商品名称',
 		    dataIndex: 'name',
-		    key: 'name',
-		    render: (name,record)=>{
-		    	return(
-		    		<Input 
-		    			style={{width:'60%'}}
-		    			defaultValue={name}
-		    			onBlur={(ev)=>{
-		    				// console.log(ev.target.value)
-		    				// console.log(record)
-		    				if(ev.target.value != name){
-		    					this.props.handleUpdateName(record._id,ev.target.value)
-		    				}		    				
-		    			}}
-		    		/>
-		    	)
-		    }
+		    key: 'name'
 		  },
 		  {
-		    title: '手机分类名称',
-		    dataIndex: 'mobileName',
-		    key: 'mobileName',
-		    render: (mobileName,record)=>{
-		    	return(
-		    		<Input 
-		    			style={{width:'60%'}}
-		    			defaultValue={mobileName}
-		    			onBlur={(ev)=>{
-		    				// console.log(ev.target.value)
-		    				// console.log(record)
-		    				if(ev.target.value != mobileName){
-		    					this.props.handleUpdateMobileName(record._id,ev.target.value)
-		    				}		    				
-		    			}}
-		    		/>
-		    	)
-		    }
-		  },
-		  {
-		    title: '是否显示',
+		    title: '是否首页显示',
 		    key: 'isShow',
 		    dataIndex: 'isShow',
 		    render:(isShow,record)=>{
@@ -73,13 +38,46 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 		    )}
 		  },
 		  {
+		    title: '上架/下架',
+		    key: 'status',
+		    dataIndex: 'status',
+		    render:(status,record)=>{
+		    	return(<Switch 
+		    		checkedChildren="上架" 
+		    		unCheckedChildren="下架"
+		    		checked={status=='0' ? false : true}
+		    		onChange={(checked)=>{
+		    			const status = checked ? '1' : '0'
+		    			this.props.handleUpdateStatus(record._id,status)
+		    		}}
+		    	/>
+		    )}
+		  },
+		  {
+		    title: '是否热卖',
+		    key: 'isHot',
+		    dataIndex: 'isHot',
+		    render:(isHot,record)=>{
+		    	return(<Switch 
+		    		checkedChildren="热卖" 
+		    		unCheckedChildren="冷门"
+		    		checked={isHot=='0' ? false : true}
+		    		onChange={(checked)=>{
+		    			const isHot = checked ? '1' : '0'
+		    			this.props.handleUpdateIsHot(record._id,isHot)
+		    		}}
+		    	/>
+		    )}
+		  },
+		  {
 		    title: '排序',
 		    key: 'order',
 		    dataIndex: 'order',
+		    width:'20%',
 		    render: (order,record)=>{
 		    	return(
 		    		<InputNumber 
-		    			style={{width:'60%'}}
+		    			style={{width:'40%'}}
 		    			defaultValue={order}
 		    			onBlur={(ev)=>{
 		    				// console.log(ev.target.value)
@@ -92,6 +90,18 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 		    	)
 		    }
 		  },
+		  {
+		  	title:'操作',
+		  	render:(text,record)=>{//在编辑和查看路由后面加上准确的id，可以精准编辑和查看商品信息
+		  		return(
+		  			<span>
+		  				<Link to={'/product/save/' + record._id}>编辑</Link>
+		  				<Divider type="vertical" />
+		  				<Link to={'/product/detail/' + record._id}>查看</Link>
+		  			</span>
+		  		)
+		  	}
+		  }
 		]
 		 const { list,current,pageSize,total,handlePage,isFecthing } = this.props
 		 const dataSource = list.toJS()
@@ -110,6 +120,7 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
  						<Table 
 							columns={columns} 
 							dataSource={dataSource}
+							rowKey='_id'
 							pagination={{
 								current:current,
 								pageSize:pageSize,
@@ -147,17 +158,17 @@ const mapDispatchToProps =(dispatch)=>{//利用接收的dispatch参数，进行�
 		handlePage:(page)=>{//进行页码的获取
 			dispatch(actionCreator.getPageAction(page))
 		},
-		handleUpdateName:(id,newName)=>{//更新分类名称
-			dispatch(actionCreator.updateNameAction(id,newName))
-		},
-		handleUpdateMobileName:(id,newMobileName)=>{//更新手机分类名称
-			dispatch(actionCreator.updateMobileNameAction(id,newMobileName))
-		},
 		handleUpdateOrder:(id,newOrder)=>{//更新排序
 			dispatch(actionCreator.updateOrderAction(id,newOrder))
 		},
-		handleUpdateIsShow:(id,newIsShow)=>{//更新排序
+		handleUpdateIsShow:(id,newIsShow)=>{//更新显示隐藏
 			dispatch(actionCreator.updateIsShowAction(id,newIsShow))
+		},
+		handleUpdateStatus:(id,newStatus)=>{//更新上下架状态
+			dispatch(actionCreator.updateStatusAction(id,newStatus))
+		},
+		handleUpdateIsHot:(id,newIsHot)=>{//更新是否热卖
+			dispatch(actionCreator.updateIsHotAction(id,newIsHot))
 		}
 	}
 }

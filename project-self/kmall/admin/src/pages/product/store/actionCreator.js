@@ -4,22 +4,52 @@ import axios from 'axios'
 import api from 'api'
 import { message } from 'antd';
 
-export  const setLevelCategoriesAction = (payload)=>({
+const setLevelCategoriesAction = (payload)=>({
 			type:types.SET_LEVEL_CATEGORIES,
 			payload
 })
-
-//处理新增分类action
-export const AddCategoryACtion = (values)=>{
+const setMainImageErrAction = ()=>({
+	type:types.SET_MAIN_IMAGE_ERR
+})
+const setImagesErrACtion = ()=>({
+	type:types.SET_IMAGES_ERR
+})
+//处理新增商品action
+export const saveProductACtion = (err,values)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		api.addCategories(values)
+		console.log(values,err)
+		const state = getState().get('product')
+		const mainImage = state.get('mainImage')
+		const images = state.get('images')
+		const detail = state.get('detail')
+		let hasErr = false;
+		if(err){//如果存在err，则hasErr为true
+			hasErr = true;
+		}
+		if(!mainImage){
+			dispatch(setMainImageErrAction())
+			hasErr = true;
+		}
+		if(!images){
+			dispatch(setImagesErrACtion())
+			hasErr = true;
+		}
+		if(hasErr){//如果hasErr为true,则阻止接下来的操作
+			return
+		}
+		api.addProduct({
+			...values,
+			mainImage:mainImage,
+			images:images,
+			detail:detail
+		})
 		.then(result=>{
 			// console.log(result.data.data)
 			const data = result.data
-			//提交成功之后直接派发action经reducer设置最新父级分类
 			if(data.code == 0){
-				dispatch(setLevelCategoriesAction(data.data))
-				message.success('新增分类成功~')
+				message.success(data.message,()=>{//新增商品成功后在回调函数中跳转到商品列表页面
+					window.location.href = '/product'
+				})
 			}else{
 				 message.error(data.message);
 			}						
@@ -29,6 +59,24 @@ export const AddCategoryACtion = (values)=>{
 		})
 	}
 }
+
+//处理自定义组件存值到store
+export const setMainImageAction = (payload)=>({
+	type:types.SET_MAIN_IMAGE,
+	payload
+})
+export const setImagesAction = (payload)=>({
+	type:types.SET_IMAGES,
+	payload
+})
+export const setDetailAction = (payload)=>({
+	type:types.SET_DETAIL,
+	payload
+})
+
+
+
+
 
 //处理获取最新父级分类
 export const getLevelCategoriesAction = ()=>{
@@ -53,7 +101,7 @@ export const getLevelCategoriesAction = ()=>{
 }
 
 //处理分类列表分页显示
-export  const setPageAction = (payload)=>({
+const setPageAction = (payload)=>({
 			type:types.SET_PAGE,
 			payload
 })
@@ -63,12 +111,12 @@ const getPageStartAction = () =>({
 const getPageDoneAction = () =>({
 	type:types.PAGE_REQUEST_DONE
 })
-
+//设置页面分页数据
 export const getPageAction = (page)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
 		//派发action,发送ajax前进行loading加载
 		dispatch(getPageStartAction())
-		api.getCategoryList({//获取分类列表
+		api.getProductsList({//获取分类列表
 			page:page
 		})
 		.then(result=>{
@@ -86,58 +134,11 @@ export const getPageAction = (page)=>{
 	}
 }
 
-//处理更新分类名称
-export const updateNameAction = (id,newName)=>{
-	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		const page = getState().get('category').get('current')
-		api.updateCategoryName({//更新分类名称
-			id:id,
-			name:newName,
-			page:page
-		})
-		.then(result=>{
-			// console.log(result.data.data)
-			const data = result.data
-			//派发action传递设置页面分页数据
-			if(data.code == 0){
-				dispatch(setPageAction(data.data))
-				message.success('更新分类成功~')	
-			}					
-		})
-		.catch(err =>{
-			console.log(err)
-		})
-	}
-}
-
-//处理更新手机分类名称
-export const updateMobileNameAction = (id,newMobileName)=>{
-	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		const page = getState().get('category').get('current')
-		api.updateCategoryMobileName({//更新分类名称
-			id:id,
-			mobileName:newMobileName,
-			page:page
-		})
-		.then(result=>{
-			// console.log(result.data.data)
-			const data = result.data
-			//派发action传递设置页面分页数据
-			if(data.code == 0){
-				dispatch(setPageAction(data.data))
-				message.success('更新手机分类成功~')	
-			}			
-		})
-		.catch(err =>{
-			console.log(err)
-		})
-	}
-}
 
 //处理更新排序
 export const updateOrderAction = (id,newOrder)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		const page = getState().get('category').get('current')
+		const page = getState().get('product').get('current')
 		api.updateCategoryOrder({//更新分类名称
 			id:id,
 			order:newOrder,
@@ -146,7 +147,7 @@ export const updateOrderAction = (id,newOrder)=>{
 		.then(result=>{
 			// console.log(result.data.data)
 			const data = result.data
-			//派发action传递设置页面分页数据
+			//派发action传递更新排序
 			if(data.code == 0){
 				dispatch(setPageAction(data.data))
 				message.success('更新排序成功~')	
@@ -161,8 +162,8 @@ export const updateOrderAction = (id,newOrder)=>{
 //更新显示隐藏
 export const updateIsShowAction = (id,newIsShow)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		const page = getState().get('category').get('current')
-		api.updateCategoryIsShow({//更新分类名称
+		const page = getState().get('product').get('current')
+		api.updateProductIsShow({//更新分类名称
 			id:id,
 			isShow:newIsShow,
 			page:page
@@ -170,10 +171,83 @@ export const updateIsShowAction = (id,newIsShow)=>{
 		.then(result=>{
 			// console.log(result.data.data)
 			const data = result.data
-			//派发action传递设置页面分页数据
+			//派发action传递设置更新显示隐藏
 			if(data.code == 0){
 				dispatch(setPageAction(data.data))
 				message.success('更新显示隐藏成功~')	
+			}			
+		})
+		.catch(err =>{
+			console.log(err)
+		})
+	}
+}
+
+//更新上架/下架
+export const updateStatusAction = (id,newStatus)=>{
+	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
+		const page = getState().get('product').get('current')
+		api.updateProductStatus({//更新分类名称
+			id:id,
+			status:newStatus,
+			page:page
+		})
+		.then(result=>{
+			// console.log(result.data.data)
+			const data = result.data
+			//派发action'更新上架/下架
+			if(data.code == 0){
+				dispatch(setPageAction(data.data))
+				message.success('更新上架/下架成功~')	
+			}			
+		})
+		.catch(err =>{
+			console.log(err)
+		})
+	}
+}
+
+//更新是否热卖
+export const updateIsHotAction = (id,newIsHot)=>{
+	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
+		const page = getState().get('product').get('current')
+		api.updateProductIsHot({//更新分类名称
+			id:id,
+			isHot:newIsHot,
+			page:page
+		})
+		.then(result=>{
+			// console.log(result.data.data)
+			const data = result.data
+			//派发action更新是否热卖
+			if(data.code == 0){
+				dispatch(setPageAction(data.data))
+				message.success('更新是否热卖成功~')	
+			}			
+		})
+		.catch(err =>{
+			console.log(err)
+		})
+	}
+}
+
+
+const setProductDetailAction = (payload)=>({
+			type:types.SET_PRODUCT_DETAIL,
+			payload
+})
+//获取商品详情
+export const getProductDetailAction = (id)=>{
+	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
+		api.getProductDetail({//向后台获取商品详情
+			id:id
+		})
+		.then(result=>{
+			console.log(result)
+			const data = result.data
+			//派发action传递设置商品详情
+			if(data.code == 0){
+				dispatch(setProductDetailAction(data.data))
 			}			
 		})
 		.catch(err =>{

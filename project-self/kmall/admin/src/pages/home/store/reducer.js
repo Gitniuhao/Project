@@ -10,6 +10,7 @@ const defaultState = fromJS({//初始化默认数据
 
 export default (state = defaultState,action)=>{
 	if(action.type == types.SET_COUNT){
+		// console.log('aa')
 		return state.merge({
 			usernum:action.payload.usernum,
     		ordernum:action.payload.ordernum,

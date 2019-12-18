@@ -3,7 +3,7 @@ import * as types from './actionTypes.js'
 import axios from 'axios'
 import api from 'api'
 
-export  const setPageAction = (payload)=>({
+const setPageAction = (payload)=>({
 			type:types.SET_PAGE,
 			payload
 })

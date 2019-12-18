@@ -256,7 +256,7 @@ router.put("/order",(req,res)=>{
 	})
 })
 
-//更新排序
+//更新上下架状态
 router.put("/status",(req,res)=>{
 	const {page,id,status}  = req.body;
 	ProductModel
@@ -285,6 +285,7 @@ router.put("/status",(req,res)=>{
 		}
 	})
 })
+//更新显示隐藏
 router.put("/isShow",(req,res)=>{
 	const {id,isShow,page}  = req.body;
 	ProductModel
@@ -313,6 +314,7 @@ router.put("/isShow",(req,res)=>{
 		}
 	})
 })
+//更新是否热卖
 router.put("/isHot",(req,res)=>{
 	const{id,isHot,page}  = req.body;
 	ProductModel

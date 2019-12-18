@@ -13,5 +13,11 @@ export const API_CONFIG = {
 	updateCategoryName:     ['/categories/name','put'],
 	updateCategoryMobileName:['/categories/mobileName','put'],
 	updateCategoryOrder:    ['/categories/order','put'],
-	updateCategoryIsShow:   ['/categories/isShow','put']
+	updateCategoryIsShow:   ['/categories/isShow','put'],
+	addProduct:             ['/products','post'],
+	getProductsList:        ['/products/list','get'],
+	updateProductIsShow:    ['/products/isShow','put'], 
+	updateProductStatus:    ['/products/status','put'], 
+	updateProductIsHot:    	['/products/isHot','put'],
+	getProductDetail:       ['/products/detail','get'],
 }

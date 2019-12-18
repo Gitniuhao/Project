@@ -7,11 +7,21 @@ class UploadImage extends Component{
 		this.state= {
 			previewVisible: false,
 		    previewImage: '',
-		    fileList: []
+		    fileList: []//存放图片的数组
 		}
 		this.handleCancel =this.handleCancel.bind(this)
 		this.handlePreview =this.handlePreview.bind(this)
 		this.handleChange =this.handleChange.bind(this)
+	}
+	static getDerivedStateFromProps(props,state){//在这个阶段里拿到父组件里的图片数据fileList然后合并到state里，从而传值给子组件使其更新图片回填
+		if(props.fileList){
+			if(props.fileList.length >0 && state.fileList.length == 0){
+				return{
+					fileList:props.fileList
+				}				
+			}
+		}
+		return null
 	}
 	 handleCancel(){
 	 	this.setState({ previewVisible: false })
@@ -43,8 +53,8 @@ class UploadImage extends Component{
 		return(
 			 <div className="clearfix">
 		        <Upload
-		          action={action}
-		          withCredentials={true}
+		          action={action}//上传图片的地址
+		          withCredentials={true}//允许携带cookie
 		          listType="picture-card"
 		          fileList={fileList}
 		          onPreview={this.handlePreview}
