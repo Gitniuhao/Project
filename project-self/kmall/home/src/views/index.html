@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%= require('html-loader!./common/meta.html')%>
+	<!-- 利用html-loader引入头部信息共通文件 -->
+	<title>
+		<%= htmlWebpackPlugin.options.title %>
+	</title>
+	<!-- 引入配置文件中的title信息 -->
+</head>
+<body>
+	<%= require('html-loader!./common/nav.html')%>
+	<!-- 利用html-loader引入顶部导航共通文件 -->	
+	<%= require('html-loader!./common/footer.html')%>
+	<!-- 利用html-loader引入底部导航共通文件 -->
+</body>
+</html>
