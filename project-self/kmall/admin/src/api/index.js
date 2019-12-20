@@ -4,7 +4,7 @@ import { removeUsername } from 'util'
 
 const getApiObj = (API_CONFIG)=>{
 	const apiObj = {};
-	for(let key in API_CONFIG){//循环遍历 API_CONFIG，从而获取每一项
+	for(let key in API_CONFIG){//for in遍历 API_CONFIG对象，从而获取每一项
 		apiObj[key] = (data)=>{//让每一项称为一个方法
 			let url = SERVER + API_CONFIG[key][0];
 			let method = API_CONFIG[key][1];

@@ -39,8 +39,8 @@ class App extends Component{
 					/>
 				)
 		}
-		return(
-			<Router>
+		return(//强制刷新页面
+			<Router forceRefresh={true}>
 				<div className ='App'>
 					<Switch>
 						<HomeRoute exact path='/'  component={Home} />				 

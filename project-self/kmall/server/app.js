@@ -29,9 +29,9 @@ db.once('open',()=>{
 const app = express();
 
 //跨域设置
-app.use((req,res,next)=>{
+app.use((req,res,next)=>{//跨域请求时，设置允许访问的源时，或者设置为全部可访问(*),或者只设置一个
 	res.append("Access-Control-Allow-Origin","http://localhost:3001");
-	res.append("Access-Control-Allow-Credentials",true);
+	res.append("Access-Control-Allow-Credentials",true);//而携带cooike时，不能设置全部的源都可以访问
 	res.append("Access-Control-Allow-Methods","GET, POST, PUT,DELETE");
 	res.append("Access-Control-Allow-Headers", "Content-Type, X-Requested-With,X-File-Name"); 
 	next();

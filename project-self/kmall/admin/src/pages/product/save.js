@@ -167,6 +167,7 @@ class ProductSave extends Component{
 					         		getValues={(values)=>{
 					         			handleDetail(values)
 					         		}}
+					         		value={detail}//将详情数据回传给子组件
 					         	 />
 					        </Form.Item>
 					        <Form.Item wrapperCol={{ span: 12, offset: 5 }}>

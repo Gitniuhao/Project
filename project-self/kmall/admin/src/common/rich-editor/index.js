@@ -26,7 +26,8 @@ class RichEditor extends Component{
 			  'indent',
 			  'outdent',
 			  'alignment',
-			]
+			],
+			isLoad:false//页面是否加载
 		}
 		//引进jquery携带cookie
 		$.ajaxSetup({
@@ -45,8 +46,22 @@ class RichEditor extends Component{
 	  	}
 		});
 		this.editor.on('valuechanged',()=>{
-			this.props.getValues(this.editor.getValue())
+			this.setState({isLoad:true},()=>{//表示页面加载过，直接更新就好
+				this.props.getValues(this.editor.getValue())
+			})			
 		})
+	}
+	componentDidUpdate(){//在更新完成后的周期
+//isLoad默认为false,if条件语句中对isLoad取非，是代表如果没有加载则使其称为true，且存在values
+// 两个条件同时成立,然后进入下面操作，然后进入之后isload是false(即没有加载)，
+//然后进行数据回填，之后将isLoad赋值true，代表以及加载过，则此时isLoad为true,!isLoad为false,
+//则不能继续if语句下面的操作
+		if(this.props.value && !this.state.isLoad){
+			this.editor.setValue(this.props.value)			
+			this.setState({
+				isLoad:true
+			})
+		}
 	}
 	render(){
 		return(
