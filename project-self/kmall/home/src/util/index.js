@@ -1,3 +1,4 @@
+var Hogan = require('hogan.js')
 module.exports = {
 	validate:function(values,type){
 		//非空验证,当验证类型为required时，如果有值，则用双重否定转换成布尔值
@@ -30,10 +31,15 @@ module.exports = {
 	 goLogin:function(){//跳转到登录页面
 	 	window.location.href = '/user-login.html'
 	 },
-	 getParamsFromUrl:function(key){
+	 getParamsFromUrl:function(key){//从url中获取参数
 	 	var query = window.location.search.substr(1)//去掉?
 	 	var reg = new RegExp('(^|&)'+key+'='+'([^&]*)(&|$)')
 	 	var result = query.match(reg)
 	 	return result ? decodeURIComponent(result[2]) : null
+	 },
+	 render:function(tpl,data){//动态渲染页面
+	 	var template = Hogan.compile(tpl);
+		var html = template.render(data);
+		return html;
 	 }
 }

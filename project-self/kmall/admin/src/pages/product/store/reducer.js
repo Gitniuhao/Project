@@ -20,6 +20,7 @@ const defaultState = fromJS({//初始化默认数据
 	imagesHelp:'',
 
 	category:'',
+	categoryName:'',
 	name:'',
 	description:'',
 	price:'',
@@ -82,6 +83,7 @@ export default (state = defaultState,action)=>{
 	 if(action.type == types.SET_PRODUCT_DETAIL){
 	 	return state.merge({
 	 		category:action.payload.category._id,
+	 		categoryName:action.payload.category.name,
 			name:action.payload.name,
 			description:action.payload.description,
 			price:action.payload.price,

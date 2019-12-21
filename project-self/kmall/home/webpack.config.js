@@ -80,7 +80,14 @@ module.exports = {
 			           presets: ['env','es2015','stage-3'],
 			        }
 			    }               
-			}
+			},
+			//tpl
+            {
+                test:/\.tpl$/,
+                use: {
+                    loader: 'html-loader',
+                }
+            },            
 		]
 	},
 	plugins:[

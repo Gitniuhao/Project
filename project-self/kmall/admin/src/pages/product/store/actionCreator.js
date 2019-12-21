@@ -17,7 +17,7 @@ const setImagesErrACtion = ()=>({
 //处理新增商品action
 export const saveProductACtion = (err,values)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		console.log(values,err)
+		// console.log(values,err)
 		const state = getState().get('product')
 		const mainImage = state.get('mainImage')
 		const images = state.get('images')
@@ -37,7 +37,12 @@ export const saveProductACtion = (err,values)=>{
 		if(hasErr){//如果hasErr为true,则阻止接下来的操作
 			return
 		}
-		api.addProduct({
+		//将新增商品设为默认api,如果存在id，则将方法设为更新商品
+		var request = api.addProduct
+		if(values.id){
+			request = api.updateProduct
+		}
+		request({
 			...values,
 			mainImage:mainImage,
 			images:images,
@@ -247,6 +252,7 @@ export const getProductDetailAction = (id)=>{
 			const data = result.data
 			//派发action传递设置商品详情
 			if(data.code == 0){
+				console.log(data.data)
 				dispatch(setProductDetailAction(data.data))
 			}			
 		})

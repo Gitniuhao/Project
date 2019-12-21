@@ -14,7 +14,7 @@ class ProductSave extends Component{
 		super(props)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		// console.log(this.props.match)
-		this.state ={
+		this.state ={//获取url中的商品id
 			productId:this.props.match.params.productId
 		}
 	}
@@ -28,11 +28,8 @@ class ProductSave extends Component{
 	handleSubmit(e){
 	    e.preventDefault();
 	    this.props.form.validateFields((err, values) => {
-	    	/*
-	      if (!err) {
-	        // console.log('Received values of form: ', values);
-	        this.props.handleSaveProduct(values)
-	      }*/
+	    	//将商品id存在values中
+	      values.id = this.state.productId
 	      this.props.handleSaveProduct(err,values)
 	    });
 	  };
@@ -66,19 +63,22 @@ class ProductSave extends Component{
 		        name: 'image.png',
 		        status: 'done',
 		        url:mainImage,
+		        response:{
+	              url:mainImage
+	            }
 		 	})
 		 }
-		 //商品图片数据回传
+		 //商品图片数据回传//先将images转换成数组然后再用map进行遍历然后返回
 		 let imagesList = [];
-		 if(images){//先将images转换成数组然后再用map进行遍历然后返回
-		 	imagesList = images.split(',').map((index,url)=>{
-		 		return{
-		 			uid: index,
-			        name: 'image.png',
-			        status: 'done',
-			        url:url,
-		 		}
-		 	})
+		  if(images){
+          imagesList = images.split(',').map((url,index)=>({
+            uid: index,
+            status: 'done',
+            url: url, 
+            response:{
+              url:url
+            }                       
+          }))
 		 }
 		return(
 			<div className='ProductSave'>

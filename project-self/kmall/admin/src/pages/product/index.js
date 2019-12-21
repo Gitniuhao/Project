@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import ProductList from './list.js'
 import ProductSave from './save.js'
+import ProductDetail from './detail.js'
 
 class Product extends Component{
 	render(){//:productId?,后面加上?的意思是可有可无，有的话匹配到有id的路由，没有id的话就匹配之前的路由
@@ -13,6 +14,7 @@ class Product extends Component{
 				<Switch>
 					<Route exact path='/product/' component={ProductList}/>
 					<Route path='/product/save/:productId?' component={ProductSave}/>
+					<Route path='/product/detail/:productId?' component={ProductDetail}/>
 				</Switch>
 			</div>
 		)
