@@ -8,14 +8,26 @@ var _util = require('util')
 var api = require('api')
 require('./index.css')
 var _side = require('pages/common/side')
+var tpl = require('./index.tpl')
 
 
 var page ={
 	init:function(){//初始化事件
 		this.renderSide()
+		this.getUserInfo()
 	},
 	renderSide:function(){
-		_side.render('.user-center')
+		_side.render('user-center')
+	},
+	getUserInfo:function(){
+		api.getUserInfo({
+			success:function(result){
+				// console.log(result)
+				var data = result.data
+				var html =_util.render(tpl,data)
+				$('.side-content').html(html)
+			}
+		})
 	}
 }
 

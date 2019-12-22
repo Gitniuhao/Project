@@ -23,6 +23,7 @@ module.exports = {
 		'user-login':'./src/pages/user-login',
 		'user-register':'./src/pages/user-register',
 		'user-center':'./src/pages/user-center',
+		'user-update-password':'./src/pages/user-update-password',
 		'result':'./src/pages/result',
 	},
 	//如何输出结果的相关选项
@@ -97,6 +98,7 @@ module.exports = {
 		new HtmlWebpackPlugin(getHtmlConfig('user-login','用户登录')),
 		new HtmlWebpackPlugin(getHtmlConfig('user-register','用户注册')),
 		new HtmlWebpackPlugin(getHtmlConfig('user-center','用户中心')),
+		new HtmlWebpackPlugin(getHtmlConfig('user-update-password','修改密码')),
 		new HtmlWebpackPlugin(getHtmlConfig('result','结果页面')),
 		//自动清理无用文件
 		new CleanWebpackPlugin(),
@@ -109,7 +111,7 @@ module.exports = {
 		contentBase:'./dist',//内容的目录
 		port:'3002',//服务运行的端口,可以手动更改端口，但是修改后要重新打包
 		proxy: [{//服务器代理
-	      context: ['/sessions','/users'],//当context里的以xx开头的全都代理在target下面
+	      context: ['/sessions','/users','/categories','/ads','/floors'],//当context里的以xx开头的全都代理在target下面
 	      target: 'http://localhost:3000',
 	    }]
 	}

@@ -31,7 +31,7 @@ const request = (options)=>{//在这个函数里发送ajax请求
 				options.success && options.success(result)
 			}else if(result.code == 1){//登录失败，账号或密码错误
 				options.error && options.error(result.message)
-			}else if(result.code == 10){//登录失败，没有管理员权限
+			}else if(result.code == 10){//未登录，没有权限访问
 				_util.goLogin()//跳转到登录页面
 			}
 		},

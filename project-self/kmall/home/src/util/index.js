@@ -28,8 +28,8 @@ module.exports = {
 	 showErrMsg:function(msg){//弹出失败提示信息
 	 	alert(msg)
 	 },
-	 goLogin:function(){//跳转到登录页面
-	 	window.location.href = '/user-login.html'
+	 goLogin:function(){//跳转到登录页面，后面的window.location.href是从api.index.js中处理未登录时传的
+	 	window.location.href = '/user-login.html?redirect='+encodeURIComponent(window.location.href)
 	 },
 	 getParamsFromUrl:function(key){//从url中获取参数
 	 	var query = window.location.search.substr(1)//去掉?

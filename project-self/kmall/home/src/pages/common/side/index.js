@@ -23,7 +23,7 @@ var list = [
 module.exports = {
 	render:function(name){
 		list.find(function(item){//当传进来的name和item.name相等时，其isActive为true
-			return item.name = name
+			return item.name == name
 		}).isActive = true
 		// console.log(list)
 		//自定义hogan模板并运用模板渲染数据

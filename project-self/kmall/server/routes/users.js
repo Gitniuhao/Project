@@ -117,6 +117,7 @@ router.use((req,res,next)=>{
 		})
 	}
 })
+//修改密码
 router.put("/",(req,res)=>{
 	UserModel.update({_id:req.userInfo._id},{password:hmac(req.body.password)})
 	.then(raw=>{

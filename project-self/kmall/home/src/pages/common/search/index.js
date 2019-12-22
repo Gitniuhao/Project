@@ -21,7 +21,7 @@ const page ={
 	submit:function(){
 		//获取数据
 		var keyword = $.trim($('#search-input').val())
-		window.location.href = '/list.html?keyword'+keyword
+		window.location.href = '/list.html?keyword='+keyword
 	}
 }
 module.exports = page.init();
