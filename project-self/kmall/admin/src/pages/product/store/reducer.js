@@ -24,7 +24,8 @@ const defaultState = fromJS({//初始化默认数据
 	name:'',
 	description:'',
 	price:'',
-	stock:''
+	stock:'',
+	keyword:''
 })
 
 export default (state = defaultState,action)=>{
@@ -36,7 +37,8 @@ export default (state = defaultState,action)=>{
 			'list':fromJS(action.payload.list),//必须是immutable数据
 			'current':action.payload.current,
 			'pageSize':action.payload.pageSize,
-			'total':action.payload.total
+			'total':action.payload.total,
+			keyword:action.payload.keyword
 		})
 	}
 	if(action.type == types.PAGE_REQUEST_START){//开始时将spinning的值设置为true

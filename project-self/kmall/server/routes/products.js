@@ -61,34 +61,34 @@ async function getPaginationProducts(req){
 
 //获取商品列表
 router.get('/list',(req,res)=>{
-	/*
-	const {page,status,category,keyword,orderBy} = req.query
 	
-	let query = {};
+	// const {page,status,category,keyword,orderBy} = req.query
 	
-	//如果是普通用户,只能获取上架的商品
-	if(!req.userInfo.isAdmin){
-		query.status = 1
-	}	
-	if(category){
-		query.category = category;
-	}
-	else if(keyword){
-		query.name = {$regex:new RegExp(keyword,'i')}
-	}
+	// let query = {};
+	
+	// //如果是普通用户,只能获取上架的商品
+	// if(!req.userInfo.isAdmin){
+	// 	query.status = 1
+	// }	
+	// if(category){
+	// 	query.category = category;
+	// }
+	// else if(keyword){
+	// 	query.name = {$regex:new RegExp(keyword,'i')}
+	// }
 
-	let projection = 'name _id price status order isShow isHot mainImage';
+	// let projection = 'name _id price status order isShow isHot mainImage';
 
-	let sort={order:-1,_id:-1};
+	// let sort={order:-1,_id:-1};
 
-	if(orderBy == 'price_asc'){
-		sort = {price:1}
-	}else if(orderBy == 'price_desc'){
-		sort = {price:-1}
-	}
+	// if(orderBy == 'price_asc'){
+	// 	sort = {price:1}
+	// }else if(orderBy == 'price_desc'){
+	// 	sort = {price:-1}
+	// }
 
 	ProductModel.getPaginationProducts(page,query,projection,sort)
-	*/
+	
 	getPaginationProducts(req)
 	.then(result=>{
 		res.json({

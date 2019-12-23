@@ -6,6 +6,7 @@ import { Table,Pagination,Breadcrumb,Button,Input,InputNumber,Switch,Divider } f
 import AdminLayout from 'common/layout'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+const { Search } = Input
 
 class ProductList extends Component{//自定义组件名字首字母都要大写，而html组件则就是个一个html标签
 	constructor(props){
@@ -15,11 +16,23 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 		this.props.handlePage(1)
 	}
 	render(){
+		 const { list,current,pageSize,total,handlePage,isFecthing,keyword } = this.props
 		const columns = [
 		  {
 		    title: '商品名称',
 		    dataIndex: 'name',
-		    key: 'name'
+		    key: 'name',
+		    render:(name)=>{
+		    	if(keyword){
+		    		///keyword/ig
+		    		// console.log(keyword)
+		    		let reg = new RegExp(keyword,'ig')
+		    		let newName = name.replace(reg,'<b style="color:red;">'+keyword+'</b>')
+		    		return <div dangerouslySetInnerHTML={{__html: newName}}></div>
+		    	}else{
+		    		return name
+		    	}
+		    }
 		  },
 		  {
 		    title: '是否首页显示',
@@ -103,7 +116,7 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 		  	}
 		  }
 		]
-		 const { list,current,pageSize,total,handlePage,isFecthing } = this.props
+		
 		 const dataSource = list.toJS()
 		return(
  			<div className = 'ProductList'>
@@ -114,6 +127,14 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 	                  <Breadcrumb.Item>商品列表</Breadcrumb.Item>
 	                </Breadcrumb>
 	                <div className='btn'>
+	                	<Search 
+	                        placeholder="请输入商品名称关键字" 
+	                        onSearch={
+	                            value => handlePage(1,value)
+	                        } 
+	                        enterButton 
+	                        style={{ width: 300 }}
+	                    />
 			        	<Link to='/product/save'><Button type="primary" className='add-btn'>新增商品</Button></Link>
 			        </div>
  					<div className='conntent'>
@@ -128,7 +149,12 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 							}}
 							onChange={(page)=>{//点击分页器根据当前页码进行改变页面
 								// console.log(page)
-								handlePage(page.current)
+								if(keyword){//如果存在关键词，则只根据关键词设置页面
+									// console.log(keyword)
+									handlePage(page.current,keyword)
+								}else{
+									handlePage(page.current)
+								}								
 							}}
 							loading={{//仿加载
 								spinning:isFecthing,
@@ -145,18 +171,19 @@ class ProductList extends Component{//自定义组件名字首字母都要大写
 const mapStateToProps = (state) =>{	
 	// console.log(state.get('category').get('list'))
 	return{
-		list:state.get('category').get('list'),
-		current:state.get('category').get('current'),
-		pageSize:state.get('category').get('pageSize'),
-		total:state.get('category').get('total'),
-		isFecthing:state.get('category').get('isFecthing')
+		list:state.get('product').get('list'),
+		current:state.get('product').get('current'),
+		pageSize:state.get('product').get('pageSize'),
+		total:state.get('product').get('total'),
+		isFecthing:state.get('product').get('isFecthing'),
+		keyword:state.get('product').get('keyword')
 	}
 }
 //将方法映射到组件中，从而返回到this.props里
 const mapDispatchToProps =(dispatch)=>{//利用接收的dispatch参数，进行派发action
 	return{//将方法都需要返回一个对象，
-		handlePage:(page)=>{//进行页码的获取
-			dispatch(actionCreator.getPageAction(page))
+		handlePage:(page,keyword)=>{//进行页码的获取
+			dispatch(actionCreator.getPageAction(page,keyword))
 		},
 		handleUpdateOrder:(id,newOrder)=>{//更新排序
 			dispatch(actionCreator.updateOrderAction(id,newOrder))

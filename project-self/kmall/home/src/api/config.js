@@ -9,6 +9,7 @@ var API_CONFIG = {
 	getHomeCategories:      ['/categories/homeCategories','get'],
 	getPositionAds:         ['/ads/positionAds','get'],
 	getFloor:         		['/floors','get'],
+	getProductsList:        ['/products/list','get'],
 }
 
 module.exports = {

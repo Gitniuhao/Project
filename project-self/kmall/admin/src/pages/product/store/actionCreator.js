@@ -117,15 +117,20 @@ const getPageDoneAction = () =>({
 	type:types.PAGE_REQUEST_DONE
 })
 //设置页面分页数据
-export const getPageAction = (page)=>{
+export const getPageAction = (page,keyword)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
 		//派发action,发送ajax前进行loading加载
 		dispatch(getPageStartAction())
-		api.getProductsList({//获取分类列表
+		const options = {
 			page:page
-		})
+		}
+		if(keyword){
+			// console.log(keyword)
+			options.keyword = keyword
+		}
+		api.getProductsList(options)
 		.then(result=>{
-			// console.log(result.data.data)
+			console.log(result.data.data)
 			const data = result.data
 			//派发action传递设置页面分页数据
 			dispatch(setPageAction(data.data))			

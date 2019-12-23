@@ -9,6 +9,7 @@ var api = require('api')
 var _util = require('util')
 var swiperTpl = require('./swiper.tpl')
 var categoriesTpl = require('./categories.tpl')
+var floorTpl = require('./floor.tpl')
 
 var page ={
 	init:function(){
@@ -63,7 +64,12 @@ var page ={
 	loadFloor:function(){
 		api.getFloor({
 			success:function(result){
-				console.log(result)
+				console.log(result.data)
+				const data = result.data
+				var html = _util.render(floorTpl,{
+					floors:data
+				})
+				$('.floor-wrap').html(html)
 			}
 		})
 	}

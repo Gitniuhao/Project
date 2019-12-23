@@ -86,7 +86,9 @@ class ProductSave extends Component{
 					<Breadcrumb style={{ margin: '16px 0' }}>
 	                  <Breadcrumb.Item>首页</Breadcrumb.Item>
 	                  <Breadcrumb.Item>商品管理</Breadcrumb.Item>
-	                  <Breadcrumb.Item>编辑商品</Breadcrumb.Item>
+	                  <Breadcrumb.Item>
+                    	{this.state.productId ? "修改商品" : "添加商品"}
+                  	  </Breadcrumb.Item>
 	                </Breadcrumb>
 					<div className='content'>
 						 <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} >

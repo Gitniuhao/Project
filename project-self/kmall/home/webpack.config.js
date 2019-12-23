@@ -111,7 +111,7 @@ module.exports = {
 		contentBase:'./dist',//内容的目录
 		port:'3002',//服务运行的端口,可以手动更改端口，但是修改后要重新打包
 		proxy: [{//服务器代理
-	      context: ['/sessions','/users','/categories','/ads','/floors'],//当context里的以xx开头的全都代理在target下面
+	      context: ['/sessions','/users','/categories','/ads','/floors','/products'],//当context里的以xx开头的全都代理在target下面
 	      target: 'http://localhost:3000',
 	    }]
 	}
