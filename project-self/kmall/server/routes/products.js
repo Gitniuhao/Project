@@ -87,7 +87,7 @@ router.get('/list',(req,res)=>{
 	// 	sort = {price:-1}
 	// }
 
-	ProductModel.getPaginationProducts(page,query,projection,sort)
+	// ProductModel.getPaginationProducts(page,query,projection,sort)
 	
 	getPaginationProducts(req)
 	.then(result=>{

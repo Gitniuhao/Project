@@ -22,9 +22,15 @@ var page = {
 		this.bindEvent()
 		this.initPagination()
 	},
-	initPagination:function(){//初始化分页器组件
+	initPagination:function(){
 		this.$pagination = $('.pagination-box')
-		this.$pagination.pagination()
+		this.$pagination.pagination()//初始化分页器组件\
+		var _this = this
+		this.$pagination.on('page-change',function(ev,page){
+			//重新赋值page，然后请求页面数据进行渲染页面
+			_this.productsListParams.page = page;
+			_this.loadProductsList()
+		})
 	},
 	bindEvent:function(){
 		var _this = this;
@@ -67,7 +73,7 @@ var page = {
 			data:this.productsListParams,
 			success:function(result){
 				const data = result.data
-				console.log(data)
+				// console.log(data)
 				if(data.list.length >0){//如果list内有内容再进行渲染
 					var html = _util.render(tpl,{
 						list:data.list
