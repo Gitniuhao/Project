@@ -37,6 +37,9 @@ module.exports = {
 	 	var result = query.match(reg)
 	 	return result ? decodeURIComponent(result[2]) : null
 	 },
+	 goResult:function(type){//跳转到结果页面
+	 	window.location.href = '/result.html?type='+ type
+	 },
 	 render:function(tpl,data){//动态渲染页面
 	 	var template = Hogan.compile(tpl);
 		var html = template.render(data);

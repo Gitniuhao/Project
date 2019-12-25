@@ -6,7 +6,20 @@ const page ={
 	init:function(){
 		this.bindEvent()
 		this.loadUsername()
+		this.loadCartNum()
 		return this
+	},
+	loadCartNum:function(){//加载购物车数量
+		var $cartNum = $('.cart-num')
+		api.getCartCount({
+			success:function(result){
+				var count = result.data
+				$cartNum.text(count || 0)
+			},
+			error:function(){	
+				$cartNum.text(0)
+			}
+		})
 	},
 	bindEvent:function(){//绑定事件
 		$('#logout').on('click',function(){

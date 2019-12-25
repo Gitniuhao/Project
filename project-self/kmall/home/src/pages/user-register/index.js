@@ -74,7 +74,7 @@ var page ={
 			api.register({
 				data:formData,
 				success:function(result){//登录成功后的操作
-					window.location.href = '/result.html?type=register'
+					_util.goResult('register')
 				},
 				error:function(msg){//登录失败后的操作
 					formErr.show(msg)

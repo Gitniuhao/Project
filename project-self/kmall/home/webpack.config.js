@@ -25,6 +25,8 @@ module.exports = {
 		'user-center':'./src/pages/user-center',
 		'user-update-password':'./src/pages/user-update-password',
 		'result':'./src/pages/result',
+		'detail':'./src/pages/detail',
+		'cart':'./src/pages/cart',
 	},
 	//如何输出结果的相关选项
 	output:{
@@ -100,6 +102,8 @@ module.exports = {
 		new HtmlWebpackPlugin(getHtmlConfig('user-center','用户中心')),
 		new HtmlWebpackPlugin(getHtmlConfig('user-update-password','修改密码')),
 		new HtmlWebpackPlugin(getHtmlConfig('result','结果页面')),
+		new HtmlWebpackPlugin(getHtmlConfig('detail','商品详情')),
+		new HtmlWebpackPlugin(getHtmlConfig('cart','购物车页面')),
 		//自动清理无用文件
 		new CleanWebpackPlugin(),
 		//单独打包css文件
@@ -111,7 +115,15 @@ module.exports = {
 		contentBase:'./dist',//内容的目录
 		port:'3002',//服务运行的端口,可以手动更改端口，但是修改后要重新打包
 		proxy: [{//服务器代理
-	      context: ['/sessions','/users','/categories','/ads','/floors','/products'],//当context里的以xx开头的全都代理在target下面
+	      context: [
+	      '/sessions',
+	      '/users',
+	      '/categories',
+	      '/ads',
+	      '/floors',
+	      '/products',
+	      '/carts'
+	      ],//当context里的以xx开头的全都代理在target下面
 	      target: 'http://localhost:3000',
 	    }]
 	}
