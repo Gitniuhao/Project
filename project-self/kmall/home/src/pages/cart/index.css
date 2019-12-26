@@ -1,4 +1,4 @@
-product-title li,
+.product-title li,
 .product-item li,
 .product-footer li{
     float: left;
@@ -68,6 +68,7 @@ product-title li,
 
 .cart .cart-box .product-select{
     width: 6%;
+    
 }
 .cart .cart-box .product-info{
     width: 54%;

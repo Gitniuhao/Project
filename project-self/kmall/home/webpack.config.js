@@ -27,6 +27,7 @@ module.exports = {
 		'result':'./src/pages/result',
 		'detail':'./src/pages/detail',
 		'cart':'./src/pages/cart',
+		'order-confirm':'./src/pages/order-confirm'
 	},
 	//如何输出结果的相关选项
 	output:{
@@ -104,6 +105,7 @@ module.exports = {
 		new HtmlWebpackPlugin(getHtmlConfig('result','结果页面')),
 		new HtmlWebpackPlugin(getHtmlConfig('detail','商品详情')),
 		new HtmlWebpackPlugin(getHtmlConfig('cart','购物车页面')),
+		new HtmlWebpackPlugin(getHtmlConfig('order-confirm','订单管理')),
 		//自动清理无用文件
 		new CleanWebpackPlugin(),
 		//单独打包css文件

@@ -14,6 +14,9 @@ var API_CONFIG = {
 	addCart:                ['/carts','post'],
 	getCartCount:           ['/carts/count','get'],
 	getCartDetail:          ['/carts','get'],
+	updateCartChoice:       ['/carts/choices','put'],
+	deleteCartProduct:      ['/carts','delete'],
+	updateCartCount:        ['/carts/counts','put'],
 }
 
 module.exports = {

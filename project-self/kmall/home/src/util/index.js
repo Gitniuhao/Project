@@ -40,6 +40,9 @@ module.exports = {
 	 goResult:function(type){//跳转到结果页面
 	 	window.location.href = '/result.html?type='+ type
 	 },
+	 showConfirm:function(msg){
+	 	return window.confirm(msg)
+	 },
 	 render:function(tpl,data){//动态渲染页面
 	 	var template = Hogan.compile(tpl);
 		var html = template.render(data);

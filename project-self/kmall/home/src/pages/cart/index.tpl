@@ -1,10 +1,10 @@
 <ul class="product-title clearfix">
     <li class="product-select">
         {{#allChecked}}
-        <input type="checkbox" class="select-all" checked />
+            <input type="checkbox" class="select-all" checked />
         {{/allChecked}}
         {{^allChecked}}
-        <input type="checkbox" class="select-all" />
+            <input type="checkbox" class="select-all" />
         {{/allChecked}}
         <span>全选</span>
     </li>
@@ -28,10 +28,10 @@
 <ul class="product-item" data-product-id="{{product._id}}">
     <li class="product-select">
         {{#checked}}
-        <input type="checkbox" class="select-one" checked />
+            <input type="checkbox" class="select-one" checked />
         {{/checked}}
         {{^checked}}
-        <input type="checkbox" class="select-one" />
+            <input type="checkbox" class="select-one" />
         {{/checked}}
     </li>
     <li class="product-info text-ellipsis">
