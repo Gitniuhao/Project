@@ -124,7 +124,9 @@ module.exports = {
 	      '/ads',
 	      '/floors',
 	      '/products',
-	      '/carts'
+	      '/carts',
+	      '/orders',
+	      '/shippings'
 	      ],//当context里的以xx开头的全都代理在target下面
 	      target: 'http://localhost:3000',
 	    }]

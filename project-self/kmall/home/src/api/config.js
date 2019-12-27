@@ -17,6 +17,10 @@ var API_CONFIG = {
 	updateCartChoice:       ['/carts/choices','put'],
 	deleteCartProduct:      ['/carts','delete'],
 	updateCartCount:        ['/carts/counts','put'],
+	getOrderProducts:       ['/orders/products','get'],
+	addShippings:           ['/shippings','post'],
+	getShippingsList:       ['/shippings/list','get'],
+	deleteShipping:         ['/shippings','delete'],
 }
 
 module.exports = {
