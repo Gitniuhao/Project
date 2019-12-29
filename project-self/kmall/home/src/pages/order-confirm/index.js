@@ -33,14 +33,16 @@ var page = {
 			_modal.show()//点击加号加载地址框
 		})
 		//2、处理删除地址
-		this.$shippingBox.on('click','.shipping-delete',function(){
+		this.$shippingBox.on('click','.shipping-delete',function(ev){
+			//防止事件冒泡，点击时选中该地址
+			ev.stopPropagation()
 			if(_util.showConfirm('您确定要删除这条地址嘛？')){
 				var shippingId = $(this).parents('.shipping-item').data('shipping-id')
 				api.deleteShipping({
 					data:{
 						id:shippingId
 					},
-					success:function(result){
+					success:function(result){//获取数据成功的情况下，再次渲染页面
 						const shippings = result.data
 						_this.renderShippingList(shippings)
 					},
@@ -50,15 +52,69 @@ var page = {
 				})
 			}
 		})
-		 
+		//3、处理编辑地址
+		this.$shippingBox.on('click','.shipping-edit',function(ev){
+				//防止事件冒泡，点击时选中该地址
+				ev.stopPropagation()
+				var shippingId = $(this).parents('.shipping-item').data('shipping-id')
+				api.getShippingDetail({
+					data:{
+						id:shippingId
+					},
+					success:function(result){//获取数据成功的情况下，再次渲染页面
+						const shipping = result.data
+						_modal.show(shipping)
+					},
+					error:function(msg){
+						_util.showErrMsg(msg)
+					}
+				})
+		 })
+		 //4、处理选中地址
+		 this.$shippingBox.on('click','.shipping-item',function(){
+		 	var $this = $(this)
+		 	$this.addClass('active')
+		 	.siblings('.shipping-item')
+		 	.removeClass('active')
+
+		 	//存储id,重新渲染页面仍时选中地址
+		 	_this.selectShippingId = $this.data('shipping-id')
+		 })
+		 //5、处理支付	 
+		 this.$productBox.on('click','.btn-submit',function(){
+		 	//支付必须获取到地址
+		 	if(_this.selectShippingId){
+		 		api.addOrder({
+		 			data:{
+		 				shippingId:_this.selectShippingId
+		 			},
+		 			success:function(result){
+		 				const order = result.data
+		 				window.location.href = './payment.html?orderNo='+order.orderNo
+		 			},
+		 			error:function(msg){
+		 				_util.showErrMsg(msg)
+		 			}
+		 		})
+		 	}else{
+		 		_util.showErrMsg('请选择收获地址后再进行提交~')
+		 	}
+		 })
 	},
 	renderShippingList:function(shippings){//抽取渲染地址列表的逻辑
+		var _this = this
+		//如果其中一个id和之前选中的id相同，则保持选中状态
+		shippings.forEach(function(shipping){
+			if(shipping._id == _this.selectShippingId){
+				shipping.active = true;
+			}
+		})
 		var html = _util.render(shippingTpl,{
 			shippings:shippings
 		})
 		this.$shippingBox.html(html)
 	},
-	loadShippingBox:function(){
+	loadShippingBox:function(){//加载地址栏
 		var _this = this
 		api.getShippingsList({
 			success:function(result){

@@ -20,6 +20,8 @@ var formErr = {
 
 module.exports ={
 	show:function(shipping){//显示面板
+		//编辑时回传缓存shipping
+		this.shipping = shipping
 		this.$modalBox = $('.modal-box')
 		this.loadModal();
 		this.bindEvent();
@@ -33,6 +35,12 @@ module.exports ={
 		var $provincesSelect = $('.province-select')
 		//生成下拉结构
 		$provincesSelect.html(provincesSelectOptions)
+
+		//处理编辑地址
+		if(this.shipping){
+			$provincesSelect.val(this.shipping.province)
+			this.loadCities(this.shipping.province)
+		}
 	},
 	loadCities:function(province){
 		//获取省份对应的城市
@@ -42,6 +50,11 @@ module.exports ={
 		var $citiesSelect = $('.city-select')
 		//生成下拉结构
 		$citiesSelect.html(citiesSelectOptions)
+
+		//处理编辑地址
+		if(this.shipping){
+			$citiesSelect.val(this.shipping.city)
+		}
 	},
 	getSelectOptions:function(arr){
 		var html = '<option value="">请选择</option>'
@@ -51,7 +64,7 @@ module.exports ={
 		return html;
 	},
 	loadModal:function(){//加载弹出面板
-		var html = _util.render(ModalTpl)
+		var html = _util.render(ModalTpl,this.shipping)
 		this.$modalBox.html(html)
 	},
 	bindEvent:function(){
@@ -94,14 +107,21 @@ module.exports ={
 			phone:$.trim($('[name = "phone"]').val()),
 			zip:$.trim($('[name="zip"]').val()),
 		}
-		console.log(formData.username,formData.password)
+		// console.log(formData.username,formData.password)
 		//2、验证数据合法性
 		var formDataValidate = this.validate(formData)
 		// console.log(formDataValidate)
 		if(formDataValidate.status){//3、验证通过，消除错误提示，发送ajax
 			formErr.hide()//消除错误提示
 			//开始发送ajax
-			api.addShippings({
+			var request = api.addShippings
+			var action = '添加地址'
+			if(this.shipping){//在编辑地址的情况下
+				request = api.updateShippingDetail
+				formData.id = _this.shipping._id
+				action = '编辑地址'
+			}
+			request({
 				data:formData,
 				success:function(result){//登录成功后的操作
 					const shippings  = result.data
@@ -111,10 +131,10 @@ module.exports ={
 					//2、传递数据给index文件
 					$('.shipping-box').trigger('get-shippings',[shippings])
 					//3、提示信息
-					_util.showSuccessMsg('添加地址成功~')
+					_util.showSuccessMsg(action+'成功~')
 				},
 				error:function(){//登录失败后的操作
-					_util.showErrMsg('添加地址失败~')
+					_util.showErrMsg(action+'失败~')
 				}
 			})
 		}else{//验证不通过，出现错误提示

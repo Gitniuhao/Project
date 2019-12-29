@@ -8,5 +8,11 @@ require('./index.css')
 
 ;(function($){
 	var type = _util.getParamsFromUrl('type') || 'default'
+	if(type == 'payment'){//在结果页面时payment时的处理
+		var orderNo = _util.getParamsFromUrl('orderNo') || ''
+		var $btn = $('.order-detail')
+		var url = $btn.attr('href')+orderNo;
+		$btn.attr('href',url)
+	}
 	$('.'+ type).show()
 })(jQuery);

@@ -27,7 +27,10 @@ module.exports = {
 		'result':'./src/pages/result',
 		'detail':'./src/pages/detail',
 		'cart':'./src/pages/cart',
-		'order-confirm':'./src/pages/order-confirm'
+		'order-confirm':'./src/pages/order-confirm',
+		'payment':'./src/pages/payment',
+		'order-list':'./src/pages/order-list',
+		'order-detail':'./src/pages/order-detail',
 	},
 	//如何输出结果的相关选项
 	output:{
@@ -106,6 +109,9 @@ module.exports = {
 		new HtmlWebpackPlugin(getHtmlConfig('detail','商品详情')),
 		new HtmlWebpackPlugin(getHtmlConfig('cart','购物车页面')),
 		new HtmlWebpackPlugin(getHtmlConfig('order-confirm','订单管理')),
+		new HtmlWebpackPlugin(getHtmlConfig('payment','支付页面')),
+		new HtmlWebpackPlugin(getHtmlConfig('order-list','订单列表')),
+		new HtmlWebpackPlugin(getHtmlConfig('order-detail','订单详情')),
 		//自动清理无用文件
 		new CleanWebpackPlugin(),
 		//单独打包css文件
@@ -126,7 +132,8 @@ module.exports = {
 	      '/products',
 	      '/carts',
 	      '/orders',
-	      '/shippings'
+	      '/shippings',
+	      '/payments'
 	      ],//当context里的以xx开头的全都代理在target下面
 	      target: 'http://localhost:3000',
 	    }]
