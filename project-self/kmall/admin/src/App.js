@@ -6,6 +6,7 @@ import Home from 'pages/home'
 import User from 'pages/user'
 import Category from 'pages/category'
 import Product from 'pages/product'
+import Order from 'pages/order'
 import Ad from 'pages/ad'
 import Err from 'common/err'
 import {
@@ -48,6 +49,7 @@ class App extends Component{
 						<HomeRoute  path='/user'  component={User} />				 
 						<HomeRoute  path='/category'  component={Category} />				 
 						<HomeRoute  path='/product'  component={Product} />				 
+						<HomeRoute  path='/order'  component={Order} />				 
 						<HomeRoute  path='/ad'  component={Ad} />				 
 						<LoginRoute path='/login'  component={Login} />
 						<Route component={Err} />				 

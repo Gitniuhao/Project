@@ -23,10 +23,14 @@ export const API_CONFIG = {
 	getProductDetail:       ['/products/detail','get'],
 	updateProduct:       	['/products','put'],
 	//广告api
-	getAdsList:                  	["/ads/list","get"],
-    getAdsDetail:                	["/ads/detail","get"],
-    addAds:                      	["/ads","post"],
-    updateAds:                  	["/ads","put"],
-    updateAdsOrder:              	["/ads/order","put"],
-    updateAdsIsShow:             	["/ads/isShow","put"],
+	getAdsList:              ["/ads/list","get"],
+    getAdsDetail:            ["/ads/detail","get"],
+    addAds:                  ["/ads","post"],
+    updateAds:               ["/ads","put"],
+    updateAdsOrder:          ["/ads/order","put"],
+    updateAdsIsShow:         ["/ads/isShow","put"],
+    //订单api
+    getOrdersList:           ["/orders/list","get"],
+    getOrderDetail:          ["/orders/detail","get"],
+    updateOrderDeliver:      ["/orders/status","put"],
 }

@@ -10,55 +10,57 @@ var tpl = require('./index.tpl')
 require('util/pagination')
 
 var page = {
-	orderListParams:{
-		page:_util.getParamsFromUrl('page') || '1',
-		keyword:_util.getParamsFromUrl('keyword'),
+	orderDetailParams:{
+		orderNo:_util.getParamsFromUrl('orderNo'),
 	},
 	init:function(){
 		this.$orderBox = $('.order-box')
 		//加载商品列表
-		this.loadOrderList()	
-		this.initPagination()
+		this.loadOrderDetail()	
 		this.renderSide()
+		this.bindEvent()
 	},
 	renderSide:function(){
-		_side.render('user-center')
+		_side.render('order-list')
 	},
-	initPagination:function(){
-		this.$pagination = $('.pagination-box')
+	loadOrderDetail:function(){
 		var _this = this
-		this.$pagination.on('page-change',function(ev,page){
-			//重新赋值page，然后请求页面数据进行渲染页面
-			_this.orderListParams.page = page;
-			_this.loadOrderList()
-		})
-		this.$pagination.pagination()//初始化分页器组件\
-	},	
-	loadOrderList:function(){
-		var _this = this
-		api.getOrderList({
-			data:this.orderListParams,
+		api.getOrderDetail({
+			data:this.orderDetailParams,
 			success:function(result){
-				const data = result.data
-				console.log(data)
-				if(data.list.length >0){//如果list内有内容再进行渲染
-					data.list.forEach(function(order){
-						 order.createTime = new Date(order.createdAt).toLocaleString()
-					})
-					var html = _util.render(tpl,{
-						list:data.list
-					})
-					_this.$orderBox.html(html)
-					//渲染分页器到页面
-					_this.$pagination.pagination('render',{
-                        current:data.current,
-                        total:data.total,
-                        pageSize:data.pageSize
-                    })
-				}else{//list没有内容的话返回提示信息
-					_this.$orderBox.html('<p class="empty-message">您还没有订单!</p>')
-				}
-				
+				const order = result.data
+				// console.log(order)
+				_this.renderOrderDetail(order)
+			}
+		})
+	},
+	renderOrderDetail:function(order){//渲染商品详情
+		if(order){
+			order.createTime = new Date(order.createdAt).toLocaleString()
+			//使得当支付和取消的状态码是10(代表未支付）时，使得可以支付和取消
+			order.canpy = order.cancel = order.status == 10;
+			var html = _util.render(tpl,order)
+			this.$orderBox.html(html)
+		}else{
+			this.$orderBox.html('<p class="empty-message">您还没有订购商品。。<p>')
+		}
+	},
+	bindEvent:function(){
+		var _this = this
+		this.$orderBox.on('click','.btn-cancel',function(){
+			var $this = $(this)
+			if(_util.showConfirm('您确定要取消该订单吗？')){
+				api.updateOrderStatus({
+					data:{
+						orderNo:_this.orderDetailParams.orderNo,
+						status:20
+					},
+					success:function(result){
+						const order = result.data
+						// console.log(order)
+						_this.renderOrderDetail(order)
+					}
+				})
 			}
 		})
 	}

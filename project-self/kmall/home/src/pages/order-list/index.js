@@ -22,7 +22,7 @@ var page = {
 		this.renderSide()
 	},
 	renderSide:function(){
-		_side.render('user-center')
+		_side.render('order-list')
 	},
 	initPagination:function(){
 		this.$pagination = $('.pagination-box')
