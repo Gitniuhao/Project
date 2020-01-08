@@ -1,7 +1,8 @@
 const path = require('path')
 module.exports ={
 	devServer:{
-		port:3001
+		port:3002,
+		proxy: 'http://127.0.0.1:3000'
 	},
 	pluginOptions: {
 	    'style-resources-loader': {

@@ -8,6 +8,9 @@ import './assets/css/common.css'
 import router from './router'
 //全局加载vant组件
 import './plugins/vant'
+//全局加载过滤器
+import filters from './filters/'
+Object.keys(filters).forEach(key=>Vue.filter(key,filters[key]))
 // 消除打印台提示信息
 Vue.config.productionTip = false
 
