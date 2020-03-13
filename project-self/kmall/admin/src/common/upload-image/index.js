@@ -34,11 +34,11 @@ class UploadImage extends Component{
 	 }
 	 handleChange({ fileList }){
 	 	this.setState({ fileList },()=>{
-	 		this.props.getFileList(fileList.map(file=>{//调用父组件save传递的方法，将图片的地址传递到父组件
-	 			if(file.response){//当file.response存在的时候返回图片的地址
-	 				return file.response.url 
-	 			}
-	 		}).join(','))//将数组的每一项通过，拼接成字符串返回
+	 		// this.props.getFileList(fileList.map(file=>{//调用父组件save传递的方法，将图片的地址传递到父组件
+	 		// 	if(file.response){//当file.response存在的时候返回图片的地址
+	 		// 		return file.response.url 
+	 		// 	}
+	 		// }).join(','))//将数组的每一项通过，拼接成字符串返回
 	 	})
 	 };
 	render(){

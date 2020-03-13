@@ -1,0 +1,22 @@
+*{
+	margin: 0;
+	padding: 0;
+	/*background-image:url('images/beijing.jpg');*/
+}
+.container{
+	width: 100%;
+	height: 750px;	
+	overflow: hidden;
+}
+.Login .login-form{
+	width: 300px;
+	margin:200px auto;
+	background-color: rgba(0,0,0,0.5);
+	padding: 20px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+}
+.Login .btn-submit{
+	width: 100%;
+}

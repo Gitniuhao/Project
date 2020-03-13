@@ -1,0 +1,6 @@
+.AdminSider .ant-menu-item{
+	background-color: transparent !important;
+}
+.AdminSider a.active{
+	color: #50dfb8;
+}

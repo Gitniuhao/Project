@@ -128,7 +128,7 @@ module.exports = {
 			chunks:['index']//可以设置自动引进哪一个文件
 		}),
 		//自动清理无用文件
-		new CleanWebpackPlugin(),
+		new CleanWebpackPlugin()
 		//单独打包css文件
 		new MiniCssExtractPlugin({})
 	],

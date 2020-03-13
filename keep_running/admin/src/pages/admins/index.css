@@ -1,0 +1,37 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.AdminList .btn{	
+	height: 40px;
+}
+.AdminList .add-btn{
+	float: right;
+	/*margin-right: 20px;*/
+}
+.AdminList .ant-table-body{
+	min-height: 450px;
+}
+.AdminAdd .content .login-form{
+	width: 500px;
+	margin:100px auto;
+	padding: 20px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+}
+.AdminAdd .content .login-form .btn-submit{
+	width: 100%;
+}
+
+.AdminReset .content .login-form{
+	width: 500px;
+	margin:100px auto;
+	padding: 20px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+}
+.AdminReset .content .login-form .btn-submit{
+	width: 100%;
+}

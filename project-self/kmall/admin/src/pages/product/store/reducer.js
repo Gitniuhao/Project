@@ -81,19 +81,19 @@ export default (state = defaultState,action)=>{
 		})
 	}
 
-	//存储设置商品详情
-	 if(action.type == types.SET_PRODUCT_DETAIL){
-	 	return state.merge({
-	 		category:action.payload.category._id,
-	 		categoryName:action.payload.category.name,
-			name:action.payload.name,
-			description:action.payload.description,
-			price:action.payload.price,
-			stock:action.payload.stock,
-			mainImage:action.payload.mainImage,
-			images:action.payload.images,
-			detail:action.payload.detail,
-	 	})
-	 }
+		//存储设置商品详情
+		 if(action.type == types.SET_PRODUCT_DETAIL){
+		 	return state.merge({
+		 		category:action.payload.category._id,
+		 		categoryName:action.payload.category.name,
+				name:action.payload.name,
+				description:action.payload.description,
+				price:action.payload.price,
+				stock:action.payload.stock,
+				mainImage:action.payload.mainImage,
+				images:action.payload.images,
+				detail:action.payload.detail,
+		 	})
+		 }
 	return state;
 }

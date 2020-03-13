@@ -3,7 +3,7 @@ import React,{Component,Fragment} from 'react'
 import * as actionCreator from'./store/actionCreator.js'
 import { connect } from 'react-redux'
 import './index.css';
-import { Table,Pagination } from 'antd';
+import { Table,pagination } from 'antd';
 import AdminLayout from 'common/layout'
 import moment from 'moment'
 
@@ -52,7 +52,7 @@ class User extends Component{//自定义组件名字首字母都要大写，而h
 				isAdmin:user.get('isAdmin'),
 				email:user.get('email'),
 				phone:user.get('phone'),
-				createdAt:moment(user.get('createdAt')).format('YYYY-MM-DD HH:MM:SS')
+				createdAt:moment(user.get('create_time')).format('YYYY-MM-DD HH:MM:SS')
 			}		 	
 		 }).toJS()
 		return(

@@ -1,0 +1,10 @@
+.header .logo{
+	float: left;
+	width: 300px;
+	color: #50dfb8;
+	font-size: 20px;
+	font-weight: 600;
+}
+.header .drop-down{
+	float: right;
+}
