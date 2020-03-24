@@ -1,10 +1,12 @@
 {
-  "pages": [ 
-    "pages/index/main",     
-    "pages/article/main",
+  "pages": [
+   "pages/article/main",    
+    "pages/index/main",
+    
     "pages/articleDetail/main",
+    "pages/collection/main",
     "pages/record/main",
-    "pages/me/main",   
+    "pages/me/main", 
     "pages/opinion/main",
     "pages/instruction/main"
   ],

@@ -76,7 +76,9 @@ export const resetPasswordAction = (values)=>{
 		.then(result=>{
 			// console.log(result.data)			
 			message.success(result.data.data)
-			window.location.href ='/'//修改密码成功后返回首页	
+			setTimeout(function(){
+				window.location.href = '/';
+			},2000)//修改密码成功后返回首页	
 		})
 		.catch(err =>{
 			console.log(err)
@@ -92,7 +94,9 @@ export const delAdminAction = (id)=>{
 		.then(result=>{
 			// console.log(result.data.data)
 			message.success(result.data.data.msg)//显示修改成功提示
-			window.location.href = '/admin';//跳转到列表页				
+			setTimeout(function(){
+				window.location.href = '/admin';
+			},2000)//跳转到列表页				
 		})
 		.catch(err =>{
 			console.log(err)

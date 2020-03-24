@@ -53,7 +53,7 @@ class ArticleList extends Component{//自定义组件名字首字母都要大写
 		    dataIndex: 'isCollection',
 		    render:(isCollection,record)=>{
 		    	return(
-		    		<span>{isCollection== '0' ? '否' : '是'}</span>
+		    		<span>{isCollection== 0 ? '否' : '是'}</span>
 		    )}
 		  },
 		  {
@@ -82,7 +82,7 @@ class ArticleList extends Component{//自定义组件名字首字母都要大写
 		  				<Divider type="vertical" />
 		  				<Link to={'/article/detail/' + record.id}>查看</Link>
 		  				<Divider type="vertical" />	
-		  				<span onClick={()=>this.props.handleDeleteArticle(record.id)}>删除</span>
+		  				<Button onClick={()=>this.props.handleDeleteArticle(record.id)}>删除</Button>
 		  			</span>
 		  			
 		  		)

@@ -19,12 +19,11 @@ export const getPageAction = (page)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
 		//派发action,发送ajax前进行loading加载
 		dispatch(getPageStartAction())
-		api.getUserList({
+		api.getOpinionList({
 			page:page
 		})//发送获取管理员列表的请求
-		.then(result=>{
-			// console.log(result.data.data)			
-			//派发action,将后台获取的数据进行传递设置
+		.then(result=>{					
+			//派发action,将后台获取的数据进行传递设置			
 			dispatch(setPageAction(result.data.data))	
 		})
 		.catch(err =>{
@@ -36,17 +35,37 @@ export const getPageAction = (page)=>{
 	}
 }
 
-export const delUserAction = (openId)=>{
+export const delOpinonAction = (id)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		api.delteAdmin({
-			openId:openId
+		api.delteOpinion({
+			id:id
 		})//发送获取管理员列表的请求
 		.then(result=>{
-			// console.log(result.data.data)
+			console.log(result.data.data)
 			message.success(result.data.data.msg)
 			setTimeout(function(){
-				window.location.href = '/user';
-			},2000)					
+				window.location.href = '/opinion';
+			},2000)							
+		})
+		.catch(err =>{
+			console.log(err)
+		})
+	}
+}
+
+export  const setDetailAction = (payload)=>({
+			type:types.SET_DETAIL,
+			payload
+})
+
+export const getDetailAction = (id)=>{
+	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
+		api.getOpinionDetail({
+			id:id
+		})//发送获取管理员列表的请求
+		.then(result=>{
+			console.log(result.data.data)
+			dispatch(setDetailAction(result.data.data))						
 		})
 		.catch(err =>{
 			console.log(err)

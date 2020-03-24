@@ -2,14 +2,14 @@
 drop table if exists `opinions`;
 
 create table `opinions`(
-	`id` int(11) not null auto_increment,--必填项，且要自增
-	`openid` varchar(100) not null,--不同微信的标识符
-	`src` text default null,--选填项，可以默认为空
+	`id` int(11) not null auto_increment,
+	`openid` varchar(100) not null,
+	`src` longText default null,
 	`wechat` varchar(100) default null,
 	`opinion` text not null,
-	`create_time` timestamp not null default current_timestamp,--默认为当前时间拖
+	`create_time` timestamp not null default current_timestamp,
 	primary key(`id`)
-)default charset=`utf8`;--默认语法为utf8
+)default charset=`utf8`;
 
 
 --创建分数记录表

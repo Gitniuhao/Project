@@ -4,7 +4,7 @@
 			<div class="prompt">还没有任何文章~</div>
 		</div>
 		<div v-else>
-			<ArticleList v-for="(article,index) in articles" :key="index" :article="article" :index="article.id"></ArticleList>
+			<ArticleList v-for="(article,index) in collectionArticles" :key="index" :article="article" :index="article.id"></ArticleList>
 			<p class="text-footer" v-if="!more">没有更多文章了~</p>
 	     	<p class="text-footer" v-else>加载中...</p>			
 		</div>		
@@ -22,7 +22,7 @@
 			return{
 				userinfo:{},
 				show_article:false,
-				articles:[],
+				collectionArticles:[],
 		        page:0,
 		        more:true
 			}
@@ -38,16 +38,20 @@
 		          this.more = true
 		        }
 		        if(this.page === 0){//如果回到初始状态，将之前获取的数据置空
-		          this.articles = []
+		          this.collectionArticles = []
 		        }
 				try{
-					const res = await get("/weapp/getArticlesList",{page:this.page})
+					const data = {
+						page:this.page,
+						openId:this.userinfo.openId
+					}
+					const res = await get("/weapp/getCollectionList",data)
 					console.log("后端传来的数据：",res)
-					this.articles = this.articles.concat(res.articles)
-					if(res.articles.length <3){
+					this.collectionArticles = this.collectionArticles.concat(res.collectionArticles)
+					if(res.collectionArticles.length <3){
 			            this.more = false//如果获取的数据不足3条，其页面大于0，则没有更多数据了，停止操作
 			          }
-					if(this.articles.length == 0){//如果页面文章个数为零，则显示提示语句
+					if(this.collectionArticles.length == 0){//如果页面文章个数为零，则显示提示语句
 						this.show_article = true
 					}else{
 						this.show_article = false

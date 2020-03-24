@@ -27,6 +27,7 @@
     "babel-generator": "^6.26.1",
     "babel-template": "^6.26.0",
     "mpvue": "^2.0.0",
+    "mpvue-wxparse": "^0.6.5",
     "node-sass": "^4.13.1",
     "vuex": "^3.0.1",
     "wafer2-client-sdk": "^2.1.0",

@@ -20,7 +20,7 @@
     <p class="content tip"><label class="point">◉</label> 心态的奖励。</br>比如分数越多就会越幸运；凑足3个100分，说不定就会瘦很多等等。这种心理暗示对生活还是很有积极意义的~</p>
     <p class="content tip"><label class="point">◉</label> 物质的奖励。</br>比如凑足300分，奖励自己一顿海底捞；够了500分，奖励自己旅游基金1000元等。虽然都是从自己身上薅下的肉，但是生活更有仪式感了~</p>
     <p class="content prompts">（2）减小记录的阻力</p>
-    <p class="content tip">将小程序放在微信浮窗里，或者添加到桌面，减小打开程序的步骤，从而减小自己记录的阻力。</p>
+    <p class="content tip">将小程序放在我的小程序里，或者添加到桌面，减小打开程序的步骤，从而减小自己记录的阻力。</p>
     <img class="index-img" :src="src1">
     <p class="little-tip">3、小程序使用介绍</p>
     <p class="content prompts">（1）首页</p>
@@ -32,9 +32,12 @@
     <p class="content prompts">（3）文章页面</p>
     <p class="content tip"><label class="point">◉</label> 查看文章：可以查看文章的详情，详细了解关于运动的文章~</p>
     <p class="content tip"><label class="point">◉</label> 收藏文章：对于比较感兴趣的文章，可以进行收藏留待往后查看。</p>
+    <p class="content tip"><label class="point">◉</label> 分享文章：对于觉得不错的文章，可以分享给其他朋友个观看。</p>
     <p class="content prompts">（4）我的页面</p>
+    <p class="content tip"><label class="point">◉</label> 操作指引：大致了解小程序的基本使用和功能，使用户快速上手~</p>
     <p class="content tip"><label class="point">◉</label> 清空记录：清空所有的历史记录，清空后记录不能恢复，谨慎操作~</p>
     <p class="content tip"><label class="point">◉</label> 意见反馈：对于小程序的建议、问题反馈、合作信息等，可以通过这个页面提交。</p>
+    <p class="content tip"><label class="point">◉</label> 收藏文章：在文章页面部分感兴趣的文章，可以在收藏之后在此页面进行查看。</p>
     </div>
 </template>
 
@@ -43,7 +46,7 @@ export default {
     data () {
     return {
       src: "../../static/images/littleTip-huang.jpg",
-      src1: "../../static/images/share.png"
+      src1: "../../static/images/share.jpg"
     }
   }
 }

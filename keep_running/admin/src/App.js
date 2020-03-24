@@ -14,6 +14,7 @@ import Home from 'pages/home'
 import Admin from 'pages/admins'
 import User from 'pages/user'
 import Article from 'pages/article'
+import Opinion from 'pages/opinion'
 import Err from 'common/err'
 
 import {getName} from 'util'
@@ -48,6 +49,7 @@ class App extends Component{
 					<HomeRoute path='/admin' component={Admin} />
 					<HomeRoute path='/user' component={User} />
 					<HomeRoute path='/article' component={Article} />
+					<HomeRoute path='/opinion' component={Opinion} />
 					<LoginRoute path='/login' component={Login} />
 					<Route component={Err}/>
 					{/*在路由匹配选项下如果没有匹配的路由就前往错误组件页面*/}

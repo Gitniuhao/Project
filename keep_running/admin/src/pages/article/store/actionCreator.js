@@ -82,9 +82,11 @@ export const saveArticleAction = (err,values)=>{
 			content:content
 		})//发送新增文章的请求
 		.then(result=>{
-			console.log(result.data.data.msg)
-			message.success(result.data.data.msg)			
-			window.location.href ='/article'//新增文章成功后返回文章列表页
+			// console.log(result.data.data.msg)
+			message.success(result.data.data.msg)
+			setTimeout(function(){
+				window.location.href = '/article';
+			},2000)//新增文章成功后返回文章列表页				
 		})
 		.catch(err =>{
 			console.log(err)
@@ -156,7 +158,9 @@ export const deleteArticleAction = (id)=>{
 		.then(result=>{
 			// console.log(result.data.data)
 			message.success(result.data.data.msg)		
-			window.location.href ='/article'//删除文章成功后刷新文章列表页			
+			setTimeout(function(){
+				window.location.href = '/article';
+			},2000)//删除文章成功后刷新文章列表页			
 		})
 		.catch(err =>{
 			console.log(err)

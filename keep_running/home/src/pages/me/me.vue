@@ -29,12 +29,20 @@
 					>		
 				</label>
 			</div>
-
 			<div class="row" @click="showOpinion">
 				<label class="left">
 					<img class="img" src="/static/images/approval.png" alt="">
 				</label>
 				<label class="name">&nbsp;&nbsp;意见反馈</label>
+				<label class="right">
+					>		
+				</label>
+			</div>
+			<div class="row" @click="showCollection">
+				<label class="left">
+					<img class="img" src="/static/images/bookmark.png" alt="">
+				</label>
+				<label class="name">&nbsp;&nbsp;收藏文章</label>
 				<label class="right">
 					>		
 				</label>
@@ -71,6 +79,11 @@
 			showInstruction(){
 				wx.navigateTo({
 					url:"/pages/instruction/main"
+				})
+			},
+			showCollection(){
+				wx.navigateTo({
+					url:"/pages/collection/main"
 				})
 			},
 			async resetRecord(){

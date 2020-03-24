@@ -65,6 +65,17 @@ router.get('/getrecords',controllers.getrecords)
 router.post('/updatenote',controllers.updatenote)
 //清空记录
 router.post('/resetRecord',controllers.resetRecord)
+//请求文章列表数据
+router.get('/getArticlesList',controllers.getArticlesList)
+//请求文章详情
+router.get('/getArticlesDetail',controllers.getArticlesDetail)
+//增加view数量
+router.post('/updateView',controllers.updateView)
+//更新isCollection
+router.post('/updateIsCollection',controllers.updateIsCollection)
+//获取收藏文章列表
+router.get('/getCollectionList',controllers.getCollectionList)
+
 
 // 后端管理系统部分
 //管理员登录
@@ -73,6 +84,7 @@ router.post('/adminLogin',controllers.adminLogin)
 router.post('/resetSession',controllers.resetSession)
 //查询数量
 router.get('/getCount',controllers.getCount)
+
 //查询管理员列表
 router.get('/getAdminList',controllers.admin.getAdminList)
 //新增管理员
@@ -81,10 +93,12 @@ router.post('/addAdmin',controllers.admin.addAdmin)
 router.post('/resetPassword',controllers.admin.resetPassword)
 //删除管理员
 router.post('/delteAdmin',controllers.admin.delteAdmin)
+
 //获取用户列表
 router.get('/getUserList',controllers.user.getUserList)
 //删除用户
 router.post('/delteUser',controllers.user.delteUser)
+
 //上传文章封面图片
 router.post('/uploadImage',upload.single('file'),controllers.article.uploadImage)
 //上传文章详情图片
@@ -101,6 +115,13 @@ router.get('/getArticleDetail',controllers.article.getArticleDetail)
 router.post('/updateArticle',controllers.article.updateArticle)
 //删除文章
 router.post('/deleteArticle',controllers.article.deleteArticle)
+
+//获取反馈意见列表
+router.get('/getOpinionList',controllers.opinion.getOpinionList)
+//删除反馈意见表
+router.post('/delteOpinion',controllers.opinion.delteOpinion)
+//获取反馈意见详情
+router.get('/getOpinionDetail',controllers.opinion.getOpinionDetail)
 
 
 module.exports = router
