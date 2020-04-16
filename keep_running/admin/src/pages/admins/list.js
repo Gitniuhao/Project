@@ -21,7 +21,7 @@ class AdminList extends Component{//自定义组件名字首字母都要大写�
 	render(){//render负责渲染页面
 		const columns = [
 		  {
-		    title: '管理员名',
+		    title: '账号名',
 		    dataIndex: 'name',
 		    key: 'name',
 		    render: text => <a>{text}</a>,
@@ -120,4 +120,4 @@ const mapDispatchToProps =(dispatch)=>{//利用接收的dispatch参数，进行�
 export default connect(mapStateToProps,mapDispatchToProps)(AdminList);//app通过connnect方法与store进行关联，接收数据和方法
 
 /*react-redux的好处：不用进行constructor从而进行数据的初始化，也不用将更新后的数据再次进行
-设置，这些react-dedux都自己做了*/
+设置，这些react-redux都自己做了*/

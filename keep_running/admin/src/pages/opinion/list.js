@@ -21,7 +21,7 @@ class OpinionList extends Component{//自定义组件名字首字母都要大写
 	render(){//render负责渲染页面
 		const columns = [
 		  {
-		    title: '序号',
+		    title: '#',
 		    dataIndex: 'id',
 		    key: 'id',
 		    render: text => <a>{text}</a>,
@@ -32,7 +32,7 @@ class OpinionList extends Component{//自定义组件名字首字母都要大写
 		    key: 'name',
 		  },
 		  {
-		    title: '创建时间',
+		    title: '反馈时间',
 		    key: 'createdAt',
 		    dataIndex: 'createdAt',
 		  },
@@ -62,6 +62,7 @@ class OpinionList extends Component{//自定义组件名字首字母都要大写
  			<div className = 'OpinionList'>
  				<AdminLayout>
 	 				<Breadcrumb style={{ margin: '16px 0' }}>
+	 				  <Breadcrumb.Item>首页</Breadcrumb.Item>
 	                  <Breadcrumb.Item>反馈意见列表</Breadcrumb.Item>
 	                </Breadcrumb>
  					<div className='content'>

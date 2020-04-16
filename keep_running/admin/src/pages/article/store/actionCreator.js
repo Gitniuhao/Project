@@ -110,6 +110,7 @@ export const getNameAction = ()=>{
 export const updateIsShowAction = (id,newIsShow)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
 		const page = getState().get('article').get('current')
+		console.log(page)
 		api.updateArticleIsShow({//更新分类名称
 			id:id,
 			isShow:newIsShow,

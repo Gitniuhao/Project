@@ -26,6 +26,8 @@
     <p class="content prompts">（1）首页</p>
     <p class="content tip"><label class="point">◉</label> 清零功能：会将当前分数设为0，历史记录不会被清空。</p>
     <p class="content tip"><label class="point">◉</label> 撤销功能：撤销上一步的操作。</p>
+    <p class="content tip"><label class="point">◉</label> 目标设定：选择设定周或月目标分数，当完成目标分数进行激励，而未完成目标则进行提醒督促。</p>
+    <p class="content tip"><label class="point">◉</label> 微信步数：展示近三十天的微信步数，仅供分数操作时的参考。</p>
     <p class="content prompts">（2）记录页面</p>
     <p class="content tip"><label class="point">◉</label> 添加备注：备注默认为空，可以点击添加备注。</p>
     <p class="content tip"><label class="point">◉</label> 修改备注：备注添加完成后，可以修改。</p>

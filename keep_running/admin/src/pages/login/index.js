@@ -36,17 +36,17 @@ class NormalLoginForm extends React.Component {
       <Form  className="login-form">
         <Form.Item>
           {getFieldDecorator('name', {
-            rules: [{ required: true, message: '请输入用户名~' },{pattern:/^[a-z][0-9a-z_]{2,5}$/i,message:'用户名是以字母开头的3-6位字符'}],
+            rules: [{ required: true, message: '账号不能为空' },{pattern:/^[a-z][0-9a-z_]{2,5}$/i,message:'用户名是以字母开头的3-6位字符'}],
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="用户名"
+              placeholder="账号"
             />,
           )}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: '请输入密码~' },{pattern:/^\w{3,6}$/i,message:'密码是任意的3-6位字符'}],
+            rules: [{ required: true, message: '密码不能为空' },{pattern:/^\w{3,6}$/i,message:'密码是任意的3-6位字符'}],
           })(
             <Input
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}

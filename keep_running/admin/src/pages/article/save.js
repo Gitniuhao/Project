@@ -16,7 +16,7 @@ class ArticleSave extends Component{//自定义组件名字首字母都要大写
   constructor(props){
 	super(props)
 	this.handleSubmit = this.handleSubmit.bind(this)
-	this.state={//获取url中的商品id
+	this.state={//获取url中的文章id
 		articleId:this.props.match.params.articleId
 	}
   }
@@ -72,7 +72,10 @@ class ArticleSave extends Component{//自定义组件名字首字母都要大写
  				<AdminLayout>
 	 				<Breadcrumb style={{ margin: '16px 0' }}>
 	                  <Breadcrumb.Item>首页</Breadcrumb.Item>
-	                  <Breadcrumb.Item>新增文章</Breadcrumb.Item>
+	                  <Breadcrumb.Item>文章管理</Breadcrumb.Item>
+	                  <Breadcrumb.Item>
+                    	{this.state.articleId ? "编辑文章" : "新增文章"}
+                  	  </Breadcrumb.Item>
 	                </Breadcrumb>
  					<div className='content'>
  						<Form  className="article-form" labelCol={{ span: 5 }} wrapperCol={{ span: 12 }}>

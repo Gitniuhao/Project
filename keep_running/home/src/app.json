@@ -1,8 +1,7 @@
 {
-  "pages": [
-   "pages/article/main",    
+  "pages": [    
     "pages/index/main",
-    
+    "pages/article/main",
     "pages/articleDetail/main",
     "pages/collection/main",
     "pages/record/main",

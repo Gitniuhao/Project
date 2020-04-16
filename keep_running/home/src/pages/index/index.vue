@@ -3,44 +3,76 @@
     <!--调用组件 -->
     <div v-if="showLogin">
       <loginWindow @changeShow="getModal(arguments)"></loginWindow>
-    </div>   
-    <div class="show">
-      <div class="button">
-        <div class="btn1 right" @click="recall">撤销</div>
-        <div class="btn0" @click="reset">清零</div>
+    </div>
+    <div>
+      <div class="nav">
+        <div :class="{'selected':tab === 1,'title':true}"
+           @click="changTab(1)">
+          <p>分数操作</p>
+        </div>
+        <div :class="{'selected':tab === 2,'title':true}"
+           @click="changTab(2)">
+          <p>目标设定</p>
+        </div>
+        <div :class="{'selected':tab === 3,'title':true}"
+           @click="changTab(3)">
+          <p>微信步数</p>
+        </div>
       </div>
-      <div class="mark-text">当前分数</div>
-      <div class="mark">{{mark}}</div>
-    </div>
-
-    <div class="row">
-      <div class="button right" @click="addMark(1)">+1</div>
-      <div class="button left" @click="addMark(-1)">-1</div>
-    </div>
-
-    <div class="row">
-      <div class="button right" @click="addMark(5)">+5</div>
-      <div class="button left" @click="addMark(-5)">-5</div>
-    </div>
+      <div class="content">
+        <div class="show_mark" v-if="tab===1">   
+          <div class="show">
+            <div class="button">
+              <div class="btn1 right" @click="recall">撤销</div>
+              <div class="btn0" @click="reset">清零</div>
+            </div>
+            <div class="mark-text">当前分数</div>
+            <div class="mark">{{mark}}</div>
+          </div>
+          <div class="row">
+            <div class="button right" @click="addMark(1)">+1</div>
+            <div class="button left" @click="addMark(-1)">-1</div>
+          </div>
+          <div class="row">
+            <div class="button right" @click="addMark(5)">+5</div>
+            <div class="button left" @click="addMark(-5)">-5</div>
+          </div>
+        </div>
+        <div class="show_target" v-else-if="tab===2">
+          <Target :userinfo='userinfo'></Target>
+        </div>
+        <div class="show_RunData" v-else>
+          <RunData></RunData>
+        </div>
+      </div> 
+    </div>      
   </div>
 </template>
 
 <script>
   // 引入组件
   import loginWindow from '@/components/loginWindow'
+  import RunData from '@/components/RunData'
+  import Target from '@/components/Target'
   import {showSuccess,showModal,post,get} from '@/util'
   export default {
     components:{//声明组件
-      loginWindow
+      loginWindow,
+      RunData,
+      Target
     },
     data(){
       return{
         mark:0,
         showLogin:false,
-        userinfo:{}
+        userinfo:{},
+        tab:1
       }
     },
     methods:{
+      changTab(index){
+          this.tab = index
+      },
       async addMark(add){//控制加减分的方法，并向后台发送请求
         try{
           const data={
@@ -142,60 +174,83 @@
 </script>
 
 <style lang="scss">
-.show{
-  text-align:center;
-  height:266px;
-  background-color: #EA5149;
-  margin-bottom:5px;
-  color:#fff;
-  font-weight:bold;
-  .mark-text{
-    font-size:20px;
-    padding:28px;
-  }
-  .mark{
-    font-size:88px;
-  }
-  .button{
-    margin:0 10px;
-    height: 30px;
-    line-height:30px;
+.nav{
+  display:flex;
+  height:30px;
+  line-height:30px;
+  color:#353535;
+  background-color:#EA5149;
+  border-bottom:5px solid #EA5149;
+  .title{
     text-align:center;
-    font-size: 15px;
+  }
+  .selected{
+    color:#fff;
+  }
+  p{
+    width:70%;
+    margin:0 22px;
+    height:20px;
+    line-height:20px;
+    padding:5px 0;
+  }  
+}
+.content{
+  .show{
+    text-align:center;
+    height:250px;
+    background-color: #EA5149;
+    margin-bottom:5px;
+    color:#fff;
     font-weight:bold;
-    background:#EA5149;
-    .btn0{
-      width: 60px;
-      border-radius: 15px;
-      border:1px dashed #feb600;
+    .mark-text{
+      font-size:20px;
+      padding:28px;
     }
-    .btn1{
-      width: 60px;
-      border-radius: 15px;
-      border:1px dashed #feb600;
+    .mark{
+      font-size:88px;
+    }
+    .button{
+      margin:0 10px;
+      height: 30px;
+      line-height:30px;
+      text-align:center;
+      font-size: 15px;
+      font-weight:bold;
+      background:#EA5149;
+      .btn0{
+        width: 60px;
+        border-radius: 15px;
+        border:1px dashed #feb600;
+      }
+      .btn1{
+        width: 60px;
+        border-radius: 15px;
+        border:1px dashed #feb600;
+      }
     }
   }
-}
-.row{  
-    margin:40px 56px;
-    .button{    
-        width: 70px;    
-        height: 70px;    
-        line-height:70px;    
-        border-radius: 20%;    
-        border: none;    
-        text-align:center;    
-        font-size: 25px;    
-        color:#FFFFFF;    
-        font-weight:bold;  
-    }    
-}
-.right{  
-  background:#EA5149;  
-  float: right; 
-}
-.left{  
-  background:#feb600;  
-  margin-right:80px; 
+  .row{  
+      margin:40px 56px;
+      .button{    
+          width: 70px;    
+          height: 70px;    
+          line-height:70px;    
+          border-radius: 20%;    
+          border: none;    
+          text-align:center;    
+          font-size: 25px;    
+          color:#FFFFFF;    
+          font-weight:bold;  
+      }    
+  }
+  .right{  
+    background:#EA5149; 
+    float: right; 
+  }
+  .left{  
+    background:#feb600;  
+    margin-right:80px; 
+  }
 }
 </style>

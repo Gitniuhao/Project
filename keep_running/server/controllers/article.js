@@ -152,9 +152,9 @@ async function updateArticleIsShow(ctx){//上传内容图片
 		if(page <= 0){
 			page = 1;
 		}
-		const limit = 5
-		const res =await mysql('articles').count('title')
-		const count = res[0]['count(`title`)']//获取总数量
+		const limit = 4
+		const res =await mysql('articles').count('id')
+		const count = res[0]['count(`id`)']//获取总数量
 		const pages = Math.ceil(count / limit);//获取总页数
 		if(page > pages){
 			page = pages;
@@ -163,7 +163,7 @@ async function updateArticleIsShow(ctx){//上传内容图片
 			page = 1;
 		}
 		const list = await mysql('articles')
-							.orderBy('title','desc')
+							.orderBy('id','desc')
 							.limit(limit).offset(Number(page-1)*limit)//查询得出数据
 	//一次限制5条，且offset是限制从第多少条开始查询，page=1,从第0条查询，page为2，从第5条开始
 						

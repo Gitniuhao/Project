@@ -67,6 +67,7 @@ class User extends Component{//自定义组件名字首字母都要大写，而h
  			<div className = 'User'>
  				<AdminLayout>
 	 				<Breadcrumb style={{ margin: '16px 0' }}>
+	 				 <Breadcrumb.Item>首页</Breadcrumb.Item>
 	                  <Breadcrumb.Item>用户列表</Breadcrumb.Item>
 	                </Breadcrumb>
  					<div className='content'>

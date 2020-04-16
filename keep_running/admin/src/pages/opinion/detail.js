@@ -33,7 +33,8 @@ class OpinionDetail extends Component{//自定义组件名字首字母都要大�
  				<AdminLayout>
 	 				<Breadcrumb style={{ margin: '16px 0' }}>
 	                  <Breadcrumb.Item>首页</Breadcrumb.Item>
-	                  <Breadcrumb.Item>文章详情</Breadcrumb.Item>
+	                  <Breadcrumb.Item>意见管理</Breadcrumb.Item>
+	                  <Breadcrumb.Item>意见详情</Breadcrumb.Item>
 	                </Breadcrumb>
  					<div className='content'>
  						<Form  className="article-form" labelCol={{ span: 5 }} wrapperCol={{ span: 12 }}>

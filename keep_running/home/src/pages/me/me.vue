@@ -42,7 +42,7 @@
 				<label class="left">
 					<img class="img" src="/static/images/bookmark.png" alt="">
 				</label>
-				<label class="name">&nbsp;&nbsp;收藏文章</label>
+				<label class="name">&nbsp;&nbsp;已收藏文章</label>
 				<label class="right">
 					>		
 				</label>

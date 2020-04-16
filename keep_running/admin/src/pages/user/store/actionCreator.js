@@ -38,7 +38,7 @@ export const getPageAction = (page)=>{
 
 export const delUserAction = (openId)=>{
 	return (dispatch,getState) =>{//因为有redux-thunk这个中间件存在，可以让dispatch不仅可以处理对象，也可以处理函数
-		api.delteAdmin({
+		api.delteUser({
 			openId:openId
 		})//发送获取管理员列表的请求
 		.then(result=>{

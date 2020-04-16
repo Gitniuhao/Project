@@ -68,11 +68,11 @@
 				this.img_count = this.src.length
 			}			
 		},
-		methods:{
+		methods:{			
 			uploadPicture(){//上传图片
 				let _this = this//将this重新赋值，便于在小程序方法里使用
 				wx.chooseImage({
-				  count: 2,
+				  count: 1,
 				  sizeType: ['original', 'compressed'],
 				  sourceType: ['album', 'camera'],
 				  success (res) {

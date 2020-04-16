@@ -35,6 +35,7 @@ class AdminReset extends Component{//自定义组件名字首字母都要大写�
  				<AdminLayout>
 	 				<Breadcrumb style={{ margin: '16px 0' }}>
 	                  <Breadcrumb.Item>首页</Breadcrumb.Item>
+	                  <Breadcrumb.Item>管理员管理</Breadcrumb.Item>
 	                  <Breadcrumb.Item>修改管理员密码</Breadcrumb.Item>
 	                </Breadcrumb>
  					<div className='content'>

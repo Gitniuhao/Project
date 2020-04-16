@@ -9,15 +9,16 @@
 			</div>
 			<div>
 				<label class="author">{{articleDetail.author}}</label>				
-				<label class="view">
+				<label class="date">发布于{{articleDetail.create_time}}</label>
+			</div>
+			<div class="content">
+				<img :src="articleDetail.article_image" alt="">
+				<wxParse :content="articleDetail.content"/>
+			</div>			
+			<label class="view">
 					<img src="/static/images/view.png" alt="">
 					<span>{{view}}次阅读</span>
 				</label>
-			</div>
-			<div class="content">
-				<wxParse :content="articleDetail.content"/>
-			</div>
-			<label class="date">发布于{{articleDetail.create_time}}</label>
 			<div class="collection_share">
 				<img class="share" src="/static/images/shared.png" @click="handleShare">	
 				<img class="collection" :src="isCollection ? '/static/images/collection-none.png' : '/static/images/collection-done.png'" @click='handleCollection'>			
@@ -75,7 +76,7 @@
 					this.addView()//每次进入页面改变阅读次数	
 					//渲染转义赋值
 					this.isCollection = res.articleDetail.isCollection == 0 ? true : false
-					console.log('isCollection:',res.articleDetail.isCollection)
+					// console.log('isCollection:',res.articleDetail.isCollection)
 					if(!this.articleDetail.title){//如果页面文章标题不存在，则显示提示语句
 						this.show_articleDetail = true
 					}else{
@@ -142,25 +143,23 @@
 .articleDetail{
 	display:flex;
 	flex-direction:column;
-	padding:10px 10px;
+	padding:10px 5px;
 	.title{
 		font-size:24px;
 		font-weight:bold;
 		white-space:normal;
         word-break:break-all;
         word-wrap:break-word;
-        margin-top:10px;
         margin-bottom:5px; 
 	}
 	.author{
 		font-size:16px;
-		color:#EA5149;
+		color:gray;
 		opcity:0.3;
 		margin-left:10px;
 	}
 	.view{
-		float:right;
-		margin-right:10px;
+		margin-left:260px;
 		img{
 			width: 20px;
 			height: 20px;
@@ -168,9 +167,9 @@
 		}
 		span{
 			font-size:16px;
+			margin-left:5px;
 		}
-	}
-	
+	}	
 	.collection_share{
 		position:relative;
 		margin-top:20px;
@@ -187,10 +186,18 @@
 		color:gray;
 		opcity:0.3;
 		margin-bottom:20px;
-		margin-left:150px;
+		margin-left:10px;
 	}
 	.content{
 		margin-top:10px;
+		background-color: #fff;
+		img{
+			margin:10px 15px;
+			width: 336px;
+			height: 180px;
+			border-radius:10px 10px;
+
+		}
 	}
 }
 @import url("~mpvue-wxparse/src/wxParse.css");
