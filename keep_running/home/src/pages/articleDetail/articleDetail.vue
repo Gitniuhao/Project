@@ -17,7 +17,7 @@
 			</div>			
 			<label class="view">
 					<img src="/static/images/view.png" alt="">
-					<span>{{view}}次阅读</span>
+					<span>本文已被浏览{{view}}次</span>
 				</label>
 			<div class="collection_share">
 				<img class="share" src="/static/images/shared.png" @click="handleShare">	
@@ -159,7 +159,7 @@
 		margin-left:10px;
 	}
 	.view{
-		margin-left:260px;
+		margin-left:100px;
 		img{
 			width: 20px;
 			height: 20px;

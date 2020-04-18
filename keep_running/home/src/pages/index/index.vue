@@ -101,7 +101,11 @@
           const res = await get('/weapp/getMark',{openid:this.userinfo.openId})
           console.log(res.mark)
           //将返回的数据重新赋值
-          this.mark = res.mark
+          if(res.mark){
+            this.mark = res.mark
+          }else{//清空记录状态下mark默认为0
+            this.mark = 0;
+          }
         }catch(e){
           showModal('请求失败','请稍后重试~')
           console.log('从后端返回的执行错误的信息是：',e)
